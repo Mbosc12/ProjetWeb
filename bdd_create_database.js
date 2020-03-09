@@ -5,7 +5,11 @@
 //dans une invite de commande
 //	cd le dossier projet
 //	npm install mysql;
-// mettre ce fichier sql.js dans le dossier 
+// mettre ce fichier bdd_create_database.js dans le dossier 
+// executer dans l'invite de commande dans le dossier : 
+// node bdd_create_database.js
+// node bdd_create_tables_et_remplissage.js
+// node select.js
 
 var mysql = require('mysql');
 
