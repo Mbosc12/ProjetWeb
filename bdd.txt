@@ -1,0 +1,63 @@
+
+CREATE TABLE utilisateur(
+   id COUNTER,
+   pseudo VARCHAR(50) NOT NULL,
+   nom VARCHAR(50),
+   prenom VARCHAR(50),
+   mail VARCHAR(50) NOT NULL,
+   date_naissance DATE,
+   CP VARCHAR(50),
+   ville VARCHAR(50),
+   adresse VARCHAR(50),
+   PRIMARY KEY(id)
+);
+
+CREATE TABLE post(
+   id COUNTER,
+   titre VARCHAR(50) NOT NULL,
+   message VARCHAR(50) NOT NULL,
+   PRIMARY KEY(id)
+);
+
+CREATE TABLE Poster(
+   id INT,
+   id_1 INT,
+   date_publication DATE NOT NULL,
+   PRIMARY KEY(id, id_1),
+   FOREIGN KEY(id) REFERENCES utilisateur(id),
+   FOREIGN KEY(id_1) REFERENCES post(id)
+);
+
+CREATE TABLE Follow(
+   id INT,
+   id_1 INT,
+   PRIMARY KEY(id, id_1),
+   FOREIGN KEY(id) REFERENCES utilisateur(id),
+   FOREIGN KEY(id_1) REFERENCES utilisateur(id)
+);
+
+CREATE TABLE Liker(
+   id INT,
+   id_1 INT,
+   PRIMARY KEY(id, id_1),
+   FOREIGN KEY(id) REFERENCES utilisateur(id),
+   FOREIGN KEY(id_1) REFERENCES post(id)
+);
+
+CREATE TABLE Commenter(
+   id INT,
+   id_1 INT,
+   date_commentaire DATETIME NOT NULL,
+   message_commentaire VARCHAR(50) NOT NULL,
+   PRIMARY KEY(id, id_1),
+   FOREIGN KEY(id) REFERENCES utilisateur(id),
+   FOREIGN KEY(id_1) REFERENCES post(id)
+);
+
+CREATE TABLE Partager(
+   id INT,
+   id_1 INT,
+   PRIMARY KEY(id, id_1),
+   FOREIGN KEY(id) REFERENCES utilisateur(id),
+   FOREIGN KEY(id_1) REFERENCES post(id)
+);
