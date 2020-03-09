@@ -138,7 +138,7 @@ html {
   
   input[type=text]:focus {
     background-color: #fff;
-    border-bottom: 2px solid #5fbae9;
+    border-bottom: 2px solid #68d89b;
   }
   
   input[type=text]:placeholder {
