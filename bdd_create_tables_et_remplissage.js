@@ -14,7 +14,7 @@ con.connect(function(err) {
   
   console.log("Connected to mydb!");
   
-  var sql = "CREATE TABLE utilisateur(pseudo VARCHAR(50) NOT NULL,nom VARCHAR(50),prenom VARCHAR(50),mail VARCHAR(50),date_naissance DATE,CP VARCHAR(50),ville VARCHAR(50),adresse VARCHAR(50),PRIMARY KEY(mail))";
+  var sql = "CREATE TABLE utilisateur(pseudo VARCHAR(50) NOT NULL,nom VARCHAR(50),prenom VARCHAR(50),mail VARCHAR(50),motdepass VARCHAR(50) NOT NULL,date_naissance DATE,CP VARCHAR(50),ville VARCHAR(50),adresse VARCHAR(50),PRIMARY KEY(mail))";
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log("Table utilisateur created");
@@ -51,7 +51,7 @@ con.connect(function(err) {
   });
   
   
-  var sql = "INSERT INTO utilisateur VALUES ('Hola','Que','Tal','holaquetal@gmail.com', '2020-03-09','81000','Albi','20 rue de la poudriere')";
+  var sql = "INSERT INTO utilisateur VALUES ('Hola','Que','Tal','holaquetal@gmail.com','muybienytu','2020-03-09','81000','Albi','20 rue de la poudriere')";
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log("1 record inserted");

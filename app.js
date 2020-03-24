@@ -22,7 +22,8 @@ app.get('/showSignUpPage',function(req,res){
   res.sendFile('signup.html',{'root':__dirname + '/templates'})
 })
 
-app.get('/test',function(req,res){
+// Requete pour avoir tous les utilisateurs
+app.get('/AllUtilisateur',function(req,res){
 	// connection à la bdd créée
 	var db = mysql.createConnection({
 	  host: "localhost",
@@ -32,7 +33,38 @@ app.get('/test',function(req,res){
 	});
 	db.connect(function(err) {
 		if (err) throw err;
-		db.query("SELECT * FROM utilisateur", function (err, result, fields) {
+
+		var sql = "SELECT * FROM utilisateur";
+		db.query(sql, function (err, result, fields) {
+			if (err) throw err;
+			console.log(result);
+			res.send(result);
+		});
+		
+		db.end();
+	}); 
+});
+
+
+// Requete pour avoir toutes les info d'un seul utilisateur avec le mail en parametre
+app.get('/unUtilisateur',function(req,res){
+	// connection à la bdd créée
+	var db = mysql.createConnection({
+	  host: "localhost",
+	  user: "root",
+	  password: "",
+	  database: "mydb"
+	});
+
+	db.connect(function(err) {
+		if (err) throw err;
+		//console.log("req = "+req);
+		var query = req.query;
+		//console.log("query = "+query);
+		//console.log("query.mail = "+query.mail);
+		var sql = `SELECT * FROM utilisateur WHERE mail = '${query.mail}'`;
+
+		db.query(sql, function (err, result, fields) {
 			if (err) throw err;
 			console.log(result);
 			res.send(result);
@@ -41,3 +73,36 @@ app.get('/test',function(req,res){
 	}); 
 });
 
+// Requete pour vérifier si le mail correspond au mdp
+app.get('/VerifUtilisateur',function(req,res){
+	// connection à la bdd créée
+	var db = mysql.createConnection({
+	  host: "localhost",
+	  user: "root",
+	  password: "",
+	  database: "mydb"
+	});
+
+	db.connect(function(err) {
+		if (err) throw err;
+		
+		var query = req.query;
+		
+		var sql = `SELECT * FROM utilisateur WHERE mail = '${query.mail}' AND motdepass = '${query.mdp}'`;
+
+		db.query(sql, function (err, result, fields) {
+			if (err) throw err;
+			
+			if (result.length == 0){
+				res.send(false);
+			}else{
+				res.send(true);
+			}
+			/*
+			console.log(result);
+			res.send(result);
+			*/
+		});
+		db.end();
+	}); 
+});

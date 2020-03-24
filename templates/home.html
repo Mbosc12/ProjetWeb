@@ -11,11 +11,12 @@
 </body>
 
 <script>
-
+// Exemple avec juste un select 
 $(document).ready(function () {
+    
     $.ajax({
         method: 'GET',
-        url: '/test',
+        url: 'AllUtilisateur/',
         dataType: 'json',
         success: function (data) {
             console.log(data);
@@ -24,5 +25,69 @@ $(document).ready(function () {
             console.log(error+" jquery");
         }
     });
+
+    $.ajax({
+        method: 'GET',
+        url: 'unUtilisateur/',
+        dataType: 'json',
+        data:{mail:'holaquetal@gmail.com'},
+        success: function (data) {
+            console.log(data);
+        },
+        error: function (x, error) {
+            console.log(error+" jquery");
+        }
+    });
+    
+    $.ajax({
+        method: 'GET',
+        url: 'VerifUtilisateur/',
+        dataType: 'json',
+        data:{
+            mail:'holaquetal@gmail.com',
+            mdp:'undeuxtrois'
+        },
+        success: function (data) {
+            console.log(data);
+        },
+        error: function (x, error) {
+            console.log(error+" jquery");
+        }
+    });
+
 });
+
+/* Exemple select avec parametre et traitement de la réponse (d'un autre projet)
+
+$.ajax({
+    method: 'GET',
+    url: 'competencesDunPersonnel/',
+    dataType: 'json',
+    data: {
+        id: $('#personnels option:selected').attr('data-id')
+    },
+    success: function (data) {
+        let L = [];
+        let noms = [];
+        $('#competences').html("");
+        $('#competences').append(
+            `<tr class="table-primary"><th scope="col">Compétences</th><th></th></tr>`
+        );
+        data.forEach(d => {
+            if (d.pourcentAcquis != 0) {
+                $('#competences').append(
+                    `<tr><td>${d.libelle}</td><td>${d.pourcentAcquis} %</td></tr>`
+                );
+                L.push(d.pourcentAcquis);
+                noms.push(d.libelle);
+            }
+        });
+        afficherRadar(L, noms);
+    },
+    error: function (x, error) {
+        console.log(error);
+    }
+});
+
+*/
 </script>

@@ -1,0 +1,23 @@
+{
+  "name": "projetweb",
+  "version": "1.0.0",
+  "description": "Pour créer le projet en local (/!\\ est ce que clone le git install tout le bordel? no lo se)",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mbosc12/ProjetWeb.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Mbosc12/ProjetWeb/issues"
+  },
+  "homepage": "https://github.com/Mbosc12/ProjetWeb#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mysql": "^2.18.1"
+  }
+}
