@@ -19,32 +19,32 @@ con.connect(function(err) {
     if (err) throw err;
     console.log("Table utilisateur created");
   });
-  var sql = "CREATE TABLE post(id INT,titre VARCHAR(50) NOT NULL,message VARCHAR(50) NOT NULL,PRIMARY KEY(id))";
+  var sql = "CREATE TABLE post(PK_post_id INT,titre VARCHAR(50) NOT NULL,message VARCHAR(50) NOT NULL,PRIMARY KEY(PK_post_id))";
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log("Table post created");
   });
-  var sql = "CREATE TABLE Poster(id INT,id_1 INT,date_publication DATE NOT NULL,PRIMARY KEY(id, id_1),FOREIGN KEY(id) REFERENCES utilisateur(id),FOREIGN KEY(id_1) REFERENCES post(id))";
+  var sql = "CREATE TABLE Poster(FK_utilisateur_mail VARCHAR(50),FK_post_id INT,date_publication DATE NOT NULL,PRIMARY KEY(FK_utilisateur_mail, FK_post_id),FOREIGN KEY(FK_utilisateur_mail) REFERENCES utilisateur(mail),FOREIGN KEY(FK_post_id) REFERENCES post(PK_post_id))";
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log("Table Poster created");
   });
-  var sql = "CREATE TABLE Follow(id INT,id_1 INT,PRIMARY KEY(id, id_1),FOREIGN KEY(id) REFERENCES utilisateur(id),FOREIGN KEY(id_1) REFERENCES utilisateur(id))";
+  var sql = "CREATE TABLE Follow(FK_utilisateur_mail VARCHAR(50),FK_post_id INT,PRIMARY KEY(FK_utilisateur_mail, FK_post_id),FOREIGN KEY(FK_utilisateur_mail) REFERENCES utilisateur(mail),FOREIGN KEY(FK_post_id) REFERENCES post(PK_post_id))";
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log("Table Follow created");
   });
-  var sql = "CREATE TABLE Liker(id INT,id_1 INT,PRIMARY KEY(id, id_1),FOREIGN KEY(id) REFERENCES utilisateur(id),FOREIGN KEY(id_1) REFERENCES post(id))";
+  var sql = "CREATE TABLE Liker(FK_utilisateur_mail VARCHAR(50),FK_post_id INT,PRIMARY KEY(FK_utilisateur_mail, FK_post_id),FOREIGN KEY(FK_utilisateur_mail) REFERENCES utilisateur(mail),FOREIGN KEY(FK_post_id) REFERENCES post(PK_post_id))";
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log("Table Liker created");
   });
-  var sql = "CREATE TABLE Commenter(id INT,id_1 INT,date_commentaire DATETIME NOT NULL,message_commentaire VARCHAR(50) NOT NULL,PRIMARY KEY(id, id_1),FOREIGN KEY(id) REFERENCES utilisateur(id),FOREIGN KEY(id_1) REFERENCES post(id))";
+  var sql = "CREATE TABLE Commenter(FK_utilisateur_mail VARCHAR(50),FK_post_id INT,date_commentaire DATETIME NOT NULL,message_commentaire VARCHAR(50) NOT NULL,PRIMARY KEY(FK_utilisateur_mail, FK_post_id),FOREIGN KEY(FK_utilisateur_mail) REFERENCES utilisateur(mail),FOREIGN KEY(FK_post_id) REFERENCES post(PK_post_id))";
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log("Table Commenter created");
   });
-  var sql = "CREATE TABLE Partager(id INT,id_1 INT,PRIMARY KEY(id, id_1),FOREIGN KEY(id) REFERENCES utilisateur(id),FOREIGN KEY(id_1) REFERENCES post(id))";
+  var sql = "CREATE TABLE Partager(FK_utilisateur_mail VARCHAR(50),FK_post_id INT,PRIMARY KEY(FK_utilisateur_mail, FK_post_id),FOREIGN KEY(FK_utilisateur_mail) REFERENCES utilisateur(mail),FOREIGN KEY(FK_post_id) REFERENCES post(PK_post_id))";
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log("Table Partager created");
