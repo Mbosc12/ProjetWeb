@@ -14,12 +14,12 @@ con.connect(function(err) {
   
   console.log("Connected to mydb!");
   
-  var sql = "CREATE TABLE utilisateur(pseudo VARCHAR(50) NOT NULL,nom VARCHAR(50),prenom VARCHAR(50),mail VARCHAR(50),motdepass VARCHAR(50) NOT NULL,date_naissance DATE,CP VARCHAR(50),ville VARCHAR(50),adresse VARCHAR(50),PRIMARY KEY(mail))";
+  var sql = "CREATE TABLE utilisateur(pseudo VARCHAR(50) NOT NULL ,nom VARCHAR(50),prenom VARCHAR(50),mail VARCHAR(50),motdepass VARCHAR(50) NOT NULL,date_naissance DATE,CP VARCHAR(50),ville VARCHAR(50),adresse VARCHAR(50),PRIMARY KEY(mail))";
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log("Table utilisateur created");
   });
-  var sql = "CREATE TABLE post(PK_post_id INT,titre VARCHAR(50) NOT NULL,message VARCHAR(50) NOT NULL,PRIMARY KEY(PK_post_id))";
+  var sql = "CREATE TABLE post(PK_post_id INT, FK_utilisateur_mail VARCHAR(50), FK_titre VARCHAR(50) NOT NULL,message VARCHAR(50) NOT NULL,PRIMARY KEY(PK_post_id), FOREIGN KEY(FK_utilisateur_mail) REFERENCES utilisateur(mail))";
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log("Table post created");
@@ -50,12 +50,29 @@ con.connect(function(err) {
     console.log("Table Partager created");
   });
   
-  
-  var sql = "INSERT INTO utilisateur VALUES ('Hola','Que','Tal','holaquetal@gmail.com','muybienytu','2020-03-09','81000','Albi','20 rue de la poudriere')";
+  var sql = "INSERT INTO utilisateur VALUES ('GretaThunberg','Greta','Thunberg','gretathunberg@gmail.com','superadmin','2020-03-09','81000','Albi','20 rue de la poudriere')";
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log("1 record inserted");
   });
   
+  var sql = "INSERT INTO post VALUES ('1','gretathunberg@gmail.com', 'Premier message','Ceci est le premier post de GretaGram')";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log("1 record inserted");
+  });
+
+    var sql = "INSERT INTO post VALUES ('2', 'gretathunberg@gmail.com', 'Second message','Ceci est le second post de GretaGram')";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log("1 record inserted");
+  });
+  
+  var sql = "INSERT INTO Poster VALUES ('gretathunberg@gmail.com','1','2020-04-02')";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log("1 record inserted");
+  });
+
   con.end();
 });

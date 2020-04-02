@@ -22,6 +22,37 @@ app.get('/showSignUpPage',function(req,res){
   res.sendFile('signup.html',{'root':__dirname + '/templates'})
 })
 
+app.get('/profil',function(req,res){
+  res.sendFile('profil.html',{'root':__dirname + '/templates'})
+})
+
+app.get('/mon-profil',function(req,res){
+  res.sendFile('mon-profil.html',{'root':__dirname + '/templates'})
+})
+
+// Requete pour avoir tous les utilisateurs
+app.get('/Post',function(req,res){
+	// connection à la bdd créée
+	var db = mysql.createConnection({
+	  host: "localhost",
+	  user: "root",
+	  password: "",
+	  database: "mydb"
+	});
+	db.connect(function(err) {
+		if (err) throw err;
+
+		var sql = "SELECT message FROM post WHERE post.FK_utilisateur_mail = 'gretathunberg@gmail.com'";
+		db.query(sql, function (err, result, fields) {
+			if (err) throw err;
+			console.log(result);
+			res.send(result);
+		});
+		
+		db.end();
+	}); 
+});
+
 // Requete pour avoir tous les utilisateurs
 app.get('/AllUtilisateur',function(req,res){
 	// connection à la bdd créée
