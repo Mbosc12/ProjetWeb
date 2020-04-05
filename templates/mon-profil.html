@@ -7,35 +7,9 @@
 	<link rel="stylesheet" type="text/css" href="style/css/profile.css"/>
 	<link rel="stylesheet" type="text/css" href="style/css/header-profile.css"/>
 
-    <script	src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/0.8.1/mustache.min.js"></script>
-
-
-	<script>
-        $(document).ready(// Exécuté à la fin du chargement de la page
-                function () {
-                    ShowPosts();
-                }
-        );
-        var test = 0;
-
-		function ShowPosts() {
-	    $.ajax({
-	        method: 'GET',
-	        url: 'Post/',
-	        dataType: 'json',
-	        success:
-	        	function (result) {
-	        		$('.stats').append('<categorie type="Discussions" :count="100"></categorie>');
-	        		for(var i=0; i < result.length; i++) {
-	        			$('#publi').append(result[i].message + '<br>');
-	        		}
-	        		
-	        	}
-	    });
-		}
-	</script>
-
+    <script src="//unpkg.com/vue"></script>
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/axios/0.15.3/axios.min.js"></script>
 
 </head>
 <body>
@@ -48,7 +22,7 @@
 		      		<user name="Greta Thunberg"></user>
 		      		<state city="Stockholm" country="Suède"></state>
 		    		<div class="stats">
-						<categorie type="Publications" :count="100"></categorie>
+						<categorie type="Publications" :count="messages.length"></categorie>
 						<categorie type="Abonnés" :count="10"></categorie>
 						<categorie type="Abonnés" :count="10"></categorie>
 					</div>
@@ -60,9 +34,7 @@
 		</section>
 	</div>
 
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.js">
-	</script>
-	<script src="style/js/profil.js"></script>
+	<script type="module" src="style/js/profil.js"></script>
 
 </body>
 </html>

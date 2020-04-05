@@ -17,8 +17,11 @@
   },
   "homepage": "https://github.com/Mbosc12/ProjetWeb#readme",
   "dependencies": {
+    "axios": "^0.19.2",
     "express": "^4.17.1",
-    "mysql": "^2.18.1"
+    "mysql": "^2.18.1",
+    "vue-axios": "^2.1.5",
+    "vuex": "^4.0.0-alpha.1"
   },
   "devDependencies": {}
 }

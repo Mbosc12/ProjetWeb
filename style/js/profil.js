@@ -1,3 +1,4 @@
+
 let user = {
 	props: {
 		name: String
@@ -20,21 +21,8 @@ let state = {
 
 let categorie = {
 	props: {
-		type: String,
-		count: Number
-	},
-	computed: {
-		counter: function () {
-		    		jQuery.ajax({
-			        method: 'GET',
-			        url: 'Post/',
-			        dataType: 'json',
-			        success:
-			        	function (result) {
-			        		return result.length
-			        	}
-			    });
-			}
+		count: Number,
+		type: String
 	},
 	template: `<div class="col-4 cat act" >
 				    <h4> {{ count }} </h4>
@@ -44,13 +32,22 @@ let categorie = {
 
 let vm = new Vue({
 	el: '#app',
+    created() {
+        this.fetchData();   
+    },
 	components: { categorie, state, user},
 	data: {
-		GretaPic: "style/img/greta.png"
+		GretaPic: "style/img/greta.png",
+		messages: []
 	},
 	methods: {
 		addPerson: function() {
 			this.persons[0] = 'mar'
-		}
+		},
+        fetchData() {
+        axios.get('http://localhost:3000/Post').then(response => {
+            this.messages = response.data;
+            });
+        }
 	}
 })
