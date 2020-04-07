@@ -18,7 +18,7 @@ app.get('/mon-profil',function(req,res){
   res.sendFile('mon-profil.html',{'root':__dirname + '/templates'})
 })
 
-// Requete pour avoir tous les utilisateurs
+// Requete pour avoir les posts d'un utilisateur
 app.get('/Post',function(req,res){
 	// connection à la bdd créée
 	var db = mysql.createConnection({
@@ -30,7 +30,9 @@ app.get('/Post',function(req,res){
 	db.connect(function(err) {
 		if (err) throw err;
 
-		var sql = "SELECT message FROM post WHERE post.FK_utilisateur_mail = 'gretathunberg@gmail.com'";
+		var query = req.query;
+
+		var sql = `SELECT message FROM post WHERE post.FK_utilisateur_mail = '${query.mail}'`;
 		db.query(sql, function (err, result, fields) {
 			if (err) throw err;
 			console.log(result);

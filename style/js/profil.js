@@ -33,20 +33,32 @@ let categorie = {
 let vm = new Vue({
 	el: '#app',
     created() {
-        this.fetchData();   
+        this.FetchPosts();
+        this.FetchInfos();
     },
 	components: { categorie, state, user},
 	data: {
 		GretaPic: "style/img/greta.png",
-		messages: []
+		posts: [],
+		infos: []
 	},
 	methods: {
-		addPerson: function() {
-			this.persons[0] = 'mar'
-		},
-        fetchData() {
-        axios.get('http://localhost:3000/Post').then(response => {
-            this.messages = response.data;
+        FetchPosts() {
+        axios.get('http://localhost:3000/Post', {
+        	params: {
+				mail: 'gretathunberg@gmail.com'
+        	}
+        }).then(response => {
+            this.posts = response.data;
+            });
+        },
+        FetchInfos() {
+        axios.get('http://localhost:3000/unUtilisateur', {
+        	params: {
+				mail: 'gretathunberg@gmail.com'
+        	}
+        }).then(response => {
+            this.infos = response.data;
             });
         }
 	}

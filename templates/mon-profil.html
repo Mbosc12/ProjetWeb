@@ -22,14 +22,21 @@
 		      		<user name="Greta Thunberg"></user>
 		      		<state city="Stockholm" country="Suède"></state>
 		    		<div class="stats">
-						<categorie type="Publications" :count="messages.length"></categorie>
+						<categorie type="Publications" :count="posts.length"></categorie>
 						<categorie type="Abonnés" :count="10"></categorie>
-						<categorie type="Abonnés" :count="10"></categorie>
+						<categorie type="Evenements" :count="10"></categorie>
 					</div>
 				</div>
 			</header>
 
 			<div id="publi">
+				<li v-for="msg in posts">
+					{{msg.message}}
+				</li>
+
+				<li v-for="inf in infos">
+					{{inf}}
+				</li>
 			</div>
 		</section>
 	</div>
