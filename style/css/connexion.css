@@ -1,0 +1,52 @@
+body {
+    color:black;
+    background-color: #fafafa;
+
+}
+
+.input {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    font-family: Arial, serif;
+    font-size: 14px;
+    padding: 5px 10px;
+}
+
+#logo {
+    width: 300px;
+    display: block;
+    margin: 20px auto;
+}
+
+#form {
+    background-color: white;
+    border: 1px solid grey;
+    width: 400px;
+    margin-left: 200px;
+    margin-top: 150px;
+    padding-bottom: 20px;
+    text-align: center;
+    color: grey;
+}
+
+#form p {
+    padding: 10px;
+}
+
+#login, #password {
+    display: block;
+    margin: 5px auto;
+    width: 300px;
+    padding: 5px;
+}
+
+#submit {
+    width: 300px;
+    margin-top: 10px;
+}
+#ou {
+    color: #bababa;
+}
+
+
