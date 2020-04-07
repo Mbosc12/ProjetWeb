@@ -1,37 +1,48 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:v-on="http://www.w3.org/1999/xhtml">
 
 <head>
     <meta charset="UTF-8">
+
+    <!-- Bootstrap -->
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <!-- CSS -->
     <link rel="stylesheet" type="text/css" href="style/css/connexion.css">
-    <title>Accueil</title>
+
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"> -->
+    <!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script> -->
+
+    <title>Gretagram - Connexion</title>
 </head>
 
 <body>
+<script type="module" src="style/js/connexion.js"></script>
+<!-- Vue.js -->
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<!-- Font Awesome (icon) -->
+<script src="https://use.fontawesome.com/releases/v5.13.0/js/all.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 <div>
     <div id="form">
-        <!-- Tabs Titles -->
-
-        <!-- Icon -->
+        <!-- Logo -->
         <div>
             <img src="style/img/logoConnexion.png" id="logo" alt="Logo GRETAGRAM"/>
         </div>
 
         <!-- Login Form -->
-        <form class="input">
-            <input type="text" id="login" name="login" placeholder="Nom d'utilisateur">
-            <input type="text" id="password" name="login" placeholder="Mot de passe">
+        <div id="input">
+            <form class="input">
+                <inputs></inputs>
 
-            <button type="submit" id="submit" class="btn btn-success btn-sm">Se connecter</button>
-        </form>
+            </form>
+            <submit-button></submit-button>
+        </div>
 
-        <!-- Remind Passowrd -->
+        <!-- Inscription -->
         <div>
-            <p id="ou" style="word-spacing: 1.5em" >——————— OU ———————</p>
+            <p id="ou" style="word-spacing: 1.5em">—————————— OU ——————————</p>
             Vous n'avez pas de compte ?
             <a class="underlineHover" href="/inscription">Inscrivez-vous</a>
         </div>
