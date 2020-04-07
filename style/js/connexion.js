@@ -2,8 +2,8 @@ new Vue({
     el: "#input",
     data: function () {
         return {
-            username: "",
-            password: ""
+            username: '',
+            password: '',
         }
     },
     template: `<div>
@@ -14,11 +14,22 @@ new Vue({
                </div>`,
     methods: {
         login: function () {
-            const username = this.username;
-            const password = this.password;
-
-            console.log(username, password);
-
+            console.log(this.username, this.password)
+            axios.get('http://localhost:3000/VerifUtilisateur', {
+                params: {
+                    pseudo: this.username,
+                }
+            }).then(response => {
+                if(response.data.length != 0) {
+                    if(this.password == response.data[0].motdepass) {
+                        console.log("Connexion réussie")
+                    } else {
+                        console.log("Mot de passe incorrect")
+                    }
+                } else {
+                    console.log("Utilisateur inconnu")
+                }
+                });
         }
 
     }

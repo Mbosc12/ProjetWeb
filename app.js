@@ -18,6 +18,11 @@ app.get('/mon-profil',function(req,res){
   res.sendFile('mon-profil.html',{'root':__dirname + '/templates'})
 })
 
+app.get('/connexion',function(req,res){
+  res.sendFile('connexion.html',{'root':__dirname + '/templates'})
+})
+
+
 // Requete pour avoir les posts d'un utilisateur
 app.get('/Post',function(req,res){
 	// connection à la bdd créée
@@ -109,20 +114,12 @@ app.get('/VerifUtilisateur',function(req,res){
 		
 		var query = req.query;
 		
-		var sql = `SELECT * FROM utilisateur WHERE mail = '${query.mail}' AND motdepass = '${query.mdp}'`;
+		var sql = `SELECT motdepass FROM utilisateur WHERE pseudo = '${query.pseudo}'`;
 
 		db.query(sql, function (err, result, fields) {
 			if (err) throw err;
-			
-			if (result.length == 0){
-				res.send(false);
-			}else{
-				res.send(true);
-			}
-			/*
 			console.log(result);
 			res.send(result);
-			*/
 		});
 		db.end();
 	}); 
