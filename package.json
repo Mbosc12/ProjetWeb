@@ -4,7 +4,8 @@
   "description": "Pour créer le projet en local (/!\\ est ce que clone le git install tout le bordel? no lo se)",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "serve": "node app.js"
   },
   "repository": {
     "type": "git",
