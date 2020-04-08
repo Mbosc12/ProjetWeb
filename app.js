@@ -57,6 +57,30 @@ app.get('/connexion',function(req,res){
 
 
 // 1) /NbUtilisateur : Nombre d'utilisateur (sortie : nb)
+app.get('/NbUtilisateur',function(req,res){
+	// connection à la bdd créée
+	var db = mysql.createConnection({
+	  host: "localhost",
+	  user: "root",
+	  password: "",
+	  database: "mydb"
+	});
+
+	db.connect(function(err) {
+		if (err) throw err;
+		
+		var query = req.query;
+		
+		var sql = `SELECT COUNT(mail) AS NumberOfMail FROM utilisateur`;
+
+		db.query(sql, function (err, result, fields) {
+			if (err) throw err;
+			console.log(result);
+			res.send(result);
+		});
+		db.end();
+	}); 
+});
 
 // 2) /AllUtilisateur : Tous les utilisateurs (sortie : liste)
 app.get('/AllUtilisateur',function(req,res){
