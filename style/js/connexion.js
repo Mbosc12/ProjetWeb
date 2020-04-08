@@ -9,8 +9,8 @@ new Vue({
         }
     },
     template: `<div>
-                <input type="email" id="username" name="username" v-model="username" placeholder="Nom d'utilisateur" required="true">
-                <input type="password" id="password" name="password" v-model="password" placeholder="Mot de passe" required="true">
+                <input type="email" id="username" name="username" v-model="username" placeholder="Nom d'utilisateur" required>
+                <input type="password" id="password" name="password" v-model="password" placeholder="Mot de passe" required>
 
                 <button type="submit" id="submit" class="btn btn-success btn-sm" v-on:click="login">Se connecter</button>
                 
