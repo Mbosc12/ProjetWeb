@@ -74,5 +74,11 @@ con.connect(function(err) {
     console.log("1 record inserted");
   });
 
+  var sql = "INSERT INTO Poster VALUES ('gretathunberg@gmail.com','2','2020-04-03')";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log("1 record inserted");
+  });
+
   con.end();
 });

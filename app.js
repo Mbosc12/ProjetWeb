@@ -23,32 +23,42 @@ app.get('/connexion',function(req,res){
 })
 
 
-// Requete pour avoir les posts d'un utilisateur
-app.get('/Post',function(req,res){
-	// connection à la bdd créée
-	var db = mysql.createConnection({
-	  host: "localhost",
-	  user: "root",
-	  password: "",
-	  database: "mydb"
-	});
-	db.connect(function(err) {
-		if (err) throw err;
 
-		var query = req.query;
 
-		var sql = `SELECT message FROM post WHERE post.FK_utilisateur_mail = '${query.mail}'`;
-		db.query(sql, function (err, result, fields) {
-			if (err) throw err;
-			console.log(result);
-			res.send(result);
-		});
-		
-		db.end();
-	}); 
-});
+// 1) /NbUtilisateur : Nombre d'utilisateur (sortie : nb)
 
-// Requete pour avoir tous les utilisateurs
+// 2) /AllUtilisateur : Tous les utilisateurs (sortie : liste)
+
+// 3) /unUtilisateur : Toutes les info d'un utilisateur (entrée : mail -> sortie : liste)
+
+// 4) /VerifUtilisateur : Vérification mail mdp (entrée : mail -> sortie mdp)
+
+// 5) /NbPostUtilisateur : Nombre de Post d'un utilisateur (entrée : mail -> sortie : nb)
+
+// 6) /AllPostUtilisateur : Tous les Posts d'un utilisateur (entrée : mail -> sortie : list)
+
+// 7) /NbFollowerUtilisateur : Nombre de Follower d'un utilisateur (entrée : mail -> sortie : nb)
+
+// 8) /ListeFollowerUtilisateur : Liste des Follower d'un utilisateur (entrée : mail -> sortie : liste de pseudo)
+
+// 9) /NbCommentaireUtilisateur : Nombre de commentaires d'un utilisateur (entrée : mail -> sortie : nb)
+
+// 10) /AllCommentaireUtilisateur : Liste des Commentaires d'un utilisateur (entrée : mail -> sortie : liste)
+
+// 11) /unPost : Toutes les info d'un post (entrée : id_post -> sortie : liste)
+
+// 12) /NbLikePost : Nombre de Like d'un post (entrée : id_post -> sortie : nb)
+
+// 13) /NbCommentairePost : Nombre de commentaire d'un post (entrée : id_post -> sortie : nb)
+
+// 14) /AllCommentairePost : Commentaires d'un post (entrée : id_post -> sortie : liste)
+
+
+
+
+// 1) /NbUtilisateur : Nombre d'utilisateur (sortie : nb)
+
+// 2) /AllUtilisateur : Tous les utilisateurs (sortie : liste)
 app.get('/AllUtilisateur',function(req,res){
 	// connection à la bdd créée
 	var db = mysql.createConnection({
@@ -72,7 +82,7 @@ app.get('/AllUtilisateur',function(req,res){
 });
 
 
-// Requete pour avoir toutes les info d'un seul utilisateur avec le mail en parametre
+// 3) /unUtilisateur : Toutes les info d'un utilisateur (entrée : mail -> sortie : liste)
 app.get('/unUtilisateur',function(req,res){
 	// connection à la bdd créée
 	var db = mysql.createConnection({
@@ -99,7 +109,7 @@ app.get('/unUtilisateur',function(req,res){
 	}); 
 });
 
-// Requete pour vérifier si le mail correspond au mdp
+// 4) /VerifUtilisateur : Vérification mail mdp (entrée : mail -> sortie mdp)
 app.get('/VerifUtilisateur',function(req,res){
 	// connection à la bdd créée
 	var db = mysql.createConnection({
@@ -124,3 +134,122 @@ app.get('/VerifUtilisateur',function(req,res){
 		db.end();
 	}); 
 });
+
+// 5) /NbPostUtilisateur : Nombre de Post d'un utilisateur (entrée : mail -> sortie : nb)
+app.get('/NbPostUtilisateur',function(req,res){
+	// connection à la bdd créée
+	var db = mysql.createConnection({
+	  host: "localhost",
+	  user: "root",
+	  password: "",
+	  database: "mydb"
+	});
+
+	db.connect(function(err) {
+		if (err) throw err;
+		
+		var query = req.query;
+		
+		var sql = `SELECT COUNT(PK_post_id) AS NumberOfPost FROM Poster WHERE FK_utilisateur_mail = '${query.mail}'`;
+
+		db.query(sql, function (err, result, fields) {
+			if (err) throw err;
+			console.log(result);
+			res.send(result);
+		});
+		db.end();
+	}); 
+});
+
+// 6) /AllPostUtilisateur : Tous les Posts d'un utilisateur (entrée : mail -> sortie : list)
+app.get('/AllPostUtilisateur',function(req,res){
+	// connection à la bdd créée
+	var db = mysql.createConnection({
+	  host: "localhost",
+	  user: "root",
+	  password: "",
+	  database: "mydb"
+	});
+	db.connect(function(err) {
+		if (err) throw err;
+
+		var query = req.query;
+
+		var sql = `SELECT message FROM post WHERE post.FK_utilisateur_mail = '${query.mail}'`;
+		db.query(sql, function (err, result, fields) {
+			if (err) throw err;
+			console.log(result);
+			res.send(result);
+		});
+		
+		db.end();
+	}); 
+});
+
+// 7) /NbFollowerUtilisateur : Nombre de Follower d'un utilisateur (entrée : mail -> sortie : nb)
+app.get('/NbFollowerUtilisateur',function(req,res){
+	// connection à la bdd créée
+	var db = mysql.createConnection({
+	  host: "localhost",
+	  user: "root",
+	  password: "",
+	  database: "mydb"
+	});
+
+	db.connect(function(err) {
+		if (err) throw err;
+		
+		var query = req.query;
+		
+		var sql = `SELECT COUNT(FK_utilisateur_mail_2) AS NumberOfFollower FROM Follower WHERE FK_utilisateur_mail_1 = '${query.mail}'`;
+
+		db.query(sql, function (err, result, fields) {
+			if (err) throw err;
+			console.log(result);
+			res.send(result);
+		});
+		db.end();
+	}); 
+});
+
+// 8) /ListeFollowerUtilisateur : Liste des Follower d'un utilisateur (entrée : mail -> sortie : liste de pseudo)
+app.get('/ListeFollowerUtilisateur',function(req,res){
+	// connection à la bdd créée
+	var db = mysql.createConnection({
+	  host: "localhost",
+	  user: "root",
+	  password: "",
+	  database: "mydb"
+	});
+
+	db.connect(function(err) {
+		if (err) throw err;
+		
+		var query = req.query;
+		
+		var sql = `SELECT FK_utilisateur_mail_2 AS Followers FROM Follower WHERE FK_utilisateur_mail_1 = '${query.mail}'`;
+
+		db.query(sql, function (err, result, fields) {
+			if (err) throw err;
+			console.log(result);
+			res.send(result);
+		});
+		db.end();
+	}); 
+});
+
+// 9) /NbCommentaireUtilisateur : Nombre de commentaires d'un utilisateur (entrée : mail -> sortie : nb)
+
+// 10) /AllCommentaireUtilisateur : Liste des Commentaires d'un utilisateur (entrée : mail -> sortie : liste)
+
+// 11) /unPost : Toutes les info d'un post (entrée : id_post -> sortie : liste)
+
+// 12) /NbLikePost : Nombre de Like d'un post (entrée : id_post -> sortie : nb)
+
+// 13) /NbCommentairePost : Nombre de commentaire d'un post (entrée : id_post -> sortie : nb)
+
+// 14) /AllCommentairePost : Commentaires d'un post (entrée : id_post -> sortie : liste)
+
+
+
+
