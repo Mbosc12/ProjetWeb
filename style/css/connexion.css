@@ -4,6 +4,10 @@ body {
 
 }
 
+a {
+    color: #0097EF;
+}
+
 .input {
     display: block;
     margin-left: auto;
@@ -20,9 +24,18 @@ body {
     margin: 20px auto;
 }
 
+#phone {
+    display: block;
+    height: 450px;
+    margin-right: 200px;
+    margin-top: 100px;
+    float: right;
+}
+
 #form {
+    float: left;
     background-color: white;
-    border: 1px solid grey;
+    border: 1px solid #dbdbdb;
     width: 500px;
     margin-left: 200px;
     margin-top: 150px;
@@ -51,4 +64,37 @@ body {
     color: #bababa;
     font-size: 12px;
     margin-top: 20px;
+}
+
+#alert {
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 10px;
+}
+
+#alert a {
+    color: #0097EF;
+}
+
+/* -------------------- Footer -------------------- */
+.footer {
+    margin-left: 50px;
+    margin-bottom: 10px;
+    position: fixed;
+    bottom: 0;
+    font-size: 11px;
+    color: #939393;
+}
+
+.list {
+    list-style: none;
+}
+
+li {
+    display: inline;
+    margin-left: 10px;
+}
+
+span {
+    margin-left: 48px;
 }

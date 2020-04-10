@@ -3,49 +3,31 @@ const app = express();
 var mysql = require('mysql');
 
 // Binding express app to port 3000
-app.listen(3000,function(){
-	console.log("Node server running @ http://localhost:3000");
+app.listen(3000, function () {
+    console.log("Node server running @ http://localhost:3000");
 });
 
 app.use('/node_modules', express.static(__dirname + '/node_modules'));
-app.use('/style', express.static(__dirname+'/style'));
+app.use('/style', express.static(__dirname + '/style'));
 
-app.get('/',function(req,res){
-	res.sendFile('home.html',{'root':__dirname+'/templates'});
+app.get('/', function (req, res) {
+    res.sendFile('home.html', {'root': __dirname + '/templates'});
 });
 
-app.get('/mon-profil',function(req,res){
-  res.sendFile('mon-profil.html',{'root':__dirname + '/templates'})
-})
+app.get('/mon-profil', function (req, res) {
+    res.sendFile('mon-profil.html', {'root': __dirname + '/templates'})
+});
 
-app.get('/connexion',function(req,res){
-  res.sendFile('connexion.html',{'root':__dirname + '/templates'})
-})
+app.get('/connexion', function (req, res) {
+    res.sendFile('connexion.html', {'root': __dirname + '/templates'})
+});
 
+app.get('/inscription', function (req, res) {
+    res.sendFile('inscription.html', {'root': __dirname + '/templates'})
+});
 
-// Requete pour avoir les posts d'un utilisateur
-app.get('/Post',function(req,res){
-	// connection à la bdd créée
-	var db = mysql.createConnection({
-	  host: "localhost",
-	  user: "root",
-	  password: "",
-	  database: "mydb"
-	});
-	db.connect(function(err) {
-		if (err) throw err;
-
-		var query = req.query;
-
-		var sql = `SELECT PK_post_id, message FROM post WHERE post.FK_utilisateur_mail = '${query.mail}'`;
-		db.query(sql, function (err, result, fields) {
-			if (err) throw err;
-			console.log(result);
-			res.send(result);
-		});
-		
-		db.end();
-	}); 
+app.get('/feed', function (req, res) {
+    res.sendFile('feed.html', {'root': __dirname + '/templates'})
 });
 
 // Requete pour avoir les abonnés d'un utilisateur
@@ -72,9 +54,488 @@ app.get('/Followers',function(req,res){
 		db.end();
 	}); 
 });
+/* Liste des requêtes disponibles :
+   1) /NbUtilisateur : Nombre d'utilisateur (sortie : nb)
+   2) /AllUtilisateur : Tous les utilisateurs (sortie : liste)
+   3) /unUtilisateur : Toutes les info d'un utilisateur (entrée : mail -> sortie : liste)
+   4) /VerifUtilisateur : Vérification mail mdp (entrée : mail -> sortie mdp)
+   5) /NbPostUtilisateur : Nombre de Post d'un utilisateur (entrée : mail -> sortie : nb)
+   6) /AllPostUtilisateur : Tous les Posts d'un utilisateur (entrée : mail -> sortie : list)
+   7) /NbFollowerUtilisateur : Nombre de Follower d'un utilisateur (entrée : mail -> sortie : nb)
+   8) /ListeFollowerUtilisateur : Liste des Follower d'un utilisateur (entrée : mail -> sortie : liste de pseudo)
+   9) /NbCommentaireUtilisateur : Nombre de commentaires d'un utilisateur (entrée : mail -> sortie : nb)
+   10) /AllCommentaireUtilisateur : Liste des Commentaires d'un utilisateur (entrée : mail -> sortie : liste)
+   11) /unPost : Toutes les info d'un post (entrée : id_post -> sortie : liste)
+   12) /LikePost : Like d'un post (entrée : id_post -> sortie : liste)
+   13) /NbCommentairePost : Nombre de commentaire d'un post (entrée : id_post -> sortie : nb)
+   14) /AllCommentairePost : Commentaires d'un post (entrée : id_post -> sortie : liste)
+   15) /newUser : Inscrit un utilisateur dans la bdd (entrée : pseudo, nom, prenom, mail, motdepass, date_naissance, CP, ville, adresse -> sortie : nb (1 ou 0))
+   16) /pseudoExisting : Vérication pseudo déjà existant (entrée : pseudo -> sortie : nb)
+   17) /mailExisting : Vérication mail déjà existant (entrée : mail -> sortie : nb)
+   18) /AjoutPost : Enregistre un post et poster (entrée : PK_post_id, FK_utilisateur_mail, titre, message, date_publication -> sortie : 1 ou 0)
+   19) /AjoutLike : Enregistre un Like (entrée : FK_utilisateur_mail, FK_post_id -> sortie : 1 ou 0)
+ */
 
-// Requete pour avoir les pseudos de ceux qui ont liké un post
-app.get('/Likes',function(req,res){
+/* Liste des requêtes manquantes :
+	18) /AjoutFollower : Enregistre un Follower (entrée : FK_utilisateur_mail_1, FK_utilisateur_mail_2 -> sortie : 1 ou 0)
+	19) /AjoutCommentaire : Enregistre un commentaire (entrée : FK_utilisateur_mail, FK_post_id, date_commentaire, message_commentaire -> sortie : 1 ou 0)
+	20) /AjoutPartage : Enregistre un partage de post (entrée : FK_utilisateur_mail, FK_post_id -> sortie : 1 ou 0)
+ */
+
+
+
+// 1) /NbUtilisateur : Nombre d'utilisateur (sortie : nb)
+app.get('/NbUtilisateur', function (req, res) {
+    // connection à la bdd créée
+    var db = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "",
+        database: "mydb"
+    });
+
+    db.connect(function (err) {
+        if (err) throw err;
+
+        var query = req.query;
+
+        var sql = `SELECT COUNT(mail) AS NumberOfMail FROM utilisateur`;
+
+        db.query(sql, function (err, result, fields) {
+            if (err) throw err;
+            console.log(result);
+            res.send(result);
+        });
+        db.end();
+    });
+});
+
+// 2) /AllUtilisateur : Tous les utilisateurs (sortie : liste)
+app.get('/AllUtilisateur', function (req, res) {
+    // connection à la bdd créée
+    var db = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "",
+        database: "mydb"
+        
+    });
+    db.connect(function (err) {
+        if (err) throw err;
+
+        var sql = "SELECT * FROM utilisateur";
+        db.query(sql, function (err, result, fields) {
+            if (err) throw err;
+            console.log(result);
+            res.send(result);
+        });
+
+        db.end();
+    });
+});
+
+
+// 3) /unUtilisateur : Toutes les info d'un utilisateur (entrée : mail -> sortie : liste)
+app.get('/unUtilisateur', function (req, res) {
+    // connection à la bdd créée
+    var db = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "",
+        database: "mydb"
+        
+    });
+
+    db.connect(function (err) {
+        if (err) throw err;
+        //console.log("req = "+req);
+        var query = req.query;
+        //console.log("query = "+query);
+        //console.log("query.mail = "+query.mail);
+        var sql = `SELECT * FROM utilisateur WHERE mail = '${query.mail}'`;
+
+        db.query(sql, function (err, result, fields) {
+            if (err) throw err;
+            console.log(result);
+            res.send(result);
+        });
+        db.end();
+    });
+});
+
+// 4) /VerifUtilisateur : Vérification mail mdp (entrée : mail -> sortie mdp)
+app.get('/VerifUtilisateur', function (req, res) {
+    // connection à la bdd créée
+    var db = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "",
+        database: "mydb"
+        
+    });
+
+    db.connect(function (err) {
+        if (err) throw err;
+
+        var query = req.query;
+
+        var sql = `SELECT motdepass FROM utilisateur WHERE mail = '${query.mail}'`;
+
+        db.query(sql, function (err, result, fields) {
+            if (err) throw err;
+            console.log(result);
+            res.send(result);
+        });
+        db.end();
+    });
+});
+
+// 5) /NbPostUtilisateur : Nombre de Post d'un utilisateur (entrée : mail -> sortie : nb)
+app.get('/NbPostUtilisateur', function (req, res) {
+    // connection à la bdd créée
+    var db = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "",
+        database: "mydb"
+        
+    });
+
+    db.connect(function (err) {
+        if (err) throw err;
+
+        var query = req.query;
+
+        var sql = `SELECT COUNT(PK_post_id) AS NumberOfPost FROM Poster WHERE FK_utilisateur_mail = '${query.mail}'`;
+
+        db.query(sql, function (err, result, fields) {
+            if (err) throw err;
+            console.log(result);
+            res.send(result);
+        });
+        db.end();
+    });
+});
+
+// 6) /AllPostUtilisateur : Tous les Posts d'un utilisateur (entrée : mail -> sortie : list)
+app.get('/AllPostUtilisateur', function (req, res) {
+    // connection à la bdd créée
+    var db = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "",
+        database: "mydb"
+    });
+    db.connect(function (err) {
+        if (err) throw err;
+
+        var query = req.query;
+
+        var sql = `SELECT * FROM post WHERE post.FK_utilisateur_mail = '${query.mail}'`;
+        db.query(sql, function (err, result, fields) {
+            if (err) throw err;
+            console.log(result);
+            res.send(result);
+        });
+
+        db.end();
+    });
+});
+
+// 7) /NbFollowerUtilisateur : Nombre de Follower d'un utilisateur (entrée : mail -> sortie : nb)
+app.get('/NbFollowerUtilisateur', function (req, res) {
+    // connection à la bdd créée
+    var db = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "",
+        database: "mydb"
+        
+    });
+
+    db.connect(function (err) {
+        if (err) throw err;
+
+        var query = req.query;
+
+        var sql = `SELECT COUNT(FK_utilisateur_mail_2) AS NumberOfFollower FROM Follower WHERE FK_utilisateur_mail_1 = '${query.mail}'`;
+
+        db.query(sql, function (err, result, fields) {
+            if (err) throw err;
+            console.log(result);
+            res.send(result);
+        });
+        db.end();
+    });
+});
+
+// 8) /ListeFollowerUtilisateur : Liste des Follower d'un utilisateur (entrée : mail -> sortie : liste de pseudo)
+app.get('/ListeFollowerUtilisateur', function (req, res) {
+    // connection à la bdd créée
+    var db = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "",
+        database: "mydb"
+        
+    });
+
+    db.connect(function (err) {
+        if (err) throw err;
+
+        var query = req.query;
+
+        var sql = `SELECT FK_utilisateur_mail_2 AS Followers FROM Follower WHERE FK_utilisateur_mail_1 = '${query.mail}'`;
+
+        db.query(sql, function (err, result, fields) {
+            if (err) throw err;
+            console.log(result);
+            res.send(result);
+        });
+        db.end();
+    });
+});
+
+// 9) /NbCommentaireUtilisateur : Nombre de commentaires d'un utilisateur (entrée : mail -> sortie : nb)
+app.get('/NbCommentaireUtilisateur', function (req, res) {
+    // connection à la bdd créée
+    var db = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "",
+        database: "mydb"
+        
+    });
+
+    db.connect(function (err) {
+        if (err) throw err;
+
+        var query = req.query;
+
+        var sql = `SELECT COUNT(FK_utilisateur_mail) AS NumberOfCommentaires FROM Commenter WHERE FK_utilisateur_mail = '${query.mail}'`;
+
+        db.query(sql, function (err, result, fields) {
+            if (err) throw err;
+            console.log(result);
+            res.send(result);
+        });
+        db.end();
+    });
+});
+
+// 10) /AllCommentaireUtilisateur : Liste des Commentaires d'un utilisateur (entrée : mail -> sortie : liste)
+app.get('/AllCommentaireUtilisateur', function (req, res) {
+    // connection à la bdd créée
+    var db = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "",
+        database: "mydb"
+        
+    });
+    db.connect(function (err) {
+        if (err) throw err;
+
+        var query = req.query;
+
+        var sql = `SELECT message_commentaire FROM Commenter WHERE Commenter.FK_utilisateur_mail = '${query.mail}'`;
+        db.query(sql, function (err, result, fields) {
+            if (err) throw err;
+            console.log(result);
+            res.send(result);
+        });
+
+        db.end();
+    });
+});
+
+// 11) /unPost : Toutes les info d'un post (entrée : id_post -> sortie : liste)
+app.get('/unPost', function (req, res) {
+    // connection à la bdd créée
+    var db = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "",
+        database: "mydb"
+        
+    });
+
+    db.connect(function (err) {
+        if (err) throw err;
+        var query = req.query;
+        var sql = `SELECT * FROM post WHERE PK_post_id = '${query.postId}'`;
+
+        db.query(sql, function (err, result, fields) {
+            if (err) throw err;
+            console.log(result);
+            res.send(result);
+        });
+        db.end();
+    });
+});
+
+// 12) /LikePost : Nombre de Like d'un post (entrée : id_post -> sortie : nb)
+app.get('/LikePost', function (req, res) {
+    // connection à la bdd créée
+    var db = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "",
+        database: "mydb"
+        
+    });
+
+    db.connect(function (err) {
+        if (err) throw err;
+
+        var query = req.query;
+
+        var sql = `SELECT pseudo FROM utilisateur, liker WHERE liker.FK_post_id = '${query.id}' and utilisateur.mail = liker.FK_utilisateur_mail`;
+
+        db.query(sql, function (err, result, fields) {
+            if (err) throw err;
+            console.log(result);
+            res.send(result);
+        });
+        db.end();
+    });
+});
+
+//TODO: A enlever, potentiellement inutile
+// 13) /NbCommentairePost : Nombre de commentaire d'un post (entrée : id_post -> sortie : nb)
+app.get('/NbCommentairePost', function (req, res) {
+    // connection à la bdd créée
+    var db = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "",
+        database: "mydb"
+        
+    });
+
+    db.connect(function (err) {
+        if (err) throw err;
+
+        var query = req.query;
+
+        var sql = `SELECT COUNT(FK_utilisateur_mail) AS NumberOfCommentaire FROM Commenter WHERE FK_post_id = '${query.postId}'`;
+
+        db.query(sql, function (err, result, fields) {
+            if (err) throw err;
+            console.log(result);
+            res.send(result);
+        });
+        db.end();
+    });
+});
+
+// 14) /AllCommentairePost : Commentaires d'un post (entrée : id_post -> sortie : liste)
+app.get('/AllCommentairePost', function (req, res) {
+    // connection à la bdd créée
+    var db = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "",
+        database: "mydb"
+        
+    });
+
+    db.connect(function (err) {
+        if (err) throw err;
+
+        var query = req.query;
+
+        var sql = `SELECT FK_utilisateur_mail, date_commentaire, message_commentaire FROM Commenter WHERE FK_post_id = '${query.postId}'`;
+
+        db.query(sql, function (err, result, fields) {
+            if (err) throw err;
+            console.log(result);
+            res.send(result);
+        });
+        db.end();
+    });
+});
+
+// 15) /newUser : Nouvel utilisateur
+app.get('/newUser', function (req, res) {
+    const con = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "",
+        database: "mydb"
+        
+    });
+
+    con.connect(function (err) {
+        if (err) throw err;
+
+        const query = req.query;
+
+        const sql = `INSERT INTO utilisateur VALUES ('${query.pseudo}', '${query.nom}', '${query.prenom}', '${query.mail}', '${query.motdepass}', '${query.date_naissance}', '${query.CP}', '${query.ville}', '${query.adresse}')`;
+
+        con.query(sql, function (err, result, fields) {
+            if (err) throw err;
+            console.log(result);
+            res.send(result);
+        });
+        con.end();
+    });
+});
+
+// 16) /pseudoExisting : Vérication pseudo déjà existant (entrée : pseudo -> sortie : nb)
+app.get('/pseudoExisting', function (req, res) {
+    const con = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "",
+        database: "mydb"
+        
+    });
+
+    con.connect(function (err) {
+        if (err) throw err;
+
+        const query = req.query;
+
+        const sql = `SELECT COUNT(pseudo) AS pseudoExisting FROM utilisateur WHERE pseudo='${query.pseudo}'`;
+
+        con.query(sql, function (err, result, fields) {
+            if (err) throw err;
+            console.log(result);
+            res.send(result);
+        });
+        con.end();
+    });
+});
+
+// 17) /mailExisting : Vérication mail déjà existant (entrée : mail -> sortie : nb)
+app.get('/mailExisting', function (req, res) {
+    const con = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "",
+        database: "mydb"
+        
+    });
+
+    con.connect(function (err) {
+        if (err) throw err;
+
+        const query = req.query;
+
+        const sql = `SELECT COUNT(mail) AS mailExisting FROM utilisateur WHERE mail='${query.mail}'`;
+
+        con.query(sql, function (err, result, fields) {
+            if (err) throw err;
+            console.log(result);
+            res.send(result);
+        });
+        con.end();
+    });
+});
+
+// 18) /AjoutPost : Enregistre un post et poster (entrée : PK_post_id, FK_utilisateur_mail, titre, message, date_publication -> sortie : 1 ou 0)
+app.get('/AjoutPost',function(req,res){
 	// connection à la bdd créée
 	var db = mysql.createConnection({
 	  host: "localhost",
@@ -82,50 +543,33 @@ app.get('/Likes',function(req,res){
 	  password: "",
 	  database: "mydb"
 	});
+
 	db.connect(function(err) {
 		if (err) throw err;
 
 		var query = req.query;
 
-		var sql = `SELECT pseudo FROM utilisateur, liker WHERE liker.FK_post_id = '${query.id}' and utilisateur.mail = liker.FK_utilisateur_mail`;
+		var sql = `INSERT INTO post VALUES ('${query.postId}', '${query.mail}', '${query.titre}', '${query.message}')`;
 
 		db.query(sql, function (err, result, fields) {
 			if (err) throw err;
 			console.log(result);
 			res.send(result);
 		});
-		
+
+		var sql = `INSERT INTO Poster VALUES ('${query.mail}', '${query.postId}', '${query.date}')`;
+
+		db.query(sql, function (err, result, fields) {
+			if (err) throw err;
+			console.log(result);
+			res.send(result);
+		});
 		db.end();
-	}); 
-});
-
-
-// Requete pour avoir tous les utilisateurs
-app.get('/AllUtilisateur',function(req,res){
-	// connection à la bdd créée
-	var db = mysql.createConnection({
-	  host: "localhost",
-	  user: "root",
-	  password: "",
-	  database: "mydb"
 	});
-	db.connect(function(err) {
-		if (err) throw err;
-
-		var sql = "SELECT * FROM utilisateur";
-		db.query(sql, function (err, result, fields) {
-			if (err) throw err;
-			console.log(result);
-			res.send(result);
-		});
-		
-		db.end();
-	}); 
 });
 
-
-// Requete pour avoir toutes les info d'un seul utilisateur avec le mail en parametre
-app.get('/unUtilisateur',function(req,res){
+// 19) /AjoutLike : Enregistre un Like (entrée : FK_utilisateur_mail, FK_post_id -> sortie : 1 ou 0)
+app.get('/AjoutLike',function(req,res){
 	// connection à la bdd créée
 	var db = mysql.createConnection({
 	  host: "localhost",
@@ -136,11 +580,10 @@ app.get('/unUtilisateur',function(req,res){
 
 	db.connect(function(err) {
 		if (err) throw err;
-		//console.log("req = "+req);
+
 		var query = req.query;
-		//console.log("query = "+query);
-		//console.log("query.mail = "+query.mail);
-		var sql = `SELECT * FROM utilisateur WHERE mail = '${query.mail}'`;
+
+		var sql = `INSERT INTO Liker VALUES ('${query.mail}', '${query.postId}')`;
 
 		db.query(sql, function (err, result, fields) {
 			if (err) throw err;
@@ -148,31 +591,5 @@ app.get('/unUtilisateur',function(req,res){
 			res.send(result);
 		});
 		db.end();
-	}); 
-});
-
-// Requete pour vérifier si le mail correspond au mdp
-app.get('/VerifUtilisateur',function(req,res){
-	// connection à la bdd créée
-	var db = mysql.createConnection({
-	  host: "localhost",
-	  user: "root",
-	  password: "",
-	  database: "mydb"
 	});
-
-	db.connect(function(err) {
-		if (err) throw err;
-		
-		var query = req.query;
-		
-		var sql = `SELECT motdepass FROM utilisateur WHERE pseudo = '${query.pseudo}'`;
-
-		db.query(sql, function (err, result, fields) {
-			if (err) throw err;
-			console.log(result);
-			res.send(result);
-		});
-		db.end();
-	}); 
 });

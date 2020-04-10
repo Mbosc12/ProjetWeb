@@ -1,7 +1,7 @@
-let pub = {
+let publication = {
     props: {
         message: String,
-        likes: Array,
+        listlike: Array,
         shares: Array,
         Comments: Array
     },
@@ -9,8 +9,13 @@ let pub = {
                     <p>{{ message }} </p>
                     <div class="interaction">
                         <div class="event">
-                            <button> Likes : {{likes.length}} </button>
-                            <button> Partager </button>
+                            <button class="btnlike btnevent"> Likes : {{listlike.length}} </button>
+                            <ul class="l-liste">
+                                <li v-for="like in listlike">
+                                    <p>{{ like.pseudo }}</p>
+                                </li>
+                            </ul>
+                            <button class="btnshare btnevent"> Partager </button>
                         </div>
                         <button> Afficher les commentaires </button>
                     </div>
@@ -55,27 +60,26 @@ let vm = new Vue({
         this.FetchFollowers();
         this.FetchInfos();
     },
-	components: { categorie, state, user, pub},
+	components: { categorie, state, user, publication},
 	data: {
 		GretaPic: "style/img/greta.png",
 		posts: [],
 		infos: [],
 		followers: [],
-		templike: "",
 		likes: []
 	},
 	methods: {
-        show: function(){
-            return Array("Jean", "Jack")
-        },
         FetchPosts() {
 
-        axios.get('http://localhost:3000/Post', {
+        axios.get('http://localhost:3000/AllPostUtilisateur', {
         	params: {
 				mail: 'gretathunberg@gmail.com'
         	}
         }).then(response => {
             this.posts = response.data;
+            for (var i = 0; i < response.data.length; i++ ) {
+                this.FetchLikes(response.data[i].PK_post_id)
+            }
             });
         },
         FetchFollowers() {
@@ -88,18 +92,14 @@ let vm = new Vue({
             });
         },
         FetchLikes: function(pid){
-            var test = []
-        axios.get('http://localhost:3000/Likes', {
+        axios.get('http://localhost:3000/LikePost', {
         	params: {
 				id: pid
         	}
         }).then(response => {
-            var lk = []
-            for(var i = 0; i < response.data.length; i++) {
-                lk.push(response.data[i].pseudo)
-            }
+            this.likes.push(response.data);
+            console.log("ici c'est likes")
 
-                this.likes.push(lk)
             });
         },
         FetchInfos() {

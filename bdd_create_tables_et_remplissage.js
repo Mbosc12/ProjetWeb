@@ -3,10 +3,10 @@ var mysql = require('mysql');
 
 // connection à la bdd créée
 var con = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "",
-  database: "mydb"
+    host: "localhost",
+    user: "root",
+    password: "",
+    database: "mydb"
 });
 // création des tables et insertions de valeurs
 con.connect(function(err) {
@@ -19,7 +19,7 @@ con.connect(function(err) {
     if (err) throw err;
     console.log("Table utilisateur created");
   });
-  var sql = "CREATE TABLE post(PK_post_id INT, FK_utilisateur_mail VARCHAR(50), FK_titre VARCHAR(50) NOT NULL,message VARCHAR(50) NOT NULL,PRIMARY KEY(PK_post_id), FOREIGN KEY(FK_utilisateur_mail) REFERENCES utilisateur(mail))";
+  var sql = "CREATE TABLE post(PK_post_id INT AUTO_INCREMENT, FK_utilisateur_mail VARCHAR(50), titre VARCHAR(50) NOT NULL, message VARCHAR(50) NOT NULL,PRIMARY KEY(PK_post_id), FOREIGN KEY(FK_utilisateur_mail) REFERENCES utilisateur(mail))";
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log("Table post created");
@@ -75,7 +75,7 @@ con.connect(function(err) {
     console.log("1 record inserted");
   });
 
-  var sql = "INSERT INTO post VALUES ('2','gretathunberg@gmail.com', 'Premier message','Ceci est le second post de GretaGram')";
+  var sql = "INSERT INTO post VALUES ('2','gretathunberg@gmail.com', 'Second message','Ceci est le second post de GretaGram')";
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log("1 record inserted");
@@ -87,7 +87,7 @@ con.connect(function(err) {
     console.log("1 record inserted");
   });
 
-  var sql = "INSERT INTO Poster VALUES ('gretathunberg@gmail.com','2','2020-04-02')";
+  var sql = "INSERT INTO Poster VALUES ('gretathunberg@gmail.com','2','2020-04-03')";
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log("1 record inserted");
@@ -117,5 +117,11 @@ con.connect(function(err) {
     console.log("1 record inserted");
   });
   
+  var sql = "INSERT INTO Liker VALUES(2, 'emmanuelmacron@gmail.com', 2)";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log("1 record inserted");
+  });
+
   con.end();
 });

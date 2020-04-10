@@ -40,8 +40,9 @@
 				</li>
 				<br>
 				<li v-for="post in posts" style="list-style-type: none;">
-					<pub :message="post.message" :likes="[1,2,3]"></pub>
+					<publication :message="post.message" :listlike="likes[post.PK_post_id-1]"></publication>
 				</li>
+
 			</div>
 		</section>
 	</div>

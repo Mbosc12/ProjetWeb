@@ -51,7 +51,10 @@ i, a {
 	display: none;
 }
 
-
-.liker strong:hover+.pseudoslikes {
+.btnlike:hover+.l-liste{
 	display: block;
+}
+
+.l-liste {
+	display: none;
 }
