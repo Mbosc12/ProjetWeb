@@ -1,0 +1,98 @@
+/* -------------------- Body -------------------- */
+body {
+    color: black;
+    background-color: #fafafa;
+}
+
+a {
+    color: #0097EF;
+}
+
+.input {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    font-family: Arial, serif;
+    font-size: 14px;
+    padding: 5px 10px;
+}
+
+#logo {
+    /* Centrer le logo */
+    width: 300px;
+    display: block;
+    margin: 20px auto 5px;
+}
+
+#msg {
+    text-align: center;
+    margin-left: 80px;
+    margin-right: 80px;
+    margin-bottom: 10px;
+}
+
+#form {
+    background-color: white;
+    border: 1px solid #dbdbdb;
+    margin: 15px 425px;
+    padding-bottom: 20px;
+    text-align: center;
+    color: grey;
+}
+
+input {
+    display: block;
+    width: 300px;
+    padding: 5px;
+    margin: 5px 63px 5px auto;
+}
+
+ul {
+    list-style: none;
+}
+
+#submit {
+    width: 300px;
+}
+
+#ou {
+    color: #bababa;
+    font-size: 12px;
+    margin-top: 20px;
+}
+
+#alert {
+    margin-left: 10px;
+    margin-right: 50px;
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+#alert_success {
+    margin-left: 50px;
+    margin-right: 50px;
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+#alert a {
+    color: #0097EF;
+}
+
+/* -------------------- Footer -------------------- */
+.footer {
+    margin-left: 50px;
+    margin-bottom: 10px;
+    bottom: 0;
+    font-size: 11px;
+    color: #939393;
+}
+
+footer li {
+    display: inline;
+    margin-left: 10px;
+}
+
+span {
+    margin-left: 48px;
+}

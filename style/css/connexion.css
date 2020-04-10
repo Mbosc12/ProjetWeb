@@ -1,7 +1,6 @@
 body {
     color: black;
     background-color: #fafafa;
-
 }
 
 a {
@@ -44,10 +43,6 @@ a {
     color: grey;
 }
 
-#form p {
-    padding: 10px;
-}
-
 #username, #password {
     display: block;
     margin: 5px auto;
@@ -57,7 +52,6 @@ a {
 
 #submit {
     width: 300px;
-    margin-top: 10px;
 }
 
 #ou {
