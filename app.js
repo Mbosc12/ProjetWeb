@@ -50,6 +50,50 @@ app.get('/feed', function (req, res) {
    16) /pseudoExisting : Vérication pseudo déjà existant (entrée : pseudo -> sortie : nb)
    17) /mailExisting : Vérication mail déjà existant (entrée : mail -> sortie : nb)
  */
+// fait
+
+// 1) /NbUtilisateur : Nombre d'utilisateur (sortie : nb)
+
+// 2) /AllUtilisateur : Tous les utilisateurs (sortie : liste)
+
+// 3) /unUtilisateur : Toutes les info d'un utilisateur (entrée : mail -> sortie : liste)
+
+// 4) /VerifUtilisateur : Vérification mail mdp (entrée : mail -> sortie mdp)
+
+// 5) /NbPostUtilisateur : Nombre de Post d'un utilisateur (entrée : mail -> sortie : nb)
+
+// 6) /AllPostUtilisateur : Tous les Posts d'un utilisateur (entrée : mail -> sortie : list)
+
+// 7) /NbFollowerUtilisateur : Nombre de Follower d'un utilisateur (entrée : mail -> sortie : nb)
+
+// 8) /ListeFollowerUtilisateur : Liste des Follower d'un utilisateur (entrée : mail -> sortie : liste de pseudo)
+
+// 9) /NbCommentaireUtilisateur : Nombre de commentaires d'un utilisateur (entrée : mail -> sortie : nb)
+
+// 10) /AllCommentaireUtilisateur : Liste des Commentaires d'un utilisateur (entrée : mail -> sortie : liste)
+
+// 11) /unPost : Toutes les info d'un post (entrée : id_post -> sortie : liste)
+
+// 12) /NbLikePost : Nombre de Like d'un post (entrée : id_post -> sortie : nb)
+
+// 13) /NbCommentairePost : Nombre de commentaire d'un post (entrée : id_post -> sortie : nb)
+
+// 14) /AllCommentairePost : Commentaires d'un post (entrée : id_post -> sortie : liste)
+
+// 15) /AjoutUtilisateur : Inscrit un utilisateur dans la bdd (entrée : pseudo,nom,prenom,mail,motdepass,date_naissance,CP,ville,adresse  -> sortie : 1 ou 0)
+
+// 16) /AjoutPost : Enregistre un post et poster (entrée : PK_post_id, FK_utilisateur_mail, titre, message, date_publication -> sortie : 1 ou 0)
+
+// 17) /AjoutLike : Enregistre un Like (entrée : FK_utilisateur_mail, FK_post_id -> sortie : 1 ou 0)
+
+// A faire
+
+// 18) /AjoutFollower : Enregistre un Follower (entrée : FK_utilisateur_mail_1, FK_utilisateur_mail_2 -> sortie : 1 ou 0)
+
+// 19) /AjoutCommentaire : Enregistre un commentaire (entrée : FK_utilisateur_mail, FK_post_id, date_commentaire, message_commentaire -> sortie : 1 ou 0)
+
+// 20) /AjoutPartage : Enregistre un partage de post (entrée : FK_utilisateur_mail, FK_post_id -> sortie : 1 ou 0)
+
 
 
 // 1) /NbUtilisateur : Nombre d'utilisateur (sortie : nb)
@@ -500,4 +544,69 @@ app.get('/mailExisting', function (req, res) {
         });
         con.end();
     });
+});
+// 15) /AjoutUtilisateur : Inscrit un utilisateur dans la bdd (entrée : pseudo,nom,prenom,mail,motdepass,date_naissance,CP,ville,adresse  -> sortie : 1 ou 0)
+
+
+
+
+
+// 16) /AjoutPost : Enregistre un post et poster (entrée : PK_post_id, FK_utilisateur_mail, titre, message, date_publication -> sortie : 1 ou 0)
+app.get('/AjoutPost',function(req,res){
+	// connection à la bdd créée
+	var db = mysql.createConnection({
+	  host: "localhost",
+	  user: "root",
+	  password: "",
+	  database: "mydb"
+	});
+
+	db.connect(function(err) {
+		if (err) throw err;
+
+		var query = req.query;
+
+		var sql = `INSERT INTO post VALUES ('${query.postId}', '${query.mail}', '${query.titre}', '${query.message}')`;
+
+		db.query(sql, function (err, result, fields) {
+			if (err) throw err;
+			console.log(result);
+			res.send(result);
+		});
+
+		var sql = `INSERT INTO Poster VALUES ('${query.mail}', '${query.postId}', '${query.date}')`;
+
+		db.query(sql, function (err, result, fields) {
+			if (err) throw err;
+			console.log(result);
+			res.send(result);
+		});
+		db.end();
+	});
+});
+
+// 17) /AjoutLike : Enregistre un Like (entrée : FK_utilisateur_mail, FK_post_id -> sortie : 1 ou 0)
+app.get('/AjoutLike',function(req,res){
+	// connection à la bdd créée
+	var db = mysql.createConnection({
+	  host: "localhost",
+	  user: "root",
+	  password: "",
+	  database: "mydb"
+	});
+
+	db.connect(function(err) {
+		if (err) throw err;
+
+		var query = req.query;
+
+		var sql = `INSERT INTO Liker VALUES ('${query.mail}', '${query.postId}')`;
+
+		db.query(sql, function (err, result, fields) {
+			if (err) throw err;
+			console.log(result);
+			res.send(result);
+		});
+		db.end();
+	});
 });
