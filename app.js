@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-var mysql = require('mysql');
+const mysql = require('mysql');
 
 // Binding express app to port 3000
 app.listen(3000, function () {
@@ -87,7 +87,7 @@ app.get('/Followers',function(req,res){
 // 1) /NbUtilisateur : Nombre d'utilisateur (sortie : nb)
 app.get('/NbUtilisateur', function (req, res) {
     // connection à la bdd créée
-    var db = mysql.createConnection({
+    const db = mysql.createConnection({
         host: "localhost",
         user: "root",
         password: "",
@@ -97,9 +97,9 @@ app.get('/NbUtilisateur', function (req, res) {
     db.connect(function (err) {
         if (err) throw err;
 
-        var query = req.query;
+        const query = req.query;
 
-        var sql = `SELECT COUNT(mail) AS NumberOfMail FROM utilisateur`;
+        const sql = `SELECT COUNT(mail) AS NumberOfMail FROM utilisateur`;
 
         db.query(sql, function (err, result, fields) {
             if (err) throw err;
@@ -113,7 +113,7 @@ app.get('/NbUtilisateur', function (req, res) {
 // 2) /AllUtilisateur : Tous les utilisateurs (sortie : liste)
 app.get('/AllUtilisateur', function (req, res) {
     // connection à la bdd créée
-    var db = mysql.createConnection({
+    const db = mysql.createConnection({
         host: "localhost",
         user: "root",
         password: "",
@@ -122,7 +122,7 @@ app.get('/AllUtilisateur', function (req, res) {
     db.connect(function (err) {
         if (err) throw err;
 
-        var sql = "SELECT * FROM utilisateur";
+        const sql = "SELECT * FROM utilisateur";
         db.query(sql, function (err, result, fields) {
             if (err) throw err;
             console.log(result);
@@ -137,7 +137,7 @@ app.get('/AllUtilisateur', function (req, res) {
 // 3) /unUtilisateur : Toutes les info d'un utilisateur (entrée : mail -> sortie : liste)
 app.get('/unUtilisateur', function (req, res) {
     // connection à la bdd créée
-    var db = mysql.createConnection({
+    const db = mysql.createConnection({
         host: "localhost",
         user: "root",
         password: "",
@@ -147,10 +147,10 @@ app.get('/unUtilisateur', function (req, res) {
     db.connect(function (err) {
         if (err) throw err;
         //console.log("req = "+req);
-        var query = req.query;
+        const query = req.query;
         //console.log("query = "+query);
         //console.log("query.mail = "+query.mail);
-        var sql = `SELECT * FROM utilisateur WHERE mail = '${query.mail}'`;
+        const sql = `SELECT * FROM utilisateur WHERE mail = '${query.mail}'`;
 
         db.query(sql, function (err, result, fields) {
             if (err) throw err;
@@ -164,7 +164,7 @@ app.get('/unUtilisateur', function (req, res) {
 // 4) /VerifUtilisateur : Vérification mail mdp (entrée : mail -> sortie mdp)
 app.get('/VerifUtilisateur', function (req, res) {
     // connection à la bdd créée
-    var db = mysql.createConnection({
+    const db = mysql.createConnection({
         host: "localhost",
         user: "root",
         password: "",
@@ -174,9 +174,9 @@ app.get('/VerifUtilisateur', function (req, res) {
     db.connect(function (err) {
         if (err) throw err;
 
-        var query = req.query;
+        const query = req.query;
 
-        var sql = `SELECT motdepass FROM utilisateur WHERE mail = '${query.mail}'`;
+        const sql = `SELECT motdepass FROM utilisateur WHERE mail = '${query.mail}'`;
 
         db.query(sql, function (err, result, fields) {
             if (err) throw err;
@@ -190,7 +190,7 @@ app.get('/VerifUtilisateur', function (req, res) {
 // 5) /NbPostUtilisateur : Nombre de Post d'un utilisateur (entrée : mail -> sortie : nb)
 app.get('/NbPostUtilisateur', function (req, res) {
     // connection à la bdd créée
-    var db = mysql.createConnection({
+    const db = mysql.createConnection({
         host: "localhost",
         user: "root",
         password: "",
@@ -201,9 +201,9 @@ app.get('/NbPostUtilisateur', function (req, res) {
     db.connect(function (err) {
         if (err) throw err;
 
-        var query = req.query;
+        const query = req.query;
 
-        var sql = `SELECT COUNT(PK_post_id) AS NumberOfPost FROM Poster WHERE FK_utilisateur_mail = '${query.mail}'`;
+        const sql = `SELECT COUNT(PK_post_id) AS NumberOfPost FROM Poster WHERE FK_utilisateur_mail = '${query.mail}'`;
 
         db.query(sql, function (err, result, fields) {
             if (err) throw err;
@@ -217,7 +217,7 @@ app.get('/NbPostUtilisateur', function (req, res) {
 // 6) /AllPostUtilisateur : Tous les Posts d'un utilisateur (entrée : mail -> sortie : list)
 app.get('/AllPostUtilisateur', function (req, res) {
     // connection à la bdd créée
-    var db = mysql.createConnection({
+    const db = mysql.createConnection({
         host: "localhost",
         user: "root",
         password: "",
@@ -226,9 +226,9 @@ app.get('/AllPostUtilisateur', function (req, res) {
     db.connect(function (err) {
         if (err) throw err;
 
-        var query = req.query;
+        const query = req.query;
 
-        var sql = `SELECT * FROM post WHERE post.FK_utilisateur_mail = '${query.mail}'`;
+        const sql = `SELECT * FROM post WHERE post.FK_utilisateur_mail = '${query.mail}'`;
         db.query(sql, function (err, result, fields) {
             if (err) throw err;
             console.log(result);
@@ -242,7 +242,7 @@ app.get('/AllPostUtilisateur', function (req, res) {
 // 7) /NbFollowerUtilisateur : Nombre de Follower d'un utilisateur (entrée : mail -> sortie : nb)
 app.get('/NbFollowerUtilisateur', function (req, res) {
     // connection à la bdd créée
-    var db = mysql.createConnection({
+    const db = mysql.createConnection({
         host: "localhost",
         user: "root",
         password: "",
@@ -253,9 +253,9 @@ app.get('/NbFollowerUtilisateur', function (req, res) {
     db.connect(function (err) {
         if (err) throw err;
 
-        var query = req.query;
+        const query = req.query;
 
-        var sql = `SELECT COUNT(FK_utilisateur_mail_2) AS NumberOfFollower FROM Follower WHERE FK_utilisateur_mail_1 = '${query.mail}'`;
+        const sql = `SELECT COUNT(FK_utilisateur_mail_2) AS NumberOfFollower FROM Follower WHERE FK_utilisateur_mail_1 = '${query.mail}'`;
 
         db.query(sql, function (err, result, fields) {
             if (err) throw err;
@@ -269,7 +269,7 @@ app.get('/NbFollowerUtilisateur', function (req, res) {
 // 8) /ListeFollowerUtilisateur : Liste des Follower d'un utilisateur (entrée : mail -> sortie : liste de pseudo)
 app.get('/ListeFollowerUtilisateur', function (req, res) {
     // connection à la bdd créée
-    var db = mysql.createConnection({
+    const db = mysql.createConnection({
         host: "localhost",
         user: "root",
         password: "",
@@ -280,9 +280,9 @@ app.get('/ListeFollowerUtilisateur', function (req, res) {
     db.connect(function (err) {
         if (err) throw err;
 
-        var query = req.query;
+        const query = req.query;
 
-        var sql = `SELECT FK_utilisateur_mail_2 AS Followers FROM Follower WHERE FK_utilisateur_mail_1 = '${query.mail}'`;
+        const sql = `SELECT FK_utilisateur_mail_2 AS Followers FROM Follower WHERE FK_utilisateur_mail_1 = '${query.mail}'`;
 
         db.query(sql, function (err, result, fields) {
             if (err) throw err;
@@ -296,7 +296,7 @@ app.get('/ListeFollowerUtilisateur', function (req, res) {
 // 9) /NbCommentaireUtilisateur : Nombre de commentaires d'un utilisateur (entrée : mail -> sortie : nb)
 app.get('/NbCommentaireUtilisateur', function (req, res) {
     // connection à la bdd créée
-    var db = mysql.createConnection({
+    const db = mysql.createConnection({
         host: "localhost",
         user: "root",
         password: "",
@@ -307,9 +307,9 @@ app.get('/NbCommentaireUtilisateur', function (req, res) {
     db.connect(function (err) {
         if (err) throw err;
 
-        var query = req.query;
+        const query = req.query;
 
-        var sql = `SELECT COUNT(FK_utilisateur_mail) AS NumberOfCommentaires FROM Commenter WHERE FK_utilisateur_mail = '${query.mail}'`;
+        const sql = `SELECT COUNT(FK_utilisateur_mail) AS NumberOfCommentaires FROM Commenter WHERE FK_utilisateur_mail = '${query.mail}'`;
 
         db.query(sql, function (err, result, fields) {
             if (err) throw err;
@@ -323,7 +323,7 @@ app.get('/NbCommentaireUtilisateur', function (req, res) {
 // 10) /AllCommentaireUtilisateur : Liste des Commentaires d'un utilisateur (entrée : mail -> sortie : liste)
 app.get('/AllCommentaireUtilisateur', function (req, res) {
     // connection à la bdd créée
-    var db = mysql.createConnection({
+    const db = mysql.createConnection({
         host: "localhost",
         user: "root",
         password: "",
@@ -333,9 +333,9 @@ app.get('/AllCommentaireUtilisateur', function (req, res) {
     db.connect(function (err) {
         if (err) throw err;
 
-        var query = req.query;
+        const query = req.query;
 
-        var sql = `SELECT message_commentaire FROM Commenter WHERE Commenter.FK_utilisateur_mail = '${query.mail}'`;
+        const sql = `SELECT message_commentaire FROM Commenter WHERE Commenter.FK_utilisateur_mail = '${query.mail}'`;
         db.query(sql, function (err, result, fields) {
             if (err) throw err;
             console.log(result);
@@ -349,7 +349,7 @@ app.get('/AllCommentaireUtilisateur', function (req, res) {
 // 11) /unPost : Toutes les info d'un post (entrée : id_post -> sortie : liste)
 app.get('/unPost', function (req, res) {
     // connection à la bdd créée
-    var db = mysql.createConnection({
+    const db = mysql.createConnection({
         host: "localhost",
         user: "root",
         password: "",
@@ -359,8 +359,8 @@ app.get('/unPost', function (req, res) {
 
     db.connect(function (err) {
         if (err) throw err;
-        var query = req.query;
-        var sql = `SELECT * FROM post WHERE PK_post_id = '${query.postId}'`;
+        const query = req.query;
+        const sql = `SELECT * FROM post WHERE PK_post_id = '${query.postId}'`;
 
         db.query(sql, function (err, result, fields) {
             if (err) throw err;
@@ -374,7 +374,7 @@ app.get('/unPost', function (req, res) {
 // 12) /LikePost : Nombre de Like d'un post (entrée : id_post -> sortie : nb)
 app.get('/LikePost', function (req, res) {
     // connection à la bdd créée
-    var db = mysql.createConnection({
+    const db = mysql.createConnection({
         host: "localhost",
         user: "root",
         password: "",
@@ -385,9 +385,9 @@ app.get('/LikePost', function (req, res) {
     db.connect(function (err) {
         if (err) throw err;
 
-        var query = req.query;
+        const query = req.query;
 
-        var sql = `SELECT pseudo FROM utilisateur, liker WHERE liker.FK_post_id = '${query.id}' and utilisateur.mail = liker.FK_utilisateur_mail`;
+        const sql = `SELECT pseudo FROM utilisateur, liker WHERE liker.FK_post_id = '${query.id}' and utilisateur.mail = liker.FK_utilisateur_mail`;
 
         db.query(sql, function (err, result, fields) {
             if (err) throw err;
@@ -402,7 +402,7 @@ app.get('/LikePost', function (req, res) {
 // 13) /NbCommentairePost : Nombre de commentaire d'un post (entrée : id_post -> sortie : nb)
 app.get('/NbCommentairePost', function (req, res) {
     // connection à la bdd créée
-    var db = mysql.createConnection({
+    const db = mysql.createConnection({
         host: "localhost",
         user: "root",
         password: "",
@@ -413,9 +413,9 @@ app.get('/NbCommentairePost', function (req, res) {
     db.connect(function (err) {
         if (err) throw err;
 
-        var query = req.query;
+        const query = req.query;
 
-        var sql = `SELECT COUNT(FK_utilisateur_mail) AS NumberOfCommentaire FROM Commenter WHERE FK_post_id = '${query.postId}'`;
+        const sql = `SELECT COUNT(FK_utilisateur_mail) AS NumberOfCommentaire FROM Commenter WHERE FK_post_id = '${query.postId}'`;
 
         db.query(sql, function (err, result, fields) {
             if (err) throw err;
@@ -429,7 +429,7 @@ app.get('/NbCommentairePost', function (req, res) {
 // 14) /AllCommentairePost : Commentaires d'un post (entrée : id_post -> sortie : liste)
 app.get('/AllCommentairePost', function (req, res) {
     // connection à la bdd créée
-    var db = mysql.createConnection({
+    const db = mysql.createConnection({
         host: "localhost",
         user: "root",
         password: "",
@@ -440,9 +440,9 @@ app.get('/AllCommentairePost', function (req, res) {
     db.connect(function (err) {
         if (err) throw err;
 
-        var query = req.query;
+        const query = req.query;
 
-        var sql = `SELECT FK_utilisateur_mail, date_commentaire, message_commentaire FROM Commenter WHERE FK_post_id = '${query.postId}'`;
+        const sql = `SELECT FK_utilisateur_mail, date_commentaire, message_commentaire FROM Commenter WHERE FK_post_id = '${query.postId}'`;
 
         db.query(sql, function (err, result, fields) {
             if (err) throw err;
@@ -455,7 +455,7 @@ app.get('/AllCommentairePost', function (req, res) {
 
 // 15) /newUser : Nouvel utilisateur
 app.get('/newUser', function (req, res) {
-    var db = mysql.createConnection({
+    const db = mysql.createConnection({
         host: "localhost",
         user: "root",
         password: "",
@@ -481,7 +481,7 @@ app.get('/newUser', function (req, res) {
 
 // 16) /pseudoExisting : Vérication pseudo déjà existant (entrée : pseudo -> sortie : nb)
 app.get('/pseudoExisting', function (req, res) {
-    var db = mysql.createConnection({
+    const db = mysql.createConnection({
         host: "localhost",
         user: "root",
         password: "",
@@ -507,7 +507,7 @@ app.get('/pseudoExisting', function (req, res) {
 
 // 17) /mailExisting : Vérication mail déjà existant (entrée : mail -> sortie : nb)
 app.get('/mailExisting', function (req, res) {
-    var db = mysql.createConnection({
+    const db = mysql.createConnection({
         host: "localhost",
         user: "root",
         password: "",
@@ -534,7 +534,7 @@ app.get('/mailExisting', function (req, res) {
 // 18) /AjoutPost : Enregistre un post et poster (entrée : PK_post_id, FK_utilisateur_mail, titre, message, date_publication -> sortie : 1 ou 0)
 app.get('/AjoutPost',function(req,res){
 	// connection à la bdd créée
-	var db = mysql.createConnection({
+	const db = mysql.createConnection({
 	  host: "localhost",
 	  user: "root",
 	  password: "",
@@ -544,9 +544,9 @@ app.get('/AjoutPost',function(req,res){
 	db.connect(function(err) {
 		if (err) throw err;
 
-		var query = req.query;
+		const query = req.query;
 
-		var sql = `INSERT INTO post VALUES ('${query.postId}', '${query.mail}', '${query.titre}', '${query.message}')`;
+		const sql = `INSERT INTO post VALUES ('${query.postId}', '${query.mail}', '${query.titre}', '${query.message}')`;
 
 		db.query(sql, function (err, result, fields) {
 			if (err) throw err;
@@ -554,7 +554,7 @@ app.get('/AjoutPost',function(req,res){
 			res.send(result);
 		});
 
-		var sql = `INSERT INTO Poster VALUES ('${query.mail}', '${query.postId}', '${query.date}')`;
+		sql = `INSERT INTO Poster VALUES ('${query.mail}', '${query.postId}', '${query.date}')`;
 
 		db.query(sql, function (err, result, fields) {
 			if (err) throw err;
@@ -568,7 +568,7 @@ app.get('/AjoutPost',function(req,res){
 // 19) /AjoutLike : Enregistre un Like (entrée : FK_utilisateur_mail, FK_post_id -> sortie : 1 ou 0)
 app.get('/AjoutLike',function(req,res){
 	// connection à la bdd créée
-	var db = mysql.createConnection({
+	const db = mysql.createConnection({
 	  host: "localhost",
 	  user: "root",
 	  password: "",
@@ -578,9 +578,9 @@ app.get('/AjoutLike',function(req,res){
 	db.connect(function(err) {
 		if (err) throw err;
 
-		var query = req.query;
+		const query = req.query;
 
-		var sql = `INSERT INTO Liker VALUES ('${query.mail}', '${query.postId}')`;
+		const sql = `INSERT INTO Liker VALUES ('${query.mail}', '${query.postId}')`;
 
 		db.query(sql, function (err, result, fields) {
 			if (err) throw err;

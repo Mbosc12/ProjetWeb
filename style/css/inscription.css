@@ -68,7 +68,7 @@ ul {
     font-size: 14px;
 }
 
-#alert_success {
+#alert_success, #alert_error {
     margin-left: 50px;
     margin-right: 50px;
     margin-top: 10px;
@@ -77,6 +77,10 @@ ul {
 
 #alert a {
     color: #0097EF;
+}
+
+#interdit {
+    width: 70px;
 }
 
 /* -------------------- Footer -------------------- */

@@ -14,9 +14,11 @@ new Vue({
             cp: '',
             ville: '',
             display_mdp: false,
+            display_carac: false,
             display_user: false,
             display_mail: false,
-            display_success: false
+            display_success: false,
+            display_error: false
         }
     },
     template: `<div>
@@ -51,6 +53,14 @@ new Vue({
                       </button>
                     </div>
                     
+                    <!-- Alert : password contains a forbidden character -->
+                    <div class="alert alert-danger alert-dismissible fade show" id="alert" role="alert" v-if="display_carac">
+                      Votre <strong>mot de passe</strong> contient un des caractères suivants : <img src="style/img/apostrophes.png" id="interdit" alt="Caractères interdits"/>.
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close" v-on:click="close_carac">
+                        <span aria-hidden="true" >&times;</span>
+                      </button>
+                    </div>
+                    
                     <li><input type="text" id="nom" name="nom" v-model="nom" placeholder="Nom" required></li>
                     <li><input type="text" id="prenom" name="prenom" v-model="prenom" placeholder="Prénom" required></li>
                     <li><input type="date" id="datenaiss" name="datenaiss" v-model="datenaiss" placeholder="Date de naissance" required></li>
@@ -65,6 +75,11 @@ new Vue({
                     <div class="alert alert-success" id="alert_success" role="alert" v-if="display_success">
                       Votre <strong>compte</strong> a bien été créé. Vous pouvez maintenant vous connectez en cliquant <a href="/connexion" class="alert-link">ici</a>.
                     </div>
+                    
+                    <!-- Alert : account created -->
+                    <div class="alert alert-warning" id="alert_error" role="alert" v-if="display_error">
+                      Une <strong>erreur</strong> s'est produite. Merci de réessayer en cliquant <a href="/inscription" class="alert-link">ici</a>.
+                    </div>
                 </div>`,
     methods: {
         usrname: function() {
@@ -77,19 +92,13 @@ new Vue({
                 if (response.data.length !== 0) {
                     console.log(response);
                     if (response.data[0].pseudoExisting === 1) {
-                        console.log("déjà pris");
-                        /*window.location.href = "/feed";*/
-                        this.display_mdp = false;
                         this.display_user = true;
                     } else {
-                        console.log("pas pris");
-                        /*this.display_mdp = true;
-                        this.display_mail = false;*/
                         this.display_user = false;
                     }
                 } else {
-                    this.display_mail = true;
-                    this.display_mdp = false;
+                    this.display_user = false;
+                    this.display_error = true;
                 }
             });
         },
@@ -103,28 +112,25 @@ new Vue({
                 if (response.data.length !== 0) {
                     console.log(response);
                     if (response.data[0].mailExisting === 1) {
-                        this.display_mdp = false;
-                        this.display_user = false;
                         this.display_mail = true;
                     } else {
                         this.display_mail = false;
-                        this.display_user = false;
-                        this.display_mail = false;
                     }
                 } else {
-                    this.display_mail = false;
-                    this.display_user = false;
                     this.display_mail = false;
                 }
             });
         },
         mdp: function() {
             console.log(this.password, this.password.length);
+            if (this.password.includes("`") || this.password.includes('"') || this.password.includes("'")) {
+                this.display_carac = true;
+            } else {
+                this.display_carac = false;
+            }
             if (this.password.length >= 8) {
-                console.log("ok");
                 this.display_mdp = false;
             } else {
-                console.log("inf");
                 this.display_mdp = true;
             }
         },
@@ -136,6 +142,9 @@ new Vue({
         },
         close_mdp: function () {
             this.display_mdp = false;
+        },
+        close_carac: function () {
+            this.display_carac = false;
         },
         close_success: function () {
             this.display_success = false;
@@ -162,15 +171,14 @@ new Vue({
                     if (response.data.affectedRows === 1) {
                         this.display_mdp = false;
                         this.display_mail = false;
+                        this.display_user = false;
+                        this.display_carac = false;
                         this.display_success = true;
                     } else {
-                        console.log("échec")
-                        /*this.display_mdp = true;
-                        this.display_mail = false;*/
+                        this.display_error = true;
                     }
                 } else {
-                    this.display_mail = true;
-                    this.display_mdp = false;
+                    this.display_error = true;
                 }
             });
         }
