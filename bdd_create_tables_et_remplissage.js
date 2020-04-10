@@ -114,6 +114,17 @@ con.connect(function(err) {
     console.log("greta Poster inserted");
   });
 
+  var sql = "INSERT INTO post (FK_utilisateur_mail, titre, message) VALUES ('gretathunberg@gmail.com', 'Second message','Ceci est le second post de GretaGram')";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log("Post 2 greta inserted");
+  });
+  var sql = "INSERT INTO Poster VALUES ('gretathunberg@gmail.com','2','2020-04-03')";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log("greta Poster 2 inserted");
+  });
+
   var sql = "INSERT INTO Follower VALUES('gretathunberg@gmail.com','emmanuelmacron@gmail.com')";
   con.query(sql, function (err, result) {
     if (err) throw err;
