@@ -37,7 +37,7 @@ app.get('/Post',function(req,res){
 
 		var query = req.query;
 
-		var sql = `SELECT message FROM post WHERE post.FK_utilisateur_mail = '${query.mail}'`;
+		var sql = `SELECT PK_post_id, message FROM post WHERE post.FK_utilisateur_mail = '${query.mail}'`;
 		db.query(sql, function (err, result, fields) {
 			if (err) throw err;
 			console.log(result);
@@ -47,6 +47,58 @@ app.get('/Post',function(req,res){
 		db.end();
 	}); 
 });
+
+// Requete pour avoir les abonnés d'un utilisateur
+app.get('/Followers',function(req,res){
+	// connection à la bdd créée
+	var db = mysql.createConnection({
+	  host: "localhost",
+	  user: "root",
+	  password: "",
+	  database: "mydb"
+	});
+	db.connect(function(err) {
+		if (err) throw err;
+
+		var query = req.query;
+
+		var sql = `SELECT pseudo FROM utilisateur, follower WHERE FK_utilisateur_mail_1 = '${query.mail}' AND follower.FK_utilisateur_mail_2 = utilisateur.mail`;
+		db.query(sql, function (err, result, fields) {
+			if (err) throw err;
+			console.log(result);
+			res.send(result);
+		});
+		
+		db.end();
+	}); 
+});
+
+// Requete pour avoir les pseudos de ceux qui ont liké un post
+app.get('/Likes',function(req,res){
+	// connection à la bdd créée
+	var db = mysql.createConnection({
+	  host: "localhost",
+	  user: "root",
+	  password: "",
+	  database: "mydb"
+	});
+	db.connect(function(err) {
+		if (err) throw err;
+
+		var query = req.query;
+
+		var sql = `SELECT pseudo FROM utilisateur, liker WHERE liker.FK_post_id = '${query.id}' and utilisateur.mail = liker.FK_utilisateur_mail`;
+
+		db.query(sql, function (err, result, fields) {
+			if (err) throw err;
+			console.log(result);
+			res.send(result);
+		});
+		
+		db.end();
+	}); 
+});
+
 
 // Requete pour avoir tous les utilisateurs
 app.get('/AllUtilisateur',function(req,res){

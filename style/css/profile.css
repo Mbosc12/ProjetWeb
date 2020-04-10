@@ -28,6 +28,7 @@ i, a {
 
 .location:hover {
 	color: #00aaff;
+	transition: 0.3s;
 }
 
 .cat {display:inline-block;min-width:50px;}
@@ -44,4 +45,13 @@ i, a {
 .cat:hover:after {
     width: 90%;
     background: #fff;
+}
+
+.pseudoslikes {
+	display: none;
+}
+
+
+.liker strong:hover+.pseudoslikes {
+	display: block;
 }

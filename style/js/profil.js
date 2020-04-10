@@ -1,3 +1,21 @@
+let pub = {
+    props: {
+        message: String,
+        likes: Array,
+        shares: Array,
+        Comments: Array
+    },
+    template: `<div class="publication">
+                    <p>{{ message }} </p>
+                    <div class="interaction">
+                        <div class="event">
+                            <button> Likes : {{likes.length}} </button>
+                            <button> Partager </button>
+                        </div>
+                        <button> Afficher les commentaires </button>
+                    </div>
+                </div>`
+}
 
 let user = {
 	props: {
@@ -34,16 +52,24 @@ let vm = new Vue({
 	el: '#app',
     created() {
         this.FetchPosts();
+        this.FetchFollowers();
         this.FetchInfos();
     },
-	components: { categorie, state, user},
+	components: { categorie, state, user, pub},
 	data: {
 		GretaPic: "style/img/greta.png",
 		posts: [],
-		infos: []
+		infos: [],
+		followers: [],
+		templike: "",
+		likes: []
 	},
 	methods: {
+        show: function(){
+            return Array("Jean", "Jack")
+        },
         FetchPosts() {
+
         axios.get('http://localhost:3000/Post', {
         	params: {
 				mail: 'gretathunberg@gmail.com'
@@ -52,13 +78,37 @@ let vm = new Vue({
             this.posts = response.data;
             });
         },
+        FetchFollowers() {
+        axios.get('http://localhost:3000/Followers', {
+        	params: {
+				mail: 'gretathunberg@gmail.com'
+        	}
+        }).then(response => {
+            this.followers = response.data;
+            });
+        },
+        FetchLikes: function(pid){
+            var test = []
+        axios.get('http://localhost:3000/Likes', {
+        	params: {
+				id: pid
+        	}
+        }).then(response => {
+            var lk = []
+            for(var i = 0; i < response.data.length; i++) {
+                lk.push(response.data[i].pseudo)
+            }
+
+                this.likes.push(lk)
+            });
+        },
         FetchInfos() {
         axios.get('http://localhost:3000/unUtilisateur', {
         	params: {
 				mail: 'gretathunberg@gmail.com'
         	}
         }).then(response => {
-            this.infos = response.data;
+            this.infos = response.data[0];
             });
         }
 	}
