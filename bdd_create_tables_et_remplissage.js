@@ -49,36 +49,106 @@ con.connect(function(err) {
     if (err) throw err;
     console.log("Table Partager created");
   });
+
+  // remplissage --------------------------------------------------------------------------------------------------------------------------------------------------------
   
+  // Utilisateurs
   var sql = "INSERT INTO utilisateur VALUES ('GretaThunberg','Greta','Thunberg','gretathunberg@gmail.com','superadmin','2020-03-09','81000','Albi','20 rue de la poudriere')";
   con.query(sql, function (err, result) {
     if (err) throw err;
-    console.log("1 record inserted");
+    console.log("Utilisateur GretaThunberg inserted");
+  });
+
+  var sql = "INSERT INTO utilisateur VALUES ('HaloMora','Halo','Mora','HaloMora@gmail.com','HaloMoradu69','2020-04-10','81000','Albi','20 rue de la poudriere')";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log("Utilisateur HaloMora inserted");
+  });
+
+  var sql = "INSERT INTO utilisateur VALUES ('PereCastor','Pere','Castor','PereCastor@gmail.com','RaconteNousUneHistoire','2020-04-10','81000','Albi','20 rue de la poudriere')";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log("Utilisateur PereCastor inserted");
   });
   
+  // Posts + Poster
   var sql = "INSERT INTO post (FK_utilisateur_mail, titre, message) VALUES ('gretathunberg@gmail.com', 'Premier message','Ceci est le premier post de GretaGram')";
   con.query(sql, function (err, result) {
     if (err) throw err;
-    console.log("1 record inserted");
+    console.log("Post 1 greta inserted");
   });
-
-    var sql = "INSERT INTO post (FK_utilisateur_mail, titre, message) VALUES ('gretathunberg@gmail.com', 'Second message','Ceci est le second post de GretaGram')";
-  con.query(sql, function (err, result) {
-    if (err) throw err;
-    console.log("1 record inserted");
-  });
-  
   var sql = "INSERT INTO Poster VALUES ('gretathunberg@gmail.com','1','2020-04-02')";
   con.query(sql, function (err, result) {
     if (err) throw err;
-    console.log("1 record inserted");
+    console.log("greta Poster inserted");
   });
 
+  var sql = "INSERT INTO post (FK_utilisateur_mail, titre, message) VALUES ('gretathunberg@gmail.com', 'Second message','Ceci est le second post de GretaGram')";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log("Post 2 greta inserted");
+  });
   var sql = "INSERT INTO Poster VALUES ('gretathunberg@gmail.com','2','2020-04-03')";
   con.query(sql, function (err, result) {
     if (err) throw err;
-    console.log("1 record inserted");
+    console.log("greta Poster 2 inserted");
   });
+
+  var sql = `INSERT INTO post (FK_utilisateur_mail, titre, message) VALUES ('HaloMora@gmail.com', 'HaloMora', "La porte s'ouvre")`;
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log("Post 2 greta inserted");
+  });
+  var sql = "INSERT INTO Poster VALUES ('HaloMora@gmail.com','3','2020-04-10')";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log("HaloMora Poster 3 inserted");
+  });
+
+  //Follower
+  var sql = "INSERT INTO Follower (FK_utilisateur_mail_1, FK_utilisateur_mail_2) VALUES ('PereCastor@gmail.com','gretathunberg@gmail.com')";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log("PereCastor Follow greta inserted");
+  });
+
+  var sql = "INSERT INTO Follower VALUES ('HaloMora@gmail.com','gretathunberg@gmail.com')";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log("HaloMora Follow greta inserted");
+  });
+
+  //Liker
+  var sql = "INSERT INTO Liker (FK_utilisateur_mail,FK_post_id) VALUES ('PereCastor@gmail.com','1')";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log("PereCastor Like greta inserted");
+  });
+  var sql = "INSERT INTO Liker VALUES ('PereCastor@gmail.com','2')";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log("PereCastor Like greta 2 inserted");
+  });
+  var sql = "INSERT INTO Liker VALUES ('gretathunberg@gmail.com','3')";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log("gretathunberg Like HaloMora 3 inserted");
+  });
+
+  //Commenter
+  var sql = "INSERT INTO Commenter VALUES ('gretathunberg@gmail.com','3','2020-04-10', 'Pour le Gondooor!')";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log("gretathunberg Comment HaloMora 3 inserted");
+  });
+
+  //Partager
+  var sql = "INSERT INTO Partager VALUES ('PereCastor@gmail.com','3')";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log("PereCastor Partage HaloMora 3 inserted");
+  });
+
 
   con.end();
 });
