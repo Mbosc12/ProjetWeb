@@ -3,10 +3,10 @@ var mysql = require('mysql');
 
 // connection à la bdd créée
 var con = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "",
-  database: "mydb"
+    host: "localhost",
+    user: "root",
+    password: "",
+    database: "mydb"
 });
 // création des tables et insertions de valeurs
 con.connect(function(err) {
