@@ -24,6 +24,7 @@ body {
 
 i, a {
 	color: black;
+	text-align: center;
 }
 
 .location:hover {
@@ -47,14 +48,40 @@ i, a {
     background: #fff;
 }
 
+/************************************ PUBLICATIONS ************************************/
+
+.publication {
+	border: 1px solid #aaa;
+	background-color: #eee;
+	padding: 10px;
+	width: 75%;
+	margin: 0 auto 50px auto;
+}
+
+.interaction {
+	text-align: center;
+}
+
+.event {
+	text-align: right;
+}
+
 .pseudoslikes {
 	display: none;
 }
 
-.btnlike:hover+.l-liste{
+.btnlike:hover .l-liste{
 	display: block;
 }
 
 .l-liste {
 	display: none;
+	position: absolute;
+	background-color: #fff;
+	text-align: center;
+	border: 1px solid #aaa;
+	list-style-type: none;
+	padding: 10px;
+	line-height: 3px;
+	margin: 0;
 }

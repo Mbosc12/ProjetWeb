@@ -1,3 +1,4 @@
+//VUE JS
 let publication = {
     props: {
         message: String,
@@ -9,12 +10,13 @@ let publication = {
                     <p>{{ message }} </p>
                     <div class="interaction">
                         <div class="event">
-                            <button class="btnlike btnevent"> Likes : {{listlike.length}} </button>
-                            <ul class="l-liste">
-                                <li v-for="like in listlike">
-                                    <p>{{ like.pseudo }}</p>
-                                </li>
-                            </ul>
+                            <button class="btnlike btnevent"> Likes : {{listlike.length}}                             
+                                <ul class="l-liste">
+                                    <li v-for="like in listlike">
+                                        <p>{{ like.pseudo }}</p>
+                                    </li>
+                                </ul>
+                            </button>
                             <button class="btnshare btnevent"> Partager </button>
                         </div>
                         <button> Afficher les commentaires </button>
@@ -47,7 +49,7 @@ let categorie = {
 		count: Number,
 		type: String
 	},
-	template: `<div class="col-4 cat act" >
+	template: `<div class="col-4 cat act">
 				    <h4> {{ count }} </h4>
 	            	<p> {{ type }} </p>
 			 </div>`
@@ -70,7 +72,6 @@ let vm = new Vue({
 	},
 	methods: {
         FetchPosts() {
-
         axios.get('http://localhost:3000/AllPostUtilisateur', {
         	params: {
 				mail: 'gretathunberg@gmail.com'
@@ -110,6 +111,9 @@ let vm = new Vue({
         }).then(response => {
             this.infos = response.data[0];
             });
+        },
+        ActivedCat() {
+            console.log(this)
         }
 	}
 })

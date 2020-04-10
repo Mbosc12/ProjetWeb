@@ -77,9 +77,9 @@ app.get('/Followers',function(req,res){
  */
 
 /* Liste des requêtes manquantes :
-	18) /AjoutFollower : Enregistre un Follower (entrée : FK_utilisateur_mail_1, FK_utilisateur_mail_2 -> sortie : 1 ou 0)
-	19) /AjoutCommentaire : Enregistre un commentaire (entrée : FK_utilisateur_mail, FK_post_id, date_commentaire, message_commentaire -> sortie : 1 ou 0)
-	20) /AjoutPartage : Enregistre un partage de post (entrée : FK_utilisateur_mail, FK_post_id -> sortie : 1 ou 0)
+	20) /AjoutFollower : Enregistre un Follower (entrée : FK_utilisateur_mail_1, FK_utilisateur_mail_2 -> sortie : 1 ou 0)
+	21) /AjoutCommentaire : Enregistre un commentaire (entrée : FK_utilisateur_mail, FK_post_id, date_commentaire, message_commentaire -> sortie : 1 ou 0)
+	22) /AjoutPartage : Enregistre un partage de post (entrée : FK_utilisateur_mail, FK_post_id -> sortie : 1 ou 0)
  */
 
 
@@ -118,7 +118,6 @@ app.get('/AllUtilisateur', function (req, res) {
         user: "root",
         password: "",
         database: "mydb"
-        
     });
     db.connect(function (err) {
         if (err) throw err;
@@ -143,7 +142,6 @@ app.get('/unUtilisateur', function (req, res) {
         user: "root",
         password: "",
         database: "mydb"
-        
     });
 
     db.connect(function (err) {
@@ -171,7 +169,6 @@ app.get('/VerifUtilisateur', function (req, res) {
         user: "root",
         password: "",
         database: "mydb"
-        
     });
 
     db.connect(function (err) {
@@ -198,7 +195,7 @@ app.get('/NbPostUtilisateur', function (req, res) {
         user: "root",
         password: "",
         database: "mydb"
-        
+
     });
 
     db.connect(function (err) {
@@ -250,7 +247,7 @@ app.get('/NbFollowerUtilisateur', function (req, res) {
         user: "root",
         password: "",
         database: "mydb"
-        
+
     });
 
     db.connect(function (err) {
@@ -277,7 +274,7 @@ app.get('/ListeFollowerUtilisateur', function (req, res) {
         user: "root",
         password: "",
         database: "mydb"
-        
+
     });
 
     db.connect(function (err) {
@@ -304,7 +301,7 @@ app.get('/NbCommentaireUtilisateur', function (req, res) {
         user: "root",
         password: "",
         database: "mydb"
-        
+
     });
 
     db.connect(function (err) {
@@ -331,7 +328,7 @@ app.get('/AllCommentaireUtilisateur', function (req, res) {
         user: "root",
         password: "",
         database: "mydb"
-        
+
     });
     db.connect(function (err) {
         if (err) throw err;
@@ -357,7 +354,7 @@ app.get('/unPost', function (req, res) {
         user: "root",
         password: "",
         database: "mydb"
-        
+
     });
 
     db.connect(function (err) {
@@ -382,7 +379,7 @@ app.get('/LikePost', function (req, res) {
         user: "root",
         password: "",
         database: "mydb"
-        
+
     });
 
     db.connect(function (err) {
@@ -410,7 +407,7 @@ app.get('/NbCommentairePost', function (req, res) {
         user: "root",
         password: "",
         database: "mydb"
-        
+
     });
 
     db.connect(function (err) {
@@ -437,7 +434,7 @@ app.get('/AllCommentairePost', function (req, res) {
         user: "root",
         password: "",
         database: "mydb"
-        
+
     });
 
     db.connect(function (err) {
@@ -458,79 +455,79 @@ app.get('/AllCommentairePost', function (req, res) {
 
 // 15) /newUser : Nouvel utilisateur
 app.get('/newUser', function (req, res) {
-    const con = mysql.createConnection({
+    var db = mysql.createConnection({
         host: "localhost",
         user: "root",
         password: "",
         database: "mydb"
-        
+
     });
 
-    con.connect(function (err) {
+    db.connect(function (err) {
         if (err) throw err;
 
         const query = req.query;
 
         const sql = `INSERT INTO utilisateur VALUES ('${query.pseudo}', '${query.nom}', '${query.prenom}', '${query.mail}', '${query.motdepass}', '${query.date_naissance}', '${query.CP}', '${query.ville}', '${query.adresse}')`;
 
-        con.query(sql, function (err, result, fields) {
+        db.query(sql, function (err, result, fields) {
             if (err) throw err;
             console.log(result);
             res.send(result);
         });
-        con.end();
+        db.end();
     });
 });
 
 // 16) /pseudoExisting : Vérication pseudo déjà existant (entrée : pseudo -> sortie : nb)
 app.get('/pseudoExisting', function (req, res) {
-    const con = mysql.createConnection({
+    var db = mysql.createConnection({
         host: "localhost",
         user: "root",
         password: "",
         database: "mydb"
-        
+
     });
 
-    con.connect(function (err) {
+    db.connect(function (err) {
         if (err) throw err;
 
         const query = req.query;
 
         const sql = `SELECT COUNT(pseudo) AS pseudoExisting FROM utilisateur WHERE pseudo='${query.pseudo}'`;
 
-        con.query(sql, function (err, result, fields) {
+        fb.query(sql, function (err, result, fields) {
             if (err) throw err;
             console.log(result);
             res.send(result);
         });
-        con.end();
+        fb.end();
     });
 });
 
 // 17) /mailExisting : Vérication mail déjà existant (entrée : mail -> sortie : nb)
 app.get('/mailExisting', function (req, res) {
-    const con = mysql.createConnection({
+    var db = mysql.createConnection({
         host: "localhost",
         user: "root",
         password: "",
         database: "mydb"
-        
+
     });
 
-    con.connect(function (err) {
+    db.connect(function (err) {
         if (err) throw err;
 
         const query = req.query;
 
         const sql = `SELECT COUNT(mail) AS mailExisting FROM utilisateur WHERE mail='${query.mail}'`;
 
-        con.query(sql, function (err, result, fields) {
+        db.query(sql, function (err, result, fields) {
             if (err) throw err;
             console.log(result);
             res.send(result);
         });
-        con.end();
+        db.end();
     });
 });
 
