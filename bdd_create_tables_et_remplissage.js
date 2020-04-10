@@ -19,7 +19,7 @@ con.connect(function(err) {
     if (err) throw err;
     console.log("Table utilisateur created");
   });
-  var sql = "CREATE TABLE post(PK_post_id INT, FK_utilisateur_mail VARCHAR(50), FK_titre VARCHAR(50) NOT NULL,message VARCHAR(50) NOT NULL,PRIMARY KEY(PK_post_id), FOREIGN KEY(FK_utilisateur_mail) REFERENCES utilisateur(mail))";
+  var sql = "CREATE TABLE post(PK_post_id INT AUTO_INCREMENT, FK_utilisateur_mail VARCHAR(50), titre VARCHAR(50) NOT NULL, message VARCHAR(50) NOT NULL,PRIMARY KEY(PK_post_id), FOREIGN KEY(FK_utilisateur_mail) REFERENCES utilisateur(mail))";
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log("Table post created");
@@ -56,13 +56,13 @@ con.connect(function(err) {
     console.log("1 record inserted");
   });
   
-  var sql = "INSERT INTO post VALUES ('1','gretathunberg@gmail.com', 'Premier message','Ceci est le premier post de GretaGram')";
+  var sql = "INSERT INTO post (FK_utilisateur_mail, titre, message) VALUES ('gretathunberg@gmail.com', 'Premier message','Ceci est le premier post de GretaGram')";
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log("1 record inserted");
   });
 
-    var sql = "INSERT INTO post VALUES ('2', 'gretathunberg@gmail.com', 'Second message','Ceci est le second post de GretaGram')";
+    var sql = "INSERT INTO post (FK_utilisateur_mail, titre, message) VALUES ('gretathunberg@gmail.com', 'Second message','Ceci est le second post de GretaGram')";
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log("1 record inserted");

@@ -53,13 +53,13 @@ app.get('/connexion',function(req,res){
 
 // 14) /AllCommentairePost : Commentaires d'un post (entrée : id_post -> sortie : liste)
 
-// A faire
-
 // 15) /AjoutUtilisateur : Inscrit un utilisateur dans la bdd (entrée : pseudo,nom,prenom,mail,motdepass,date_naissance,CP,ville,adresse  -> sortie : 1 ou 0)
 
-// 16) /AjoutPost : Enregistre un post et poster (entrée : PK_post_id, FK_utilisateur_mail, FK_titre, message, date_publication -> sortie : 1 ou 0)
+// 16) /AjoutPost : Enregistre un post et poster (entrée : PK_post_id, FK_utilisateur_mail, titre, message, date_publication -> sortie : 1 ou 0)
 
 // 17) /AjoutLike : Enregistre un Like (entrée : FK_utilisateur_mail, FK_post_id -> sortie : 1 ou 0)
+
+// A faire
 
 // 18) /AjoutFollower : Enregistre un Follower (entrée : FK_utilisateur_mail_1, FK_utilisateur_mail_2 -> sortie : 1 ou 0)
 
@@ -434,7 +434,7 @@ app.get('/AllCommentairePost',function(req,res){
 
 
 
-// 16) /AjoutPost : Enregistre un post et poster (entrée : PK_post_id, FK_utilisateur_mail, FK_titre, message, date_publication -> sortie : 1 ou 0)
+// 16) /AjoutPost : Enregistre un post et poster (entrée : PK_post_id, FK_utilisateur_mail, titre, message, date_publication -> sortie : 1 ou 0)
 app.get('/AjoutPost',function(req,res){
 	// connection à la bdd créée
 	var db = mysql.createConnection({
@@ -458,6 +458,32 @@ app.get('/AjoutPost',function(req,res){
 		});
 
 		var sql = `INSERT INTO Poster VALUES ('${query.mail}', '${query.postId}', '${query.date}')`;
+
+		db.query(sql, function (err, result, fields) {
+			if (err) throw err;
+			console.log(result);
+			res.send(result);
+		});
+		db.end();
+	}); 
+});
+
+// 17) /AjoutLike : Enregistre un Like (entrée : FK_utilisateur_mail, FK_post_id -> sortie : 1 ou 0)
+app.get('/AjoutLike',function(req,res){
+	// connection à la bdd créée
+	var db = mysql.createConnection({
+	  host: "localhost",
+	  user: "root",
+	  password: "",
+	  database: "mydb"
+	});
+
+	db.connect(function(err) {
+		if (err) throw err;
+		
+		var query = req.query;
+		
+		var sql = `INSERT INTO Liker VALUES ('${query.mail}', '${query.postId}')`;
 
 		db.query(sql, function (err, result, fields) {
 			if (err) throw err;
