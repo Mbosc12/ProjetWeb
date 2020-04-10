@@ -2,49 +2,74 @@
 <html>
 
 <head>
-	<meta charset="UTF-8">
-	<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-		integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-	<title>S'inscrire</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="style/css/inscription.css">
+
+    <title>S'inscrire</title>
 </head>
 
 <body>
+<script type="module" src="style/js/inscription.js"></script>
+<!-- Vue.js -->
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<!-- Axios -->
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
+<div class="wrapper fadeInDown">
+    <div id="form">
+        <!-- Logo -->
+        <div>
+            <img src="style/img/logoConnexion.png" id="logo" alt="Logo GRETAGRAM"/>
+        </div>
 
-	<div class="wrapper fadeInDown">
-		<div id="formContent">
-			<!-- Tabs Titles -->
-            <!--"CREATE TABLE utilisateur(pseudo VARCHAR(50) NOT NULL,nom VARCHAR(50),prenom VARCHAR(50),mail VARCHAR(50),date_naissance DATE,CP VARCHAR(50),ville VARCHAR(50),adresse VARCHAR(50),PRIMARY KEY(mail))";-->
-			<!-- Icon -->
-			<div class="fadeIn first">
-				<img src="http://danielzawadzki.com/codepen/01/icon.svg" id="icon" alt="Logo GRETAGRAM" />
-			</div>
+        <div id="msg">
+			<strong>Inscrivez-vous pour voir les photos, vidéos et évènements de vos abonnés.</strong>
+        </div>
 
-			<!-- Login Form -->
-			<form>
-                <input type="text" id="login" class="fadeIn second" name="login" placeholder="Nom d'utilisateur">
-                <input type="text" id="login" class="fadeIn second" name="login" placeholder="Email">
-				<input type="text" id="password" class="fadeIn third" name="login" placeholder="Mot de passe">
-                <input type="text" id="login" class="fadeIn second" name="login" placeholder="Nom">
-                <input type="text" id="login" class="fadeIn second" name="login" placeholder="Prénom">
-                <input type="text" id="login" class="fadeIn second" name="login" placeholder="Date de naissance">
-                <input type="text" id="login" class="fadeIn second" name="login" placeholder="Adresse">
-                <input type="text" id="login" class="fadeIn second" name="login" placeholder="Code postal">
-                <input type="text" id="login" class="fadeIn second" name="login" placeholder="Ville">
-				
-				<button type="submit" class="btn btn-success fadeIn fourth">S'inscrire</button>
-			</form>
+        <!-- Login Form -->
+        <div id="input">
+            <form class="input">
+				<!-- Place of the vue from inscription.js  -->
+            </form>
+        </div>
 
-			<!-- Remind Passowrd -->
-			<div id="formFooter">
-				<a class="underlineHover" href="connexion.html"><i class='fa fa-home'></i> Accueil</a>
-			</div>
+        <!-- Inscription -->
+        <div>
+            <p id="ou" style="word-spacing: 1.5em">—————————— OU ——————————</p>
+            Vous avez un compte ?
+            <a class="underlineHover" href="/connexion">Connectez-vous</a>
+        </div>
 
-		</div>
+    </div>
+</div>
+
+<footer>
+	<div class="footer">
+		<nav>
+			<ul class="list" style="display: none">
+				<li>À PROPOS</li>
+				<li>AIDE</li>
+				<li>PRESSE</li>
+				<li>API</li>
+				<li>EMPLOIS</li>
+				<li>CONFIDENTIALITÉ</li>
+				<li>CONDITIONS</li>
+				<li>LIEUX</li>
+				<li>COMPTES PRINCIPAUX</li>
+				<li>HASHTAGS</li>
+				<li>LANGUE</li>
+			</ul>
+		</nav>
+		<span><strong>© 2020 GRETAGRAM</strong></span>
 	</div>
+</footer>
 </body>
 
 </html>
