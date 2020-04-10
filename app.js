@@ -30,7 +30,30 @@ app.get('/feed', function (req, res) {
     res.sendFile('feed.html', {'root': __dirname + '/templates'})
 });
 
+// Requete pour avoir les abonnés d'un utilisateur
+app.get('/Followers',function(req,res){
+	// connection à la bdd créée
+	var db = mysql.createConnection({
+	  host: "localhost",
+	  user: "root",
+	  password: "",
+	  database: "mydb"
+	});
+	db.connect(function(err) {
+		if (err) throw err;
 
+		var query = req.query;
+
+		var sql = `SELECT pseudo FROM utilisateur, follower WHERE FK_utilisateur_mail_1 = '${query.mail}' AND follower.FK_utilisateur_mail_2 = utilisateur.mail`;
+		db.query(sql, function (err, result, fields) {
+			if (err) throw err;
+			console.log(result);
+			res.send(result);
+		});
+		
+		db.end();
+	}); 
+});
 /* Liste des requêtes disponibles :
    1) /NbUtilisateur : Nombre d'utilisateur (sortie : nb)
    2) /AllUtilisateur : Tous les utilisateurs (sortie : liste)
@@ -43,7 +66,7 @@ app.get('/feed', function (req, res) {
    9) /NbCommentaireUtilisateur : Nombre de commentaires d'un utilisateur (entrée : mail -> sortie : nb)
    10) /AllCommentaireUtilisateur : Liste des Commentaires d'un utilisateur (entrée : mail -> sortie : liste)
    11) /unPost : Toutes les info d'un post (entrée : id_post -> sortie : liste)
-   12) /NbLikePost : Nombre de Like d'un post (entrée : id_post -> sortie : nb)
+   12) /LikePost : Like d'un post (entrée : id_post -> sortie : liste)
    13) /NbCommentairePost : Nombre de commentaire d'un post (entrée : id_post -> sortie : nb)
    14) /AllCommentairePost : Commentaires d'un post (entrée : id_post -> sortie : liste)
    15) /newUser : Inscrit un utilisateur dans la bdd (entrée : pseudo, nom, prenom, mail, motdepass, date_naissance, CP, ville, adresse -> sortie : nb (1 ou 0))
@@ -178,6 +201,7 @@ app.get('/NbPostUtilisateur', function (req, res) {
         user: "root",
         password: "",
         database: "mydb"
+
     });
 
     db.connect(function (err) {
@@ -210,7 +234,7 @@ app.get('/AllPostUtilisateur', function (req, res) {
 
         const query = req.query;
 
-        const sql = `SELECT message FROM post WHERE post.FK_utilisateur_mail = '${query.mail}'`;
+        const sql = `SELECT * FROM post WHERE post.FK_utilisateur_mail = '${query.mail}'`;
         db.query(sql, function (err, result, fields) {
             if (err) throw err;
             console.log(result);
@@ -229,6 +253,7 @@ app.get('/NbFollowerUtilisateur', function (req, res) {
         user: "root",
         password: "",
         database: "mydb"
+
     });
 
     db.connect(function (err) {
@@ -255,6 +280,7 @@ app.get('/ListeFollowerUtilisateur', function (req, res) {
         user: "root",
         password: "",
         database: "mydb"
+
     });
 
     db.connect(function (err) {
@@ -281,6 +307,7 @@ app.get('/NbCommentaireUtilisateur', function (req, res) {
         user: "root",
         password: "",
         database: "mydb"
+
     });
 
     db.connect(function (err) {
@@ -307,6 +334,7 @@ app.get('/AllCommentaireUtilisateur', function (req, res) {
         user: "root",
         password: "",
         database: "mydb"
+
     });
     db.connect(function (err) {
         if (err) throw err;
@@ -332,6 +360,7 @@ app.get('/unPost', function (req, res) {
         user: "root",
         password: "",
         database: "mydb"
+
     });
 
     db.connect(function (err) {
@@ -348,14 +377,15 @@ app.get('/unPost', function (req, res) {
     });
 });
 
-// 12) /NbLikePost : Nombre de Like d'un post (entrée : id_post -> sortie : nb)
-app.get('/NbLikePost', function (req, res) {
+// 12) /LikePost : Nombre de Like d'un post (entrée : id_post -> sortie : nb)
+app.get('/LikePost', function (req, res) {
     // connection à la bdd créée
     const db = mysql.createConnection({
         host: "localhost",
         user: "root",
         password: "",
         database: "mydb"
+
     });
 
     db.connect(function (err) {
@@ -363,7 +393,7 @@ app.get('/NbLikePost', function (req, res) {
 
         const query = req.query;
 
-        const sql = `SELECT COUNT(FK_utilisateur_mail) AS NumberOfLike FROM Commenter WHERE FK_post_id = '${query.postId}'`;
+        const sql = `SELECT pseudo FROM utilisateur, liker WHERE liker.FK_post_id = '${query.id}' and utilisateur.mail = liker.FK_utilisateur_mail`;
 
         db.query(sql, function (err, result, fields) {
             if (err) throw err;
@@ -374,6 +404,7 @@ app.get('/NbLikePost', function (req, res) {
     });
 });
 
+//TODO: A enlever, potentiellement inutile
 // 13) /NbCommentairePost : Nombre de commentaire d'un post (entrée : id_post -> sortie : nb)
 app.get('/NbCommentairePost', function (req, res) {
     // connection à la bdd créée
@@ -382,6 +413,7 @@ app.get('/NbCommentairePost', function (req, res) {
         user: "root",
         password: "",
         database: "mydb"
+
     });
 
     db.connect(function (err) {
@@ -408,6 +440,7 @@ app.get('/AllCommentairePost', function (req, res) {
         user: "root",
         password: "",
         database: "mydb"
+
     });
 
     db.connect(function (err) {
@@ -433,6 +466,7 @@ app.get('/newUser', function (req, res) {
         user: "root",
         password: "",
         database: "mydb"
+
     });
 
     db.connect(function (err) {
@@ -458,6 +492,7 @@ app.get('/pseudoExisting', function (req, res) {
         user: "root",
         password: "",
         database: "mydb"
+
     });
 
     db.connect(function (err) {
@@ -483,6 +518,7 @@ app.get('/mailExisting', function (req, res) {
         user: "root",
         password: "",
         database: "mydb"
+
     });
 
     db.connect(function (err) {

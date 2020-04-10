@@ -20,23 +20,29 @@
 		    	<div class="details">
 		      		<img :src="GretaPic" class="profile-pic">
 		      		<user name="Greta Thunberg"></user>
-		      		<state city="Stockholm" country="Suède"></state>
+		      		<state :city="infos.ville" :country="infos.pays"></state>
 		    		<div class="stats">
 						<categorie type="Publications" :count="posts.length"></categorie>
-						<categorie type="Abonnés" :count="10"></categorie>
+						<categorie type="Abonnés" :count="followers.length"></categorie>
 						<categorie type="Evenements" :count="10"></categorie>
 					</div>
 				</div>
 			</header>
 
 			<div id="publi">
-				<li v-for="msg in posts">
-					{{msg.message}}
+				<strong>Mes Followers</strong>
+				<li v-for="f in followers">
+					{{f.pseudo}}
+				</li>
+				<strong>Mes Infos personnelles</strong>
+				<li>
+					{{infos}}
+				</li>
+				<br>
+				<li v-for="post in posts" style="list-style-type: none;">
+					<publication :message="post.message" :listlike="likes[post.PK_post_id-1]"></publication>
 				</li>
 
-				<li v-for="inf in infos">
-					{{inf}}
-				</li>
 			</div>
 		</section>
 	</div>
