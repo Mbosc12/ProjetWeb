@@ -8,6 +8,7 @@ var con = mysql.createConnection({
     password: "",
     database: "mydb"
 });
+
 // création des tables et insertions de valeurs
 con.connect(function(err) {
   if (err) throw err;
@@ -50,6 +51,9 @@ con.connect(function(err) {
     console.log("Table Partager created");
   });
 
+
+
+
   // remplissage --------------------------------------------------------------------------------------------------------------------------------------------------------
 
   // Utilisateurs
@@ -83,6 +87,8 @@ con.connect(function(err) {
     console.log("Utilisateur PereCastor inserted");
   });
   
+
+
   // Posts + Poster
   var sql = "INSERT INTO post VALUES ('1','gretathunberg@gmail.com', 'Premier message','Ceci est le premier post de GretaGram')";
   con.query(sql, function (err, result) {
@@ -154,6 +160,7 @@ con.connect(function(err) {
     if (err) throw err;
     console.log("Post 2 greta inserted");
   });
+
   var sql = "INSERT INTO Poster VALUES ('HaloMora@gmail.com','3','2020-04-10')";
   con.query(sql, function (err, result) {
     if (err) throw err;
@@ -179,11 +186,13 @@ con.connect(function(err) {
     if (err) throw err;
     console.log("PereCastor Like greta inserted");
   });
+
   var sql = "INSERT INTO Liker VALUES ('PereCastor@gmail.com','2')";
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log("PereCastor Like greta 2 inserted");
   });
+
   var sql = "INSERT INTO Liker VALUES ('gretathunberg@gmail.com','3')";
   con.query(sql, function (err, result) {
     if (err) throw err;
@@ -203,7 +212,6 @@ con.connect(function(err) {
     if (err) throw err;
     console.log("PereCastor Partage HaloMora 3 inserted");
   });
-
 
   con.end();
 });

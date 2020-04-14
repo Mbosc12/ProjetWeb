@@ -8,7 +8,7 @@
 	<link rel="stylesheet" type="text/css" href="style/css/header-profile.css"/>
 
     <script src="//unpkg.com/vue"></script>
-    
+
     <script src="//cdnjs.cloudflare.com/ajax/libs/axios/0.15.3/axios.min.js"></script>
 
 </head>
@@ -29,7 +29,7 @@
 				</div>
 			</header>
 
-			<div id="publi">
+			<div id="publi" style="display: none;">
 				<strong>Mes Followers</strong>
 				<li v-for="f in followers">
 					{{f.pseudo}}
@@ -43,6 +43,13 @@
 					<publication :message="post.message" :listlike="likes[post.PK_post_id-1]"></publication>
 				</li>
 
+			</div>
+
+			<div id="create">
+				<form method="post" enctype="multipart/form-data" action="/upload">
+				    <input type="file" name="file">
+				    <input type="submit" value="Submit">
+				</form>		
 			</div>
 		</section>
 	</div>
