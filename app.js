@@ -83,18 +83,15 @@ app.get('/Followers',function(req,res){
    22) /AjoutPartage : Enregistre un partage de post (entrée : FK_utilisateur_mail, FK_post_id -> sortie : 1 ou 0)
    23) /ModifUtilisateur : Update un utilisateur déjà dans la bdd (entrée : pseudo, nom, prenom, mail, motdepass, date_naissance, CP, ville, adresse -> sortie : nb (1 ou 0))
    24) /ModifPost : modifie un ou plusieurs éléments d'un post : (entrée : PK_post_id, FK_utilisateur_mail, titre, message, date_publication -> sortie : 1 ou 0)
-
-
-
+   25) /EnleveLike : supprime le like de la base de donnée : (entrée : FK_utilisateur_mail, FK_post_id -> sortie : nb 0 ou 1)
+   26) /EnleveFollower : supprime un follower de la bdd : (entrée : FK_utilisateur_mail_1, FK_utilisateur_mail_2 -> sortie nb 0 ou 1)
+   27) /EnleveCommentaire : supprime un commentaire de la bdd : (entrée : FK_utilisateur_mail, FK_post_id -> sortie : nb 0 ou 1)
+   28) /EnlevePost : supprime un post : (entrée : PK_post_id -> sortie : nb 0 ou 1)
 
  */
 
 /* Liste des requêtes manquantes :
-	
-	25) /EnleveLike
-	26) /EnleveFollower
-	27) /EnleveCommentaire
-	28) /EnlevePost
+
  */
 
 
@@ -735,6 +732,115 @@ app.get('/ModifPost',function(req,res){
 		db.end();
 	});
 });
+
+// 25) /EnleveLike : supprime le like de la base de donnée : (entrée : FK_utilisateur_mail, FK_post_id -> sortie : nb 0 ou 1)
+app.get('/EnleveLike',function(req,res){
+	// connection à la bdd créée
+	const db = mysql.createConnection({
+	  host: "localhost",
+	  user: "root",
+	  password: "",
+	  database: "mydb"
+	});
+
+	db.connect(function(err) {
+		if (err) throw err;
+
+		const query = req.query;
+
+		const sql = `DELETE FROM Liker WHERE FK_utilisateur_mail='${query.mail}' AND FK_post_id ='${query.post}' `;
+
+		db.query(sql, function (err, result, fields) {
+			if (err) throw err;
+			console.log(result);
+			res.send(result);
+		});
+		db.end();
+	});
+});
+
+// 26) /EnleveFollower : supprime un follower de la bdd : (entrée : FK_utilisateur_mail_1, FK_utilisateur_mail_2 -> sortie nb 0 ou 1)
+app.get('/EnleveFollower',function(req,res){
+	// connection à la bdd créée
+	const db = mysql.createConnection({
+	  host: "localhost",
+	  user: "root",
+	  password: "",
+	  database: "mydb"
+	});
+
+	db.connect(function(err) {
+		if (err) throw err;
+
+		const query = req.query;
+
+		const sql = `DELETE FROM Follower WHERE FK_utilisateur_mail_1='${query.mail_1}' AND FK_utilisateur_mail_2 ='${query.mail_2}' `;
+
+		db.query(sql, function (err, result, fields) {
+			if (err) throw err;
+			console.log(result);
+			res.send(result);
+		});
+		db.end();
+	});
+});
+
+// 27) /EnleveCommentaire : supprime un commentaire de la bdd : (entrée : FK_utilisateur_mail, FK_post_id -> sortie : nb 0 ou 1)
+app.get('/EnleveCommentaire',function(req,res){
+	// connection à la bdd créée
+	const db = mysql.createConnection({
+	  host: "localhost",
+	  user: "root",
+	  password: "",
+	  database: "mydb"
+	});
+
+	db.connect(function(err) {
+		if (err) throw err;
+
+		const query = req.query;
+
+		const sql = `DELETE FROM Commenter WHERE FK_utilisateur_mail='${query.mail}' AND FK_post_id ='${query.postId}' `;
+
+		db.query(sql, function (err, result, fields) {
+			if (err) throw err;
+			console.log(result);
+			res.send(result);
+		});
+		db.end();
+	});
+});
+
+// 28) /EnlevePost : supprime un post : (entrée : PK_post_id -> sortie : nb 0 ou 1)
+app.get('/EnlevePost',function(req,res){
+	// connection à la bdd créée
+	const db = mysql.createConnection({
+	  host: "localhost",
+	  user: "root",
+	  password: "",
+	  database: "mydb"
+	});
+
+	db.connect(function(err) {
+		if (err) throw err;
+
+		const query = req.query;
+
+		const sql = `DELETE FROM post WHERE PK_post_id='${query.postId}'`;
+
+		db.query(sql, function (err, result, fields) {
+			if (err) throw err;
+			console.log(result);
+			res.send(result);
+		});
+		db.end();
+	});
+});
+
+
+
+
+
 
 
 
