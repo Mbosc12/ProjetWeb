@@ -1,4 +1,30 @@
 
+//VUE JS
+let publication = {
+    props: {
+        message: String,
+        listlike: Array,
+        shares: Array,
+        Comments: Array
+    },
+    template: `<div class="publication">
+                    <p>{{ message }} </p>
+                    <div class="interaction">
+                        <div class="event">
+                            <button class="btnlike btnevent"> Likes : {{listlike.length}}                             
+                                <ul class="l-liste">
+                                    <li v-for="like in listlike">
+                                        <p>{{ like.pseudo }}</p>
+                                    </li>
+                                </ul>
+                            </button>
+                            <button class="btnshare btnevent"> Partager </button>
+                        </div>
+                        <button> Afficher les commentaires </button>
+                    </div>
+                </div>`
+}
+
 let user = {
 	props: {
 		name: String
@@ -24,7 +50,7 @@ let categorie = {
 		count: Number,
 		type: String
 	},
-	template: `<div class="col-4 cat act" >
+	template: `<div class="col-4 cat act">
 				    <h4> {{ count }} </h4>
 	            	<p> {{ type }} </p>
 			 </div>`
@@ -34,22 +60,48 @@ let vm = new Vue({
 	el: '#app',
     created() {
         this.FetchPosts();
+        this.FetchFollowers();
         this.FetchInfos();
     },
-	components: { categorie, state, user},
+	components: { categorie, state, user, publication},
 	data: {
 		GretaPic: "style/img/greta.png",
 		posts: [],
-		infos: []
+		infos: [],
+		followers: [],
+		likes: []
 	},
 	methods: {
         FetchPosts() {
-        axios.get('http://localhost:3000/Post', {
+        axios.get('http://localhost:3000/AllPostUtilisateur', {
         	params: {
 				mail: 'gretathunberg@gmail.com'
         	}
         }).then(response => {
             this.posts = response.data;
+            for (var i = 0; i < response.data.length; i++ ) {
+                this.FetchLikes(response.data[i].PK_post_id)
+            }
+            });
+        },
+        FetchFollowers() {
+        axios.get('http://localhost:3000/Followers', {
+        	params: {
+				mail: 'gretathunberg@gmail.com'
+        	}
+        }).then(response => {
+            this.followers = response.data;
+            });
+        },
+        FetchLikes: function(pid){
+        axios.get('http://localhost:3000/LikePost', {
+        	params: {
+				id: pid
+        	}
+        }).then(response => {
+            this.likes.push(response.data);
+            console.log("ici c'est likes")
+
             });
         },
         FetchInfos() {
@@ -58,8 +110,11 @@ let vm = new Vue({
 				mail: 'gretathunberg@gmail.com'
         	}
         }).then(response => {
-            this.infos = response.data;
+            this.infos = response.data[0];
             });
+        },
+        ActivedCat() {
+            console.log(this)
         }
 	}
 })
