@@ -52,7 +52,12 @@ new Vue({
                     console.log(response);
                     if (response.data.length !== 0) {
                         if (this.password === response.data[0].motdepass) {
+                            /* the username and the password are localy stored to create an user session  */
+                            localStorage.username = this.username;
+                            localStorage.password = this.password;
+                            /* redirection */
                             window.location.href = "/feed";
+                            /* deletion of the alerts */
                             this.display_mdp = false;
                             this.display_mail = false;
                         } else {
@@ -67,5 +72,4 @@ new Vue({
             }
         }
     }
-})
-;
+});
