@@ -70,16 +70,6 @@ a {
     color: #0097EF;
 }
 
-/* -------------------- Footer -------------------- */
-.footer {
-    margin-left: 50px;
-    margin-bottom: 10px;
-    position: fixed;
-    bottom: 0;
-    font-size: 11px;
-    color: #939393;
-}
-
 .list {
     list-style: none;
 }
@@ -91,4 +81,14 @@ li {
 
 span {
     margin-left: 48px;
+}
+
+/* -------------------- Footer -------------------- */
+.footer {
+    margin-left: 50px;
+    margin-bottom: 10px;
+    position: fixed;
+    bottom: 0;
+    font-size: 11px;
+    color: #939393;
 }
