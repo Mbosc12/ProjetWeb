@@ -62,10 +62,12 @@ let vm = new Vue({
         this.FetchPosts();
         this.FetchFollowers();
         this.FetchInfos();
+        this.FetchLikes();
+        this.FetchPhotoProfil();
     },
 	components: { categorie, state, user, publication},
 	data: {
-		GretaPic: "style/img/halo.jpg",
+		GretaPic: "",
 		posts: [],
 		infos: [],
 		followers: [],
@@ -110,11 +112,28 @@ let vm = new Vue({
 				mail: localStorage.username
         	}
         }).then(response => {
+            this.FetchPhotoProfil(response.data[0].photo_profil);
             this.infos = response.data[0];
             });
         },
         ActivedCat() {
             console.log(this)
+        },
+        FetchPhotoProfil: function(photo_profil){
+            var email = 'admin@gmail.com';
+            var photo = '1';
+            if(photo_profil!=null){
+                email = localStorage.username;
+                photo = photo_profil;
+            }
+            axios.get('http://localhost:3000/photoProfil', {
+                params: {
+                    mail: email,
+                    photoId : photo
+                }
+            }).then(response => {
+                this.GretaPic =  "style/img/"+response.data[0].titre; 
+            });
         }
 	}
 })

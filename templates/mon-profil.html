@@ -29,7 +29,7 @@
         <header class="header">
             <div class="details">
                 <img :src="GretaPic" class="profile-pic">
-                <user name="Greta Thunberg"></user>
+                <user :name="infos.pseudo"></user>
                 <state :city="infos.ville" :country="infos.pays"></state>
                 <div class="stats">
                     <categorie type="Publications" :count="posts.length"></categorie>
