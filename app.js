@@ -34,6 +34,15 @@ app.get('/feed', function (req, res) {
     res.sendFile('feed.html', {'root': __dirname + '/templates'})
 });
 
+app.get('/modifProfile', function (req, res) {
+    res.sendFile('modifProfile.html', {'root': __dirname + '/templates'})
+});
+
+app.get('/modifPswd', function (req, res) {
+    res.sendFile('modifPswd.html', {'root': __dirname + '/templates'})
+});
+
+
 // Requete pour avoir les abonnés d'un utilisateur
 app.get('/Followers',function(req,res){
 	// connection à la bdd créée
@@ -167,6 +176,52 @@ app.get('/unUtilisateur', function (req, res) {
         //console.log("query.mail = "+query.mail);
         var sql = `SELECT * FROM utilisateur WHERE mail = '${query.mail}'`;
 
+        db.query(sql, function (err, result, fields) {
+            if (err) throw err;
+            console.log(result);
+            res.send(result);
+        });
+        db.end();
+    });
+});
+
+// 3 bis) /photoProfil : retourne le nom de la photo de profil d'un utilisateur (entrée : photoId, mail -> sortie : photo_profil)
+app.get('/photoProfil', function (req, res) {
+    // connection à la bdd créée
+    var db = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "",
+        database: "mydb"
+    });
+
+    db.connect(function (err) {
+        if (err) throw err;
+        var query = req.query;
+        var sql = `SELECT titre FROM photo WHERE PK_photo_id = '${query.photoId}' AND FK_utilisateur_mail='${query.mail}'`;
+        db.query(sql, function (err, result, fields) {
+            if (err) throw err;
+            console.log(result);
+            res.send(result);
+        });
+        db.end();
+    });
+});
+
+// 3 ter) /AllPhoto : retourne tous les noms des photos d'un utilisateur (entrée : mail -> sortie : liste)
+app.get('/AllPhoto', function (req, res) {
+    // connection à la bdd créée
+    var db = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "",
+        database: "mydb"
+    });
+
+    db.connect(function (err) {
+        if (err) throw err;
+        var query = req.query;
+        var sql = `SELECT titre FROM photo WHERE FK_utilisateur_mail='${query.mail}'`;
         db.query(sql, function (err, result, fields) {
             if (err) throw err;
             console.log(result);
@@ -529,7 +584,7 @@ app.get('/newUser', function (req, res) {
 
         var query = req.query;
 
-        var sql = `INSERT INTO utilisateur VALUES ('${query.pseudo}', '${query.nom}', '${query.prenom}', '${query.mail}', '${query.motdepass}', '${query.date_naissance}', '${query.CP}', '${query.ville}', '${query.adresse}')`;
+        const sql = `INSERT INTO utilisateur (pseudo, nom, prenom, mail, motdepass, date_naissance, pays, cp, ville, adresse) VALUES ('${query.pseudo}', '${query.nom}', '${query.prenom}', '${query.mail}', '${query.motdepass}', '${query.date_naissance}', '${query.pays}', '${query.CP}', '${query.ville}', '${query.adresse}') `;
 
         db.query(sql, function (err, result, fields) {
             if (err) throw err;
@@ -773,7 +828,7 @@ app.get('/ModifMDPUtilisateur',function(req,res){
         console.log("le mail est : '${query.mail}'");
         console.log("le mdp est : '${query.motdepass}'");
 
-		const sql = `UPDATE utilisateur SET motdepass ='${query.motdepass}' WHERE mail ='${query.mail}' `;
+        const sql = `UPDATE utilisateur SET motdepass ='${query.motdepass}' WHERE pseudo ='${query.pseudo}'`;
 
 		db.query(sql, function (err, result, fields) {
 			if (err) throw err;
