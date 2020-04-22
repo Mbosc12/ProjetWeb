@@ -13,6 +13,7 @@ new Vue({
             adresse: '',
             cp: '',
             ville: '',
+            pays: '',
             display_mdp: false,
             display_carac: false,
             display_user: false,
@@ -67,6 +68,7 @@ new Vue({
                     <li><input type="text" id="adresse" name="adresse" v-model="adresse" placeholder="Adresse" required></li>
                     <li><input type="text" id="cp" name="cp" v-model="cp" placeholder="Code postal" required></li>
                     <li><input type="text" id="ville" name="ville" v-model="ville" placeholder="Ville" required></li>
+                    <li><input type="text" id="pays" name="pays" v-model="pays" placeholder="Pays" required></li>
                    </ul>
 
                    <button type="submit" id="submit" class="btn btn-success btn-sm" v-on:click="register">S'inscrire</button>
@@ -156,6 +158,7 @@ new Vue({
                     adresse: this.adresse,
                     CP: this.cp,
                     ville: this.ville,
+                    pays: this.pays
                 }
             }).then(response => {
                 if (response.data.length !== 0) {
