@@ -722,8 +722,8 @@ app.get('/ModifMDPUtilisateur',function(req,res){
 		if (err) throw err;
 
         const query = req.query;
-        console.log("le mail est : "+${query.mail});
-        console.log("le mdp est : "+${query.motdepass});
+        console.log("le mail est : '${query.mail}'");
+        console.log("le mdp est : '${query.motdepass}'");
 
 		const sql = `UPDATE utilisateur SET motdepass ='${query.motdepass}' WHERE mail ='${query.mail}' `;
 
