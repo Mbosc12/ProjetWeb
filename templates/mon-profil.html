@@ -1,60 +1,72 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Test</title>
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-	<link rel="stylesheet" type="text/css" href="style/css/profile.css"/>
-	<link rel="stylesheet" type="text/css" href="style/css/header-profile.css"/>
+    <title>Test</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="style/css/profile.css"/>
+    <link rel="stylesheet" type="text/css" href="style/css/header-profile.css"/>
 
     <script src="//unpkg.com/vue"></script>
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/axios/0.15.3/axios.min.js"></script>
 
+    <script>
+        /* if the username or password are not localy stored, the user is redirected to the connexion page */
+        if (localStorage.username === "" || localStorage.password === "") {
+            window.location.href = "/connexion";
+        }
+    </script>
+
 </head>
 <body>
-	<div class="main" id="app">
 
-		<section class="profile">
-			<header class="header">
-		    	<div class="details">
-		      		<img :src="GretaPic" class="profile-pic">
-		      		<user name="Greta Thunberg"></user>
-		      		<state :city="infos.ville" :country="infos.pays"></state>
-		    		<div class="stats">
-						<categorie type="Publications" :count="posts.length"></categorie>
-						<categorie type="Abonnés" :count="followers.length"></categorie>
-						<categorie type="Evenements" :count="10"></categorie>
-					</div>
-				</div>
-			</header>
 
-			<div id="publi" style="display: none;">
-				<strong>Mes Followers</strong>
-				<li v-for="f in followers">
-					{{f.pseudo}}
-				</li>
-				<strong>Mes Infos personnelles</strong>
-				<li>
-					{{infos}}
-				</li>
-				<br>
-				<li v-for="post in posts" style="list-style-type: none;">
-					<publication :message="post.message" :listlike="likes[post.PK_post_id-1]"></publication>
-				</li>
+<div class="main" id="app">
 
-			</div>
+    <section class="profile">
+        <header class="header">
+            <div class="details">
+                <img :src="GretaPic" class="profile-pic">
+                <user name="Greta Thunberg"></user>
+                <state :city="infos.ville" :country="infos.pays"></state>
+                <div class="stats">
+                    <categorie type="Publications" :count="posts.length"></categorie>
+                    <categorie type="Abonnés" :count="followers.length"></categorie>
+                    <categorie type="Evenements" :count="10"></categorie>
+                </div>
+            </div>
+        </header>
 
-			<div id="create">
-				<form method="post" enctype="multipart/form-data" action="/upload">
-				    <input type="file" name="file">
-				    <input type="submit" value="Submit">
-				</form>		
-			</div>
-		</section>
-	</div>
+        <div id="publi" style="display: none;">
+            <strong>Mes Followers</strong>
+            <li v-for="f in followers">
+                {{f.pseudo}}
+            </li>
+            <strong>Mes Infos personnelles</strong>
+            <li>
+                {{infos}}
+            </li>
+            <br>
+            <li v-for="post in posts" style="list-style-type: none;">
+                <publication :message="post.message" :listlike="likes[post.PK_post_id-1]"></publication>
+            </li>
 
-	<script type="module" src="style/js/profil.js"></script>
+        </div>
+
+        <div id="create">
+            <form method="post" enctype="multipart/form-data" action="/upload">
+                <input type="file" name="file">
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+
+        <div><a href="modifProfile">Modifier mon profil</a></div>
+    </section>
+</div>
+
+<script type="module" src="style/js/profil.js"></script>
 
 </body>
 </html>

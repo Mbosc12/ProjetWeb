@@ -88,9 +88,7 @@ new Vue({
                     pseudo: this.username
                 }
             }).then(response => {
-                console.log(response);
                 if (response.data.length !== 0) {
-                    console.log(response);
                     if (response.data[0].pseudoExisting === 1) {
                         this.display_user = true;
                     } else {
@@ -108,9 +106,7 @@ new Vue({
                     mail: this.mail
                 }
             }).then(response => {
-                console.log(response);
                 if (response.data.length !== 0) {
-                    console.log(response);
                     if (response.data[0].mailExisting === 1) {
                         this.display_mail = true;
                     } else {
@@ -122,7 +118,6 @@ new Vue({
             });
         },
         mdp: function() {
-            console.log(this.password, this.password.length);
             if (this.password.includes("`") || this.password.includes('"') || this.password.includes("'")) {
                 this.display_carac = true;
             } else {
@@ -150,8 +145,6 @@ new Vue({
             this.display_success = false;
         },
         register: function () {
-            console.log(this.username, this.mail, this.password, this.nom, this.prenom, this.datenaiss, this.adresse, this.cp, this.ville);
-
             axios.get('http://localhost:3000/newUser', {
                 params: {
                     pseudo: this.username,
@@ -165,9 +158,7 @@ new Vue({
                     ville: this.ville,
                 }
             }).then(response => {
-                console.log(response);
                 if (response.data.length !== 0) {
-                    console.log(response);
                     if (response.data.affectedRows === 1) {
                         this.display_mdp = false;
                         this.display_mail = false;

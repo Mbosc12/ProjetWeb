@@ -2,12 +2,26 @@
 <html>
 
 <head>
+    <!-- Script JS -->
+    <script type="module" src="style/js/feed.js"></script>
+    <!-- Vue.js -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
+    <script>
+        /* if the username or password are not localy stored, the user is redirected to the connexion page */
+        if (localStorage.username === "" || localStorage.password === "") {
+            window.location.href = "/connexion";
+        }
+    </script>
 </head>
 
 <body>
 
 <h1>Feed</h1>
+
+<div id="connected"></div>
+<div id="disconnect"></div>
+
 
 </body>
 </html>

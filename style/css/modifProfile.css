@@ -1,0 +1,136 @@
+/* -------------------- Navbar -------------------- */
+#page_navbar {
+    background-color: #ffffff;
+    border-bottom: 1px solid #dbdbdb;
+    margin-top: 5px;
+    padding-bottom: 5px;
+}
+
+#logo {
+    width: 200px;
+    margin-left: 140px;
+}
+
+#icons {
+    float: right;
+    margin-top: 7px;
+    margin-right: 175px;
+}
+
+#icons .fa-lg {
+    margin-left: 20px;
+}
+
+
+/* -------------------- Body -------------------- */
+body {
+    background-color: #fafafa;
+    position: relative;
+    margin-bottom: 20px;
+}
+
+#modif {
+    display: inline-block;
+    background-color: #FFFFFF;
+    border: 1px solid #dbdbdb;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 170px;
+    width: 940px;
+}
+
+#navbar {
+    border-right: 1px solid #dadada;
+    float: left;
+    height: 900px;
+}
+
+#modif_profil {
+    border-left: 3px solid #68d89b;
+}
+
+#change_pswd {
+    border-left: 3px solid #ffffff;
+    margin-bottom: 0;
+}
+
+#change_pswd:hover {
+    background-color: #fafafa;
+    border-left: 3px solid #dadada;
+}
+
+#navbar a {
+    color: #000000;
+    text-decoration: none;
+}
+
+#navbar ul {
+    list-style-type: none;
+    margin-left: 0;
+    padding-left: 0;
+}
+
+#navbar li {
+    padding: 20px;
+}
+
+#content {
+    margin-left: 250px;
+    margin-top: 15px;
+    margin-right: 20px;
+    margin-bottom: 15px;
+    padding: 10px;
+}
+
+#content ul {
+    list-style-type: none;
+}
+
+#content li {
+    padding: 10px;
+}
+
+#content label {
+    display: inline-block;
+    width: 140px;
+    text-align: right;
+    margin-right: 20px;
+}
+
+#content input {
+    width: 300px
+}
+
+#content #text {
+    color: #8E8E8E;
+    margin-left: 215px;
+    margin-right: 133px;
+    font-size: 12px;
+}
+
+#submit {
+    margin-left: 215px;
+    width: 300px;
+}
+
+#alert {
+    text-align: center;
+    margin-left: 215px;
+    width: 300px;
+
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+
+/* -------------------- Footer -------------------- */
+.footer {
+    margin-left: 50px;
+    margin-bottom: 10px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    font-size: 11px;
+    color: #939393;
+}
