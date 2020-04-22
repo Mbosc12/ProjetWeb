@@ -65,17 +65,17 @@ let vm = new Vue({
     },
 	components: { categorie, state, user, publication},
 	data: {
-		GretaPic: "style/img/greta.png",
+		GretaPic: "style/img/halo.jpg",
 		posts: [],
 		infos: [],
 		followers: [],
-		likes: []
+        likes: []
 	},
 	methods: {
         FetchPosts() {
         axios.get('http://localhost:3000/AllPostUtilisateur', {
         	params: {
-				mail: 'gretathunberg@gmail.com'
+				mail: localStorage.username
         	}
         }).then(response => {
             this.posts = response.data;
@@ -87,7 +87,7 @@ let vm = new Vue({
         FetchFollowers() {
         axios.get('http://localhost:3000/Followers', {
         	params: {
-				mail: 'gretathunberg@gmail.com'
+				mail: localStorage.username
         	}
         }).then(response => {
             this.followers = response.data;
@@ -107,7 +107,7 @@ let vm = new Vue({
         FetchInfos() {
         axios.get('http://localhost:3000/unUtilisateur', {
         	params: {
-				mail: 'gretathunberg@gmail.com'
+				mail: localStorage.username
         	}
         }).then(response => {
             this.infos = response.data[0];
