@@ -25,7 +25,7 @@ con.connect(function(err) {
     if (err) throw err;
     console.log("Table post created");
   });
-  var sql = "CREATE TABLE photo(PK_photo_id INT AUTO_INCREMENT, FK_utilisateur_mail VARCHAR(50), titre VARCHAR(50) NOT NULL,PRIMARY KEY(PK_post_id), FOREIGN KEY(FK_utilisateur_mail) REFERENCES utilisateur(mail))";
+  var sql = "CREATE TABLE photo(PK_photo_id INT AUTO_INCREMENT, FK_utilisateur_mail VARCHAR(50), titre VARCHAR(50) NOT NULL,PRIMARY KEY(PK_photo_id), FOREIGN KEY(FK_utilisateur_mail) REFERENCES utilisateur(mail))";
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log("Table photo created");
@@ -63,40 +63,38 @@ con.connect(function(err) {
   // remplissage --------------------------------------------------------------------------------------------------------------------------------------------------------
 
   // Utilisateurs
-  var sql = "INSERT INTO utilisateur VALUES ('GretaThunberg','Greta','Thunberg','gretathunberg@gmail.com','superadmin','2020-03-09','Suède', '81000','StockHolm','20 rue de la poudriere')";
+  var sql = "INSERT INTO utilisateur VALUES ('GretaThunberg','Greta','Thunberg','gretathunberg@gmail.com','superadmin','2020-03-09','Suède', '81000','StockHolm','20 rue de la poudriere',null)";
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log("1 record inserted");
   });
 
-  var sql = "INSERT INTO utilisateur VALUES ('EmmanuelMacron','Emmanuel','Macron','emmanuelmacron@gmail.com','superadmin','2020-03-09', 'France','81000','Albi','20 rue de la poudriere')";
+  var sql = "INSERT INTO utilisateur VALUES ('EmmanuelMacron','Emmanuel','Macron','emmanuelmacron@gmail.com','superadmin','2020-03-09', 'France','81000','Albi','20 rue de la poudriere',null)";
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log("1 record inserted");
   });
 
-  var sql = "INSERT INTO utilisateur VALUES ('DonaldTrump','Donald','Trump','donaldtrump@gmail.com','superadmin','2020-03-09','France' ,'81000','Albi','20 rue de la poudriere')";
+  var sql = "INSERT INTO utilisateur VALUES ('DonaldTrump','Donald','Trump','donaldtrump@gmail.com','superadmin','2020-03-09','France' ,'81000','Albi','20 rue de la poudriere',null)";
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log("1 record inserted");
   });
 
-  var sql = "INSERT INTO utilisateur VALUES ('HaloMora','Halo','Mora','HaloMora@gmail.com','HaloMoradu69','2020-04-10','81000','Albi','20 rue de la poudriere','1')";
+  var sql = "INSERT INTO utilisateur VALUES ('HaloMora','Halo','Mora','HaloMora@gmail.com','HaloMoradu69','2020-04-10','France','81000','Albi','20 rue de la poudriere','1')";
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log("Utilisateur HaloMora inserted");
   });
 
-  var sql = "INSERT INTO utilisateur VALUES ('PereCastor','Pere','Castor','PereCastor@gmail.com','RaconteNousUneHistoire','2020-04-10','81000','Albi','20 rue de la poudriere')";
+  var sql = "INSERT INTO utilisateur VALUES ('PereCastor','Pere','Castor','PereCastor@gmail.com','RaconteNousUneHistoire','2020-04-10','France','81000','Albi','20 rue de la poudriere',null)";
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log("Utilisateur PereCastor inserted");
   });
   
   // photo
-  var sql = "CREATE TABLE photo(PK_photo_id INT AUTO_INCREMENT, FK_utilisateur_mail VARCHAR(50), titre VARCHAR(50) NOT NULL,PRIMARY KEY(PK_post_id), FOREIGN KEY(FK_utilisateur_mail) REFERENCES utilisateur(mail))";
-
-  var sql = "INSERT INTO photo VALUES ('HaloMora@gmail.com', 'halo.jpg')";
+  var sql = "INSERT INTO photo (FK_utilisateur_mail, titre) VALUES ('HaloMora@gmail.com', 'halo.jpg')";
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log("Photo halo.jpg HaloMora inserted");
