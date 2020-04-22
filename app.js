@@ -62,6 +62,8 @@ app.get('/Followers',function(req,res){
    1) /NbUtilisateur : Nombre d'utilisateur (sortie : nb)
    2) /AllUtilisateur : Tous les utilisateurs (sortie : liste)
    3) /unUtilisateur : Toutes les info d'un utilisateur (entrée : mail -> sortie : liste)
+   3 bis) /photoProfil : retourne le nom de la photo de profil d'un utilisateur (entrée : mail -> sortie : photo_profil)
+   3 ter) /AllPhoto : retourne tous les noms des photos d'un utilisateur (entrée : mail -> sortie : liste)
    4) /VerifUtilisateur : Vérification mail mdp (entrée : mail -> sortie mdp)
    5) /NbPostUtilisateur : Nombre de Post d'un utilisateur (entrée : mail -> sortie : nb)
    6) /AllPostUtilisateur : Tous les Posts d'un utilisateur (entrée : mail -> sortie : list)
@@ -165,6 +167,52 @@ app.get('/unUtilisateur', function (req, res) {
         //console.log("query.mail = "+query.mail);
         var sql = `SELECT * FROM utilisateur WHERE mail = '${query.mail}'`;
 
+        db.query(sql, function (err, result, fields) {
+            if (err) throw err;
+            console.log(result);
+            res.send(result);
+        });
+        db.end();
+    });
+});
+
+// 3 bis) /photoProfil : retourne le nom de la photo de profil d'un utilisateur (entrée : photoId, mail -> sortie : photo_profil)
+app.get('/photoProfil', function (req, res) {
+    // connection à la bdd créée
+    var db = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "",
+        database: "mydb"
+    });
+
+    db.connect(function (err) {
+        if (err) throw err;
+        var query = req.query;
+        var sql = `SELECT titre FROM photo WHERE PK_photo_id = '${query.photoId}' AND FK_utilisateur_mail='${query.mail}'`;
+        db.query(sql, function (err, result, fields) {
+            if (err) throw err;
+            console.log(result);
+            res.send(result);
+        });
+        db.end();
+    });
+});
+
+// 3 ter) /AllPhoto : retourne tous les noms des photos d'un utilisateur (entrée : mail -> sortie : liste)
+app.get('/AllPhoto', function (req, res) {
+    // connection à la bdd créée
+    var db = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "",
+        database: "mydb"
+    });
+
+    db.connect(function (err) {
+        if (err) throw err;
+        var query = req.query;
+        var sql = `SELECT titre FROM photo WHERE FK_utilisateur_mail='${query.mail}'`;
         db.query(sql, function (err, result, fields) {
             if (err) throw err;
             console.log(result);
