@@ -62,6 +62,7 @@ let vm = new Vue({
         this.FetchPosts();
         this.FetchFollowers();
         this.FetchInfos();
+        this.FetchLikes();
         this.FetchPhotoProfil();
     },
 	components: { categorie, state, user, publication},
