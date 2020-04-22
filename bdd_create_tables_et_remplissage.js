@@ -15,7 +15,7 @@ con.connect(function(err) {
   
   console.log("Connected to mydb!");
   
-  var sql = "CREATE TABLE utilisateur(pseudo VARCHAR(50) NOT NULL ,nom VARCHAR(50),prenom VARCHAR(50),mail VARCHAR(50),motdepass VARCHAR(50) NOT NULL,date_naissance DATE,pays VARCHAR(50) NOT NULL, CP VARCHAR(50) NOT NULL,ville VARCHAR(50) NOT NULL,adresse VARCHAR(50) NOT NULL, photo_profil VARCHAR(50),PRIMARY KEY(mail))";
+  var sql = "CREATE TABLE utilisateur(pseudo VARCHAR(50) NOT NULL ,nom VARCHAR(50),prenom VARCHAR(50),mail VARCHAR(50),motdepass VARCHAR(50) NOT NULL,date_naissance DATE,pays VARCHAR(50) NOT NULL, CP VARCHAR(50) NOT NULL,ville VARCHAR(50) NOT NULL,adresse VARCHAR(50) NOT NULL, photo_profil INT,PRIMARY KEY(mail))";
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log("Table utilisateur created");
@@ -30,7 +30,7 @@ con.connect(function(err) {
     if (err) throw err;
     console.log("Table photo created");
   });
-  
+
   var sql = "CREATE TABLE Poster(FK_utilisateur_mail VARCHAR(50),FK_post_id INT,date_publication DATE NOT NULL,PRIMARY KEY(FK_utilisateur_mail, FK_post_id),FOREIGN KEY(FK_utilisateur_mail) REFERENCES utilisateur(mail),FOREIGN KEY(FK_post_id) REFERENCES post(PK_post_id))";
   con.query(sql, function (err, result) {
     if (err) throw err;
@@ -81,7 +81,7 @@ con.connect(function(err) {
     console.log("1 record inserted");
   });
 
-  var sql = "INSERT INTO utilisateur VALUES ('HaloMora','Halo','Mora','HaloMora@gmail.com','HaloMoradu69','2020-04-10','81000','Albi','20 rue de la poudriere')";
+  var sql = "INSERT INTO utilisateur VALUES ('HaloMora','Halo','Mora','HaloMora@gmail.com','HaloMoradu69','2020-04-10','81000','Albi','20 rue de la poudriere','1')";
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log("Utilisateur HaloMora inserted");
@@ -93,6 +93,14 @@ con.connect(function(err) {
     console.log("Utilisateur PereCastor inserted");
   });
   
+  // photo
+  var sql = "CREATE TABLE photo(PK_photo_id INT AUTO_INCREMENT, FK_utilisateur_mail VARCHAR(50), titre VARCHAR(50) NOT NULL,PRIMARY KEY(PK_post_id), FOREIGN KEY(FK_utilisateur_mail) REFERENCES utilisateur(mail))";
+
+  var sql = "INSERT INTO photo VALUES ('HaloMora@gmail.com', 'halo.jpg')";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log("Photo halo.jpg HaloMora inserted");
+  });
 
 
   // Posts + Poster
