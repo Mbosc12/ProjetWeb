@@ -63,6 +63,11 @@ con.connect(function(err) {
   // remplissage --------------------------------------------------------------------------------------------------------------------------------------------------------
 
   // Utilisateurs
+  var sql = "INSERT INTO utilisateur VALUES ('admin','admin','admin','admin@gmail.com','admin','2020-03-09','admin', '00000','admin','admin','1')";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log("1 record inserted");
+  });
   var sql = "INSERT INTO utilisateur VALUES ('GretaThunberg','Greta','Thunberg','gretathunberg@gmail.com','superadmin','2020-03-09','Suède', '81000','StockHolm','20 rue de la poudriere',null)";
   con.query(sql, function (err, result) {
     if (err) throw err;
@@ -81,7 +86,7 @@ con.connect(function(err) {
     console.log("1 record inserted");
   });
 
-  var sql = "INSERT INTO utilisateur VALUES ('HaloMora','Halo','Mora','HaloMora@gmail.com','HaloMoradu69','2020-04-10','France','81000','Albi','20 rue de la poudriere','1')";
+  var sql = "INSERT INTO utilisateur VALUES ('HaloMora','Halo','Mora','HaloMora@gmail.com','HaloMoradu69','2020-04-10','France','81000','Albi','20 rue de la poudriere','2')";
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log("Utilisateur HaloMora inserted");
@@ -94,6 +99,12 @@ con.connect(function(err) {
   });
   
   // photo
+  var sql = "INSERT INTO photo VALUES ('1','admin@gmail.com', 'cactus.jpg')";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log("Photo cactus.jpg  inserted");
+  });
+
   var sql = "INSERT INTO photo (FK_utilisateur_mail, titre) VALUES ('HaloMora@gmail.com', 'halo.jpg')";
   con.query(sql, function (err, result) {
     if (err) throw err;
