@@ -3,7 +3,6 @@ new Vue({
     data: function () {
         return {
             username: "",
-            mail: localStorage.username,
             old_password: "",
             new_password: "",
             re_password: "",
@@ -94,14 +93,14 @@ new Vue({
         getInfo: function () {
             axios.get('http://localhost:3000/unUtilisateur', {
                 params: {
-                    mail: localStorage.username,
+                    mail: localStorage.mail
                 }
             }).then(response => {
-                console.log(response)
+
                 if (response.data.length !== 0) {
                     this.username = response.data[0].pseudo;
                 } else {
-                    console.log("erreur");
+                    console.log("erreur /unUtilisateur");
                 }
             });
         },
@@ -128,7 +127,7 @@ new Vue({
         verif_pswd: function () {
             axios.get('http://localhost:3000/VerifUtilisateur', {
                 params: {
-                    mail: localStorage.username,
+                    mail: localStorage.mail
                 }
             }).then(response => {
                 if (response.data.length !== 0) {
@@ -142,21 +141,45 @@ new Vue({
             });
         },
         send: function () {
-            axios.get('http://localhost:3000/modifPswd', {
+            axios.get('http://localhost:3000/ModifMDPUtilisateur', {
                 params: {
-                    mail: this.mail,
-                    motdepass: this.new_password
+                    motdepass: this.new_password,
+                    pseudo: localStorage.username
                 }
             }).then(response => {
                 if (response.data.length !== 0) {
                     this.display_success = true;
                 } else {
-                    console.log("erreur");
+                    console.log("erreur /ModifMDPUtilisateur");
                 }
             });
         }
     },
     created: function () {
         this.getInfo();
+    }
+});
+
+new Vue({
+    el: "#disconnect",
+    data: function () {
+        return {
+            username: localStorage.username
+        }
+    },
+    template: `<a href="/connexion" v-on:click="disconnect"><i class="fas fa-power-off fa-lg"></i></a>`,
+    methods: {
+        disconnect: function () {
+            localStorage.mail = "";
+            localStorage.password = "";
+            localStorage.cp = "";
+            localStorage.adresse = "";
+            localStorage.datenaiss = "";
+            localStorage.nom = "";
+            localStorage.prenom = "";
+            localStorage.pays = "";
+            localStorage.username = "";
+            localStorage.ville = "";
+        }
     }
 });
