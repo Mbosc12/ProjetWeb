@@ -76,7 +76,7 @@ new Vue({
         getInfo: function () {
             axios.get('http://localhost:3000/unUtilisateur', {
                 params: {
-                    mail: localStorage.username,
+                    mail: localStorage.mail,
                 }
             }).then(response => {
                 if (response.data.length !== 0) {
@@ -121,5 +121,29 @@ new Vue({
     },
     created: function () {
         this.getInfo();
+    }
+});
+
+new Vue({
+    el: "#disconnect",
+    data: function () {
+        return {
+            username: localStorage.username
+        }
+    },
+    template: `<a href="/connexion" v-on:click="disconnect"><i class="fas fa-power-off fa-lg"></i></a>`,
+    methods: {
+        disconnect: function () {
+            localStorage.mail = "";
+            localStorage.password = "";
+            localStorage.cp = "";
+            localStorage.adresse = "";
+            localStorage.datenaiss = "";
+            localStorage.nom = "";
+            localStorage.prenom = "";
+            localStorage.pays = "";
+            localStorage.username = "";
+            localStorage.ville = "";
+        }
     }
 });
