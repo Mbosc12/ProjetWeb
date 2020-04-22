@@ -43,7 +43,7 @@ a {
     color: grey;
 }
 
-#username, #password {
+#mail, #password {
     display: block;
     margin: 5px auto;
     width: 300px;
