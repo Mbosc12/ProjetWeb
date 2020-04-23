@@ -12,6 +12,13 @@
     <!-- CSS -->
     <link rel="stylesheet" type="text/css" href="style/css/inscription.css">
 
+    <script>
+        /* if the username or password are not localy stored, the user is redirected to the connexion page */
+        if (localStorage.username != "" && localStorage.password != "") {
+            window.location.href = "/feed";
+        }
+    </script>
+
     <title>S'inscrire • Gretagram</title>
 </head>
 
