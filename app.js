@@ -584,7 +584,7 @@ app.get('/newUser', function (req, res) {
 
         var query = req.query;
 
-        const sql = `INSERT INTO utilisateur (pseudo, nom, prenom, mail, motdepass, date_naissance, pays, cp, ville, adresse) VALUES ('${query.pseudo}', '${query.nom}', '${query.prenom}', '${query.mail}', '${query.motdepass}', '${query.date_naissance}', '${query.pays}', '${query.CP}', '${query.ville}', '${query.adresse}') `;
+        const sql = `INSERT INTO utilisateur (pseudo, nom, prenom, mail, motdepass, date_naissance,sexe, pays, cp, ville, adresse) VALUES ('${query.pseudo}', '${query.nom}', '${query.prenom}', '${query.mail}', '${query.motdepass}', '${query.date_naissance}','${query.sexe}','${query.pays}', '${query.CP}', '${query.ville}', '${query.adresse}') `;
 
         db.query(sql, function (err, result, fields) {
             if (err) throw err;
@@ -696,7 +696,7 @@ app.get('/AjoutLike',function(req,res){
 
 		var query = req.query;
 
-		var sql = `INSERT INTO Liker VALUES ('${query.mail}', '${query.postId}')`;
+		var sql = `INSERT INTO Liker VALUES ('${query.mail}', '${query.postId}',NOW())`;
 
 		db.query(sql, function (err, result, fields) {
 			if (err) throw err;
@@ -722,7 +722,7 @@ app.get('/AjoutFollower',function(req,res){
 
 		const query = req.query;
 
-		const sql = `INSERT INTO Follower VALUES ('${query.mail_1}', '${query.mail_2}')`;
+		const sql = `INSERT INTO Follower VALUES ('${query.mail_1}', '${query.mail_2}',NOW())`;
 
 		db.query(sql, function (err, result, fields) {
 			if (err) throw err;
@@ -774,7 +774,7 @@ app.get('/AjoutPartage',function(req,res){
 
 		const query = req.query;
 
-		const sql = `INSERT INTO Partager VALUES ('${query.mail}', '${query.postId}')`;
+		const sql = `INSERT INTO Partager VALUES ('${query.mail}', '${query.postId}',NOW())`;
 
 		db.query(sql, function (err, result, fields) {
 			if (err) throw err;
@@ -785,7 +785,7 @@ app.get('/AjoutPartage',function(req,res){
 	});
 });
 
-// 23) /ModifUtilisateur : Update un utilisateur déjà dans la bdd (entrée : pseudo, nom, prenom, mail, motdepass, date_naissance, CP, ville, adresse -> sortie : nb (1 ou 0))
+// 23) /ModifUtilisateur : Update un utilisateur déjà dans la bdd (entrée : pseudo, nom, prenom, mail, motdepass, date_naissance, sexe, CP, ville, adresse -> sortie : nb (1 ou 0))
 app.get('/ModifUtilisateur',function(req,res){
 	// connection à la bdd créée
 	const db = mysql.createConnection({
@@ -800,7 +800,7 @@ app.get('/ModifUtilisateur',function(req,res){
 
 		const query = req.query;
 
-		const sql = `UPDATE utilisateur SET pseudo ='${query.pseudo}', nom ='${query.nom}', prenom ='${query.prenom}', mail ='${query.mail}', motdepass ='${query.motdepass}', date_naissance ='${query.date_naissance}', CP ='${query.CP}', ville ='${query.ville}', adresse ='${query.adresse}' WHERE mail ='${query.mail}' `;
+		const sql = `UPDATE utilisateur SET pseudo ='${query.pseudo}', nom ='${query.nom}', prenom ='${query.prenom}', mail ='${query.mail}', motdepass ='${query.motdepass}', date_naissance ='${query.date_naissance}',sexe ='${query.sexe}', CP ='${query.CP}', ville ='${query.ville}', adresse ='${query.adresse}' WHERE mail ='${query.mail}' `;
 
 		db.query(sql, function (err, result, fields) {
 			if (err) throw err;
