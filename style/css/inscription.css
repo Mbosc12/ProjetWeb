@@ -51,6 +51,13 @@ ul {
     list-style: none;
 }
 
+#select {
+    border: 1px solid #cacaca;
+    width: 300px;
+    margin-right: 38px;
+    border-radius: 0px;
+}
+
 #submit {
     width: 300px;
 }
