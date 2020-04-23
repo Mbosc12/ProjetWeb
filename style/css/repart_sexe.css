@@ -1,0 +1,98 @@
+/* -------------------- Nav -------------------- */
+nav {
+    background-color: #ffffff;
+    border-bottom: 1px solid #68d89b;
+    margin-top: 5px;
+    padding-bottom: 5px;
+}
+
+nav form {
+    margin-left: 120px;
+}
+
+nav ul {
+    margin-left: 125px;
+}
+
+#logo {
+    width: 200px;
+    margin-left: 120px;
+}
+
+
+
+/* -------------------- Body -------------------- */
+body {
+    background-color: #fafafa;
+    position: relative;
+    margin-bottom: 20px;
+}
+
+#graphic_area {
+    background-color: #FFFFFF;
+    border: 1px solid #dbdbdb;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 170px;
+    width: 940px;
+}
+
+.column {
+    float: left;
+}
+
+.column a {
+    color: #000000;
+    text-decoration: none;
+}
+
+.left {
+    width: 25%;
+    border-right: 1px solid #dadada;
+    height: 900px;
+}
+
+.left ul {
+    list-style-type: none;
+    margin-left: 0;
+    padding-left: 0;
+}
+
+.left li {
+    padding: 20px;
+}
+
+.right {
+    width: 75%;
+}
+
+#repart_sexe {
+    border-left: 3px solid #68d89b;
+}
+
+#repart {
+    border-bottom: double #dadada;
+    padding-bottom: 20px;
+}
+
+#repart_ville, #repart_pays, #evol_follow {
+    border-left: 3px solid #ffffff;
+}
+
+#repart_ville:hover, #repart_pays:hover, #evol_follow:hover {
+    background-color: #fafafa;
+    border-left: 3px solid #dadada;
+}
+
+
+/* -------------------- Footer -------------------- */
+.footer {
+    margin-left: 50px;
+    margin-bottom: 10px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    font-size: 11px;
+    color: #939393;
+}
