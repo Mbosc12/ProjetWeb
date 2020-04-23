@@ -1,24 +1,14 @@
-/* -------------------- Navbar -------------------- */
-#page_navbar {
+/* -------------------- Nav -------------------- */
+nav {
     background-color: #ffffff;
-    border-bottom: 1px solid #dbdbdb;
+    border-bottom: 1px solid #68d89b;
     margin-top: 5px;
     padding-bottom: 5px;
 }
 
 #logo {
     width: 200px;
-    margin-left: 140px;
-}
-
-#icons {
-    float: right;
-    margin-top: 7px;
-    margin-right: 175px;
-}
-
-#icons .fa-lg {
-    margin-left: 20px;
+    margin-left: 120px;
 }
 
 
@@ -27,6 +17,14 @@ body {
     background-color: #fafafa;
     position: relative;
     margin-bottom: 20px;
+}
+
+nav form {
+    margin-left: 120px;
+}
+
+nav ul {
+    margin-left: 125px;
 }
 
 #modif {
@@ -39,7 +37,7 @@ body {
     width: 940px;
 }
 
-#navbar {
+#modif_bar {
     border-right: 1px solid #dadada;
     float: left;
     height: 900px;
@@ -59,18 +57,18 @@ body {
     border-left: 3px solid #dadada;
 }
 
-#navbar a {
+#modif_bar a {
     color: #000000;
     text-decoration: none;
 }
 
-#navbar ul {
+#modif_bar ul {
     list-style-type: none;
     margin-left: 0;
     padding-left: 0;
 }
 
-#navbar li {
+#modif_bar li {
     padding: 20px;
 }
 
@@ -120,6 +118,13 @@ body {
 
     margin-top: 10px;
     font-size: 14px;
+}
+
+/* -------------------- Notification -------------------- */
+
+#notif {
+    border: 1px solid red;
+    margin-top: 20px;
 }
 
 
