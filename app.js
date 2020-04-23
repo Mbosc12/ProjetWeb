@@ -100,6 +100,9 @@ app.get('/Followers',function(req,res){
    27) /EnleveCommentaire : supprime un commentaire de la bdd : (entrée : FK_utilisateur_mail, FK_post_id -> sortie : nb 0 ou 1)
    28) /EnlevePost : supprime un post : (entrée : PK_post_id -> sortie : nb 0 ou 1)
 
+   29) /NbFemmeHomme : nombre de femme et d'homme follower d'un utilisateur (entrée : mail -> sortie : liste)
+   30) /NbFollowParJour : Nb de follow pour un jour donné (entrée : mail, date -> sortie : nb)
+
  */
 
 /* Liste des requêtes manquantes :
@@ -969,7 +972,65 @@ app.get('/EnlevePost',function(req,res){
 	});
 });
 
+// 29) /NbFemmeHomme : nombre de femme et d'homme follower d'un utilisateur (entrée : mail -> sortie : liste)
+app.get('/NbFemmeHomme',function(req,res){
+	// connection à la bdd créée
+	const db = mysql.createConnection({
+	  host: "localhost",
+	  user: "root",
+	  password: "",
+	  database: "mydb"
+	});
 
+	db.connect(function(err) {
+		if (err) throw err;
+
+		const query = req.query;
+
+        const sql = 
+        `SELECT COUNT(sexe) AS sexe
+                FROM utilisateur
+                INNER JOIN (SELECT FK_utilisateur_mail_2 FROM follower WHERE FK_utilisateur_mail_1 = '${query.mail}') AS table1 
+                WHERE utilisateur.mail = table1.FK_utilisateur_mail_2 AND sexe='F'
+        UNION ALL
+        SELECT COUNT(sexe)
+                FROM utilisateur
+                INNER JOIN (SELECT FK_utilisateur_mail_2 FROM follower WHERE FK_utilisateur_mail_1 = '${query.mail}') AS table1 
+                WHERE utilisateur.mail = table1.FK_utilisateur_mail_2 AND sexe='M'
+        UNION ALL
+        SELECT COUNT(sexe)
+                FROM utilisateur
+                INNER JOIN (SELECT FK_utilisateur_mail_2 FROM follower WHERE FK_utilisateur_mail_1 = '${query.mail}') AS table1 
+                WHERE utilisateur.mail = table1.FK_utilisateur_mail_2 AND sexe='A'
+        `;
+
+		db.query(sql, function (err, result, fields) {
+			if (err) throw err;
+			console.log(result);
+			res.send(result);
+		});
+		db.end();
+	});
+});
+/*
+
+
+SELECT COUNT(sexe) AS sexe
+      FROM utilisateur
+      INNER JOIN (SELECT FK_utilisateur_mail_2 FROM follower WHERE FK_utilisateur_mail_1 = 'gretathunberg@gmail.com') AS table1 
+      WHERE utilisateur.mail = table1.FK_utilisateur_mail_2 AND sexe='F'
+UNION ALL
+SELECT COUNT(sexe)
+      FROM utilisateur
+      INNER JOIN (SELECT FK_utilisateur_mail_2 FROM follower WHERE FK_utilisateur_mail_1 = 'gretathunberg@gmail.com') AS table1 
+      WHERE utilisateur.mail = table1.FK_utilisateur_mail_2 AND sexe='M'
+UNION ALL
+SELECT COUNT(sexe)
+      FROM utilisateur
+      INNER JOIN (SELECT FK_utilisateur_mail_2 FROM follower WHERE FK_utilisateur_mail_1 = 'gretathunberg@gmail.com') AS table1 
+      WHERE utilisateur.mail = table1.FK_utilisateur_mail_2 AND sexe='A'
+
+*/
 
 
 
