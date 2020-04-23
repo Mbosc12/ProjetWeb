@@ -1,20 +1,27 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:v-on="http://www.w3.org/1999/xhtml">
 
 <head>
+    <meta charset="UTF-8">
+
     <!-- Bootstrap -->
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <!-- Script JS -->
-    <script type="module" src="style/js/feed.js"></script>
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="style/css/repart_sexe.css">
+    <!-- Script JS-->
+    <script type="module" src="style/js/repart_sexe.js"></script>
     <!-- Vue.js -->
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <!-- CSS -->
-    <link rel="stylesheet" type="text/css" href="style/css/feed.css">
     <!-- Font Awesome (icon) -->
     <script src="https://use.fontawesome.com/releases/v5.13.0/js/all.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Axios -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
 
     <script>
         /* if the username or password are not localy stored, the user is redirected to the connexion page */
@@ -22,6 +29,8 @@
             window.location.href = "/connexion";
         }
     </script>
+
+    <title>Modifier le profil • Gretagram</title>
 </head>
 
 <body>
@@ -70,14 +79,50 @@
     </div>
 </nav>
 
-<div id="profile">
+<div class="row" id="graphic_area">
+    <div class="column left" id="select_graphic">
+        <ul id="repart">
+            <a href="repart-sexe">
+                <li id="repart_sexe"><strong>Répartition des followers par sexe</strong></li>
+            </a>
+            <a href="repart-ville">
+                <li id="repart_ville">Répartition des followers par ville</li>
+            </a>
+            <a href="repart-pays">
+                <li id="repart_pays">Répartition des followers par pays</li>
+            </a>
+        </ul>
+        <ul id="evo">
+            <a href="evol-follow">
+                <li id="evol_follow">Evolution du nombre de followers</li>
+            </a>
+        </ul>
+    </div>
 
+    <div class="column right" id="graphic">
+        <canvas id="pieChart"></canvas>
+    </div>
 </div>
-<div id="connected"></div>
-<a href="/">• Home</a><br>
-<a href="modifProfile">• Modifier le profil</a><br>
-<a href="modifPswd">• Modifier le mot de passe</a>
 
+<footer>
+    <div class="footer">
+        <ul class="list" style="display:none">
+            <li>À PROPOS</li>
+            <li>AIDE</li>
+            <li>PRESSE</li>
+            <li>API</li>
+            <li>EMPLOIS</li>
+            <li>CONFIDENTIALITÉ</li>
+            <li>CONDITIONS</li>
+            <li>LIEUX</li>
+            <li>COMPTES PRINCIPAUX</li>
+            <li>HASHTAGS</li>
+            <li>LANGUE</li>
+        </ul>
+        <span><strong>© 2020 GRETAGRAM</strong></span>
+    </div>
+</footer>
 
 </body>
+
 </html>

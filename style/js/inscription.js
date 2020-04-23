@@ -10,6 +10,7 @@ new Vue({
             nom: '',
             prenom: '',
             datenaiss: '',
+            sexe: '',
             adresse: '',
             cp: '',
             ville: '',
@@ -65,6 +66,12 @@ new Vue({
                     <li><input type="text" id="nom" name="nom" v-model="nom" placeholder="Nom" required></li>
                     <li><input type="text" id="prenom" name="prenom" v-model="prenom" placeholder="Prénom" required></li>
                     <li><input type="date" id="datenaiss" name="datenaiss" v-model="datenaiss" placeholder="Date de naissance" required></li>
+                    <li><select name="pets" class="custom-select" id="select" v-model="sexe">
+                        <option value="">Sexe</option>
+                        <option value="M">Masculin</option>
+                        <option value="F">Féminin</option>
+                        <option value="A">Autre</option>
+                    </select></li>
                     <li><input type="text" id="adresse" name="adresse" v-model="adresse" placeholder="Adresse" required></li>
                     <li><input type="text" id="cp" name="cp" v-model="cp" placeholder="Code postal" required></li>
                     <li><input type="text" id="ville" name="ville" v-model="ville" placeholder="Ville" required></li>
@@ -84,7 +91,7 @@ new Vue({
                     </div>
                 </div>`,
     methods: {
-        usrname: function() {
+        usrname: function () {
             axios.get('http://localhost:3000/pseudoExisting', {
                 params: {
                     pseudo: this.username
@@ -102,7 +109,7 @@ new Vue({
                 }
             });
         },
-        mail_existing: function() {
+        mail_existing: function () {
             axios.get('http://localhost:3000/mailExisting', {
                 params: {
                     mail: this.mail
@@ -119,7 +126,7 @@ new Vue({
                 }
             });
         },
-        mdp: function() {
+        mdp: function () {
             if (this.password.includes("`") || this.password.includes('"') || this.password.includes("'")) {
                 this.display_carac = true;
             } else {
@@ -155,6 +162,7 @@ new Vue({
                     nom: this.nom,
                     prenom: this.prenom,
                     date_naissance: this.datenaiss,
+                    sexe: this.sexe,
                     adresse: this.adresse,
                     CP: this.cp,
                     ville: this.ville,
