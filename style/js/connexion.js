@@ -75,6 +75,7 @@ new Vue({
                                     localStorage.pays = response.data[0].pays;
                                     localStorage.username = response.data[0].pseudo;
                                     localStorage.ville = response.data[0].ville;
+                                    localStorage.sexe = response.data[0].sexe;
                                 }
                             });
                         } else {
