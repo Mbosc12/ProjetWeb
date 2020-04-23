@@ -6,6 +6,7 @@ new Vue({
             prenom: "",
             username: "",
             datenaiss: "",
+            sexe: "",
             mail: "",
             adresse: "",
             cp: "",
@@ -42,6 +43,12 @@ new Vue({
                       <label><strong>Date de naissance</strong></label>
                       <input type="date" id="datenaiss" name="datenaiss" v-model="datenaiss" placeholder="datenaiss">
                       </li>
+                      <li><label><strong>Sexe</strong></label>
+                      <select name="pets" class="custom-select" id="select" v-model="sexe">
+                        <option value="M">Masculin</option>
+                        <option value="F">Féminin</option>
+                        <option value="A">Autre</option>
+                    </select></li>
                       <li>
                       <label><strong>Adresse</strong></label>
                       <input type="text" id="email" name="email" v-model="adresse" placeholder="Email">
@@ -86,6 +93,7 @@ new Vue({
                     for (let i=0; i<10; i++) {
                         this.datenaiss += response.data[0].date_naissance[i];
                     }
+                    this.sexe = response.data[0].sexe;
                     this.mail = response.data[0].mail;
                     this.adresse = response.data[0].adresse;
                     this.cp = response.data[0].CP;
@@ -103,6 +111,7 @@ new Vue({
                     prenom: this.prenom,
                     pseudo: this.username,
                     date_naissance: this.datenaiss,
+                    sexe: this.sexe,
                     mail: this.mail,
                     adresse: this.adresse,
                     CP: this.cp,
@@ -131,7 +140,7 @@ new Vue({
             username: localStorage.username
         }
     },
-    template: `<a href="/connexion" v-on:click="disconnect"><i class="fas fa-power-off fa-lg"></i></a>`,
+    template: `<a class="nav-link" href="connexion" v-on:click="disconnect"><i class="fas fa-power-off fa-lg"></i></a>`,
     methods: {
         disconnect: function () {
             localStorage.mail = "";
@@ -139,11 +148,33 @@ new Vue({
             localStorage.cp = "";
             localStorage.adresse = "";
             localStorage.datenaiss = "";
+            localStorage.sexe = "";
             localStorage.nom = "";
             localStorage.prenom = "";
             localStorage.pays = "";
             localStorage.username = "";
             localStorage.ville = "";
         }
+    }
+});
+//TODO: trouver comment faire apparaître une notif
+//requête sql faite ? si oui -> requête + css
+//si non -> en coder une qui fasse apparaître le like + le post liké ?
+new Vue ({
+   el: "#likes",
+    data: function() {
+       return {
+           display_notif: false
+        }
+    },
+   template: `<span v-on:click="notif"><i class='far fa-heart fa-lg'></i>
+                <span id="notif" v-if="display_notif">ok</span>
+               </span>
+`,
+    methods: {
+       notif: function() {
+           console.log("notification");
+           this.display_notif = !this.display_notif;
+       }
     }
 });
