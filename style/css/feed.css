@@ -1,0 +1,28 @@
+/* -------------------- Nav -------------------- */
+nav {
+    background-color: #ffffff;
+    border-bottom: 1px solid #68d89b;
+    margin-top: 5px;
+    padding-bottom: 5px;
+}
+
+#logo {
+    width: 200px;
+    margin-left: 120px;
+}
+
+
+/* -------------------- Body -------------------- */
+body {
+    background-color: #fafafa;
+    position: relative;
+    margin-bottom: 20px;
+}
+
+nav form {
+    margin-left: 120px;
+}
+
+nav ul {
+    margin-left: 125px;
+}

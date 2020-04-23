@@ -2,10 +2,19 @@
 <html>
 
 <head>
+    <!-- Bootstrap -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <!-- Script JS -->
     <script type="module" src="style/js/feed.js"></script>
     <!-- Vue.js -->
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="style/css/feed.css">
+    <!-- Font Awesome (icon) -->
+    <script src="https://use.fontawesome.com/releases/v5.13.0/js/all.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <script>
         /* if the username or password are not localy stored, the user is redirected to the connexion page */
@@ -16,17 +25,55 @@
 </head>
 
 <body>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light ">
+    <a class="navbar-brand" href="feed">
+        <!-- Logo -->
+        <img src="../style/img/logo.png" id="logo" alt="Logo GRETAGRAM"/>
+    </a>
 
-<h1>Feed</h1>
+    <!-- Search input -->
+    <form class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" type="search" placeholder="Ne fonctionne pas encore" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
 
-<div id="connected"></div>
-<div id="disconnect"></div><br>
+    <!-- Menu -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <!-- Home -->
+            <li class="nav-item active">
+                <a class="nav-link" href="feed"><i class='fa fa-home fa-lg'></i></a>
+            </li>
+            <!-- Stats TODO: ajouter liens stats -->
+            <li class="nav-item">
+                <a class="nav-link"><i class='far fa-chart-bar fa-lg'></i></a>
+            </li>
+            <!-- Likes -->
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    <i class='far fa-heart fa-lg'></i>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <div id="likes"></div>
+                </div>
+            </li>
+            <!-- User profile -->
+            <li class="nav-item ">
+                <a class="nav-link" href="mon-profil"><i class='far fa-user fa-lg'></i></a>
+            </li>
+            <!-- Disconnect button -->
+            <li class="nav-item " id="disconnect">
+            </li>
+        </ul>
+    </div>
+</nav>
 
-<a href="feed">• Feed</a><br>
-<a href="mon-profil">• Mon profil</a> <br>
-<a href="modifProfile">• Modifier le profil</a> <br>
-<a href="modifPswd">• Modifier le mot de passe</a><br>
-<a href="/">• home</a> <br>
+<a href="/">• Home</a><br>
+<a href="modifProfile">• Modifier le profil</a><br>
+<a href="modifPswd">• Modifier le mot de passe</a>
+
 
 </body>
 </html>
