@@ -31,22 +31,57 @@
 </head>
 
 <body>
-<div id="page_navbar">
-    <!-- Logo -->
-    <img src="../style/img/logo.png" id="logo" alt="Logo GRETAGRAM"/>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light ">
+    <a class="navbar-brand" href="feed">
+        <!-- Logo -->
+        <img src="../style/img/logo.png" id="logo" alt="Logo GRETAGRAM"/>
+    </a>
 
-    <div id="icons">
-        <!-- Menu -->
-        <a href="feed"><i class='fa fa-home fa-lg'></i></a>
-        <i class='far fa-chart-bar fa-lg'></i>
-        <i class='far fa-heart fa-lg'></i>
-        <a href="mon-profil"><i class='far fa-user fa-lg'></i></a>
-        <i id="disconnect"></i>
+    <!-- Search input -->
+    <form class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" type="search" placeholder="Ne fonctionne pas encore" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+
+    <!-- Menu -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <!-- Home -->
+            <li class="nav-item active">
+                <a class="nav-link" href="feed"><i class='fa fa-home fa-lg'></i></a>
+            </li>
+            <!-- Stats TODO: ajouter liens stats -->
+            <li class="nav-item">
+                <a class="nav-link"><i class='far fa-chart-bar fa-lg'></i></a>
+            </li>
+            <!-- Likes -->
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    <i id="likes"></i>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#">Prochainement</a>
+                    <a class="dropdown-item" href="#">Les notifications</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">Mais pas tout de suite</a>
+                    <a class="dropdown-item" href="#">Patience</a>
+                </div>
+            </li>
+            <!-- User profile -->
+            <li class="nav-item ">
+                <a class="nav-link" href="mon-profil"><i class='far fa-user fa-lg'></i></a>
+            </li>
+            <!-- Disconnect button -->
+            <li class="nav-item " id="disconnect">
+            </li>
+        </ul>
     </div>
-</div>
+</nav>
 
 <div id="modif">
-    <div id="navbar">
+    <div id="modif_bar">
         <ul>
             <a href="modifProfile"><li id="modif_profil">Modifier le profil</li></a>
             <a href="modifPswd"><li id="change_pswd"><strong>Changer de mot de passe</strong></li></a>
@@ -59,7 +94,6 @@
 
 <footer>
     <div class="footer">
-        <nav>
             <ul class="list" style="display:none">
                 <li>À PROPOS</li>
                 <li>AIDE</li>
@@ -73,7 +107,6 @@
                 <li>HASHTAGS</li>
                 <li>LANGUE</li>
             </ul>
-        </nav>
         <span><strong>© 2020 GRETAGRAM</strong></span>
     </div>
 </footer>
