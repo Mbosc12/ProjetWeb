@@ -37,6 +37,22 @@ body {
     width: 940px;
 }
 
+#graphic p{
+    border: 2px solid #68d89b;
+    border-radius: 25px;
+    text-align: center;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-left: 100px;
+    margin-right: 100px;
+    padding: 5px;
+}
+
+#graphic canvas {
+    margin-top: 50px;
+}
+
+
 .column {
     float: left;
 }
@@ -66,10 +82,6 @@ body {
     width: 75%;
 }
 
-#repart_sexe {
-    border-left: 3px solid #68d89b;
-}
-
 #repart {
     border-bottom: double #dadada;
     padding-bottom: 20px;
@@ -79,7 +91,7 @@ body {
     border-left: 3px solid #ffffff;
 }
 
-#repart_ville:hover, #repart_pays:hover, #evol_follow:hover {
+#repart_sexe:hover, #repart_ville:hover, #repart_pays:hover, #evol_follow:hover {
     background-color: #fafafa;
     border-left: 3px solid #dadada;
 }
