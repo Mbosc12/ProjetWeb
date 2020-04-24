@@ -50,6 +50,10 @@ app.get('/repart-ville', function (req, res) {
     res.sendFile('repart_ville.html', {'root': __dirname + '/templates'})
 });
 
+app.get('/repart-pays', function (req, res) {
+    res.sendFile('repart_pays.html', {'root': __dirname + '/templates'})
+});
+
 
 // Requete pour avoir les abonnés d'un utilisateur
 app.get('/Followers',function(req,res){
@@ -111,6 +115,7 @@ app.get('/Followers',function(req,res){
    29) /NbFemmeHomme : nombre de femme et d'homme follower d'un utilisateur (entrée : mail -> sortie : liste)
    30) /NbFollowParJour : Nb de follow pour un jour donné (entrée : mail, date -> sortie : nb)
    31) /nbFollowersByCity : nombre de followers par ville d'un utilisateur (entrée : mail -> sortie : liste)
+   32) /nbFollowersByCountry : nombre de followers par ville d'un utilisateur (entrée : mail -> sortie : liste)
 
  */
 
@@ -1057,6 +1062,42 @@ app.get('/nbFollowersByCity', function (req, res) {
 
     });
 });
+
+// 32) /nbFollowersByCountry : nombre de followers par ville d'un utilisateur (entrée : mail -> sortie : liste)
+app.get('/nbFollowersByCountry', function (req, res) {
+    // connection à la bdd créée
+    const db = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "root",
+        database: "mydb",
+        port: "8889"
+    });
+
+    db.connect(function (err) {
+        if (err) throw err;
+
+        const query = req.query;
+
+        const sql =
+            `SELECT DISTINCT pays, COUNT(pays) as nb
+                FROM utilisateur
+                INNER JOIN (SELECT FK_utilisateur_mail_2 FROM follower WHERE FK_utilisateur_mail_1 = '${query.mail}') AS table1 
+                WHERE utilisateur.mail = table1.FK_utilisateur_mail_2
+                GROUP BY pays
+                ORDER BY nb DESC
+        `;
+
+        db.query(sql, function (err, result, fields) {
+            if (err) throw err;
+            console.log(result);
+            res.send(result);
+        });
+        db.end();
+
+    });
+});
+
 /*
 
 
