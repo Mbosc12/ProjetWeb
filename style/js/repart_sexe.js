@@ -1,27 +1,3 @@
-new Vue({
-    el: "#disconnect",
-    data: function () {
-        return {
-            username: localStorage.username,
-        }
-    },
-    template: `<a class="nav-link" href="connexion" v-on:click="disconnect"><i class="fas fa-power-off fa-lg"></i></a>`,
-    methods: {
-        disconnect: function () {
-            localStorage.mail = "";
-            localStorage.password = "";
-            localStorage.cp = "";
-            localStorage.adresse = "";
-            localStorage.datenaiss = "";
-            localStorage.nom = "";
-            localStorage.prenom = "";
-            localStorage.pays = "";
-            localStorage.username = "";
-            localStorage.ville = "";
-        },
-    }
-});
-
 new Vue ({
     data: function() {
         return {
@@ -69,7 +45,7 @@ new Vue ({
     }
 });
 
-
+/* Likes notification */
 new Vue ({
     el: "#likes",
     data: function() {
@@ -90,6 +66,7 @@ new Vue ({
     }
 });
 
+/* Modification of the user information and password */
 new Vue ({
     el: "#config",
     data: function() {
@@ -106,5 +83,31 @@ new Vue ({
             console.log("notification");
             this.display_notif = !this.display_notif;
         }
+    }
+});
+
+/* Disconnect button and function */
+new Vue({
+    el: "#disconnect",
+    data: function () {
+        return {
+            username: localStorage.username,
+        }
+    },
+    template: `<a class="nav-link" href="connexion" v-on:click="disconnect"><i class="fas fa-power-off fa-lg"></i></a>`,
+    methods: {
+        disconnect: function () {
+            localStorage.mail = "";
+            localStorage.password = "";
+            localStorage.cp = "";
+            localStorage.adresse = "";
+            localStorage.datenaiss = "";
+            localStorage.sexe = "";
+            localStorage.nom = "";
+            localStorage.prenom = "";
+            localStorage.pays = "";
+            localStorage.username = "";
+            localStorage.ville = "";
+        },
     }
 });

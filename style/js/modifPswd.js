@@ -175,6 +175,7 @@ new Vue({
             localStorage.cp = "";
             localStorage.adresse = "";
             localStorage.datenaiss = "";
+            localStorage.sexe = "";
             localStorage.nom = "";
             localStorage.prenom = "";
             localStorage.pays = "";

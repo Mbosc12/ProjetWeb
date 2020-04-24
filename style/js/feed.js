@@ -25,7 +25,8 @@ new Vue({
             localStorage.password = "";
             localStorage.cp = "";
             localStorage.adresse = "";
-            localStorage.datenaiss = "";
+            localStorage.datenaiss = "",
+            localStorage.sexe = "";
             localStorage.nom = "";
             localStorage.prenom = "";
             localStorage.pays = "";
