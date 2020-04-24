@@ -9,7 +9,7 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <!-- CSS -->
-    <link rel="stylesheet" type="text/css" href="style/css/repart_sexe.css">
+    <link rel="stylesheet" type="text/css" href="../style/css/stats_profile.css">
     <!-- Script JS-->
     <script type="module" src="style/js/repart_sexe.js"></script>
     <!-- Vue.js -->
@@ -54,23 +54,29 @@
             <li class="nav-item active">
                 <a class="nav-link" href="feed"><i class='fa fa-home fa-lg'></i></a>
             </li>
-            <!-- Stats TODO: ajouter liens stats -->
+            <!-- Stats -->
             <li class="nav-item">
-                <a class="nav-link"><i class='far fa-chart-bar fa-lg'></i></a>
+                <a class="nav-link" href="repart-sexe"><i class='far fa-chart-bar fa-lg'></i></a>
             </li>
             <!-- Likes -->
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown"
-                   aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link" data-toggle="dropdown">
                     <i class='far fa-heart fa-lg'></i>
                 </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="margin-left: -75px">
                     <div id="likes"></div>
                 </div>
             </li>
             <!-- User profile -->
             <li class="nav-item ">
                 <a class="nav-link" href="mon-profil"><i class='far fa-user fa-lg'></i></a>
+            </li>
+            <!-- User setting -->
+            <li class="nav-item dropdown">
+                <a class="nav-link" data-toggle="dropdown"><i class="fas fa-cog fa-lg"></i></a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="margin-left: -100px">
+                    <div id="config"></div>
+                </div>
             </li>
             <!-- Disconnect button -->
             <li class="nav-item " id="disconnect">
@@ -83,7 +89,7 @@
     <div class="column left" id="select_graphic">
         <ul id="repart">
             <a href="repart-sexe">
-                <li id="repart_sexe"><strong>Répartition des followers par sexe</strong></li>
+                <li id="repart_sexe" style="border-left: 3px solid #68d89b; font-weight: bold">Répartition des followers par sexe</li>
             </a>
             <a href="repart-ville">
                 <li id="repart_ville">Répartition des followers par ville</li>
@@ -100,6 +106,7 @@
     </div>
 
     <div class="column right" id="graphic">
+        <p>Répartition de vos followers par sexe</p>
         <canvas id="pieChart"></canvas>
     </div>
 </div>
