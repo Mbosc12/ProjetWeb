@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns:v-on="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+
+    <!-- Bootstrap -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="../style/css/stats_profile.css">
+    <!-- Script JS-->
+    <script type="module" src="style/js/repart_pays.js"></script>
+    <!-- Vue.js -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!-- Font Awesome (icon) -->
+    <script src="https://use.fontawesome.com/releases/v5.13.0/js/all.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Axios -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
+
+    <script>
+        /* if the username or password are not localy stored, the user is redirected to the connexion page */
+        if (localStorage.username === "" || localStorage.password === "") {
+            window.location.href = "/connexion";
+        }
+    </script>
+
+    <title>Modifier le profil • Gretagram</title>
+</head>
+
+<body>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light ">
+    <a class="navbar-brand" href="feed">
+        <!-- Logo -->
+        <img src="../style/img/logo.png" id="logo" alt="Logo GRETAGRAM"/>
+    </a>
+
+    <!-- Search input -->
+    <form class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" type="search" placeholder="Ne fonctionne pas encore" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+
+    <!-- Menu -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <!-- Home -->
+            <li class="nav-item active">
+                <a class="nav-link" href="feed"><i class='fa fa-home fa-lg'></i></a>
+            </li>
+            <!-- Stats -->
+            <li class="nav-item">
+                <a class="nav-link" href="repart-sexe"><i class='far fa-chart-bar fa-lg'></i></a>
+            </li>
+            <!-- Likes -->
+            <li class="nav-item dropdown">
+                <a class="nav-link" data-toggle="dropdown">
+                    <i class='far fa-heart fa-lg'></i>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="margin-left: -75px">
+                    <div id="likes"></div>
+                </div>
+            </li>
+            <!-- User profile -->
+            <li class="nav-item ">
+                <a class="nav-link" href="mon-profil"><i class='far fa-user fa-lg'></i></a>
+            </li>
+            <!-- User setting -->
+            <li class="nav-item dropdown">
+                <a class="nav-link" data-toggle="dropdown"><i class="fas fa-cog fa-lg"></i></a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="margin-left: -100px">
+                    <div id="config"></div>
+                </div>
+            </li>
+            <!-- Disconnect button -->
+            <li class="nav-item " id="disconnect">
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="row" id="graphic_area">
+    <div class="column left" id="select_graphic">
+        <ul id="repart">
+            <a href="repart-sexe">
+                <li id="repart_sexe">Répartition des followers par sexe</li>
+            </a>
+            <a href="repart-ville">
+                <li id="repart_ville">Répartition des followers par ville</li>
+            </a>
+            <a href="repart-pays">
+                <li id="repart_pays" style="border-left: 3px solid #68d89b; font-weight: bold">Répartition des followers par pays</li>
+            </a>
+        </ul>
+        <ul id="evo">
+            <a href="evol-follow">
+                <li id="evol_follow">Evolution du nombre de followers</li>
+            </a>
+        </ul>
+    </div>
+
+    <div class="column right" id="graphic">
+        <p>Répartition de vos followers par pays</p>
+        <canvas id="horizontalBar"></canvas>
+    </div>
+</div>
+
+<footer>
+    <div class="footer">
+        <ul class="list" style="display:none">
+            <li>À PROPOS</li>
+            <li>AIDE</li>
+            <li>PRESSE</li>
+            <li>API</li>
+            <li>EMPLOIS</li>
+            <li>CONFIDENTIALITÉ</li>
+            <li>CONDITIONS</li>
+            <li>LIEUX</li>
+            <li>COMPTES PRINCIPAUX</li>
+            <li>HASHTAGS</li>
+            <li>LANGUE</li>
+        </ul>
+        <span><strong>© 2020 GRETAGRAM</strong></span>
+    </div>
+</footer>
+
+</body>
+
+</html>
