@@ -136,4 +136,70 @@ let vm = new Vue({
             });
         }
 	}
-})
+});
+
+
+new Vue({
+    el: "#disconnect",
+    data: function () {
+        return {
+            username: localStorage.username
+        }
+    },
+    template: `<a class="nav-link" href="connexion" v-on:click="disconnect"><i class="fas fa-power-off fa-lg"></i></a>`,
+    methods: {
+        disconnect: function () {
+            localStorage.mail = "";
+            localStorage.password = "";
+            localStorage.cp = "";
+            localStorage.adresse = "";
+            localStorage.datenaiss = "";
+            localStorage.nom = "";
+            localStorage.prenom = "";
+            localStorage.pays = "";
+            localStorage.username = "";
+            localStorage.ville = "";
+        }
+    }
+});
+
+new Vue ({
+    el: "#likes",
+    data: function() {
+        return {
+            display_notif: false
+        }
+    },
+    template: `<div><a class="dropdown-item" href="#">Prochainement</a>
+                    <a class="dropdown-item" href="#">Les notifications</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">Mais pas tout de suite</a>
+                    <a class="dropdown-item" href="#">Patience</a></div>`,
+    methods: {
+        notif: function () {
+            console.log("notification");
+            this.display_notif = !this.display_notif;
+        }
+    }
+});
+
+new Vue ({
+    el: "#config",
+    data: function() {
+        return {
+            display_notif: false
+        }
+    },
+    template: `<div>
+                   <a class="dropdown-item" href="modifProfile">Modifier mes informations</a>
+                   <a class="dropdown-item" href="modifPswd">Modifier mon mot de passe</a>
+               </div>`,
+    methods: {
+        notif: function () {
+            console.log("notification");
+            this.display_notif = !this.display_notif;
+        }
+    }
+});
+
+

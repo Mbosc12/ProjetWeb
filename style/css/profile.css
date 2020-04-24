@@ -1,13 +1,30 @@
+/* -------------------- Nav -------------------- */
+nav {
+	background-color: #ffffff;
+	border-bottom: 1px solid #68d89b;
+	margin-top: 5px;
+	padding-bottom: 5px;
+}
+
+#logo {
+	width: 200px;
+	margin-left: 120px;
+}
+
+nav form {
+	margin-left: 120px;
+}
+
+nav ul {
+	margin-left: 125px;
+}
+
+/* --------------------  -------------------- */
+
 body {
 	top: 0;
 	left: 0;
 	margin: 0;
-}
-
-.navbar {
-	justify-content: unset;
-	line-height: calc(1.5em + .75rem + 2px);
-	background-color: #f6f6f6;
 }
 
 #home {
