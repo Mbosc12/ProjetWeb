@@ -45,17 +45,16 @@
             <li class="nav-item active">
                 <a class="nav-link" href="feed"><i class='fa fa-home fa-lg'></i></a>
             </li>
-            <!-- Stats TODO: ajouter liens stats -->
+            <!-- Stats -->
             <li class="nav-item">
-                <a class="nav-link"><i class='far fa-chart-bar fa-lg'></i></a>
+                <a class="nav-link" href="repart-sexe"><i class='far fa-chart-bar fa-lg'></i></a>
             </li>
             <!-- Likes -->
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown"
-                   aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link" data-toggle="dropdown">
                     <i class='far fa-heart fa-lg'></i>
                 </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="margin-left: -75px">
                     <div id="likes"></div>
                 </div>
             </li>
@@ -64,8 +63,11 @@
                 <a class="nav-link" href="mon-profil"><i class='far fa-user fa-lg'></i></a>
             </li>
             <!-- User setting -->
-            <li class="nav-item ">
-                <a class="nav-link" href="modifProfile"><i class="fas fa-cog fa-lg"></i></a>
+            <li class="nav-item dropdown">
+                <a class="nav-link" data-toggle="dropdown"><i class="fas fa-cog fa-lg"></i></a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="margin-left: -100px">
+                    <div id="config"></div>
+                </div>
             </li>
             <!-- Disconnect button -->
             <li class="nav-item " id="disconnect">
