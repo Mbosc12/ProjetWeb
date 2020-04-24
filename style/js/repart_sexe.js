@@ -1,3 +1,4 @@
+/* Graphic : followers by gender */
 new Vue ({
     data: function() {
         return {
