@@ -42,6 +42,14 @@ app.get('/modifPswd', function (req, res) {
     res.sendFile('modifPswd.html', {'root': __dirname + '/templates'})
 });
 
+app.get('/repart-sexe', function (req, res) {
+    res.sendFile('repart_sexe.html', {'root': __dirname + '/templates'})
+});
+
+app.get('/repart-ville', function (req, res) {
+    res.sendFile('repart_ville.html', {'root': __dirname + '/templates'})
+});
+
 
 // Requete pour avoir les abonnés d'un utilisateur
 app.get('/Followers',function(req,res){
@@ -102,6 +110,7 @@ app.get('/Followers',function(req,res){
 
    29) /NbFemmeHomme : nombre de femme et d'homme follower d'un utilisateur (entrée : mail -> sortie : liste)
    30) /NbFollowParJour : Nb de follow pour un jour donné (entrée : mail, date -> sortie : nb)
+   31) /nbFollowersByCity : nombre de followers par ville d'un utilisateur (entrée : mail -> sortie : liste)
 
  */
 
@@ -585,7 +594,7 @@ app.get('/newUser', function (req, res) {
     db.connect(function (err) {
         if (err) throw err;
 
-        var query = req.query;
+        const query = req.query;
 
         const sql = `INSERT INTO utilisateur (pseudo, nom, prenom, mail, motdepass, date_naissance,sexe, pays, cp, ville, adresse) VALUES ('${query.pseudo}', '${query.nom}', '${query.prenom}', '${query.mail}', '${query.motdepass}', '${query.date_naissance}','${query.sexe}','${query.pays}', '${query.CP}', '${query.ville}', '${query.adresse}') `;
 
@@ -615,12 +624,12 @@ app.get('/pseudoExisting', function (req, res) {
 
         var sql = `SELECT COUNT(pseudo) AS pseudoExisting FROM utilisateur WHERE pseudo='${query.pseudo}'`;
 
-        fb.query(sql, function (err, result, fields) {
+        db.query(sql, function (err, result, fields) {
             if (err) throw err;
             console.log(result);
             res.send(result);
         });
-        fb.end();
+        db.end();
     });
 });
 
@@ -660,28 +669,28 @@ app.get('/AjoutPost',function(req,res){
 	  database: "mydb"
 	});
 
-	db.connect(function(err) {
-		if (err) throw err;
+    db.connect(function (err) {
+        if (err) throw err;
 
-		var query = req.query;
+        var query = req.query;
 
-		var sql = `INSERT INTO post VALUES ('${query.postId}', '${query.mail}', '${query.titre}', '${query.message}')`;
+        var sql = `INSERT INTO post VALUES ('${query.postId}', '${query.mail}', '${query.titre}', '${query.message}')`;
 
-		db.query(sql, function (err, result, fields) {
-			if (err) throw err;
-			console.log(result);
-			res.send(result);
-		});
+        db.query(sql, function (err, result, fields) {
+            if (err) throw err;
+            console.log(result);
+            res.send(result);
+        });
 
-		sql = `INSERT INTO Poster VALUES ('${query.mail}', '${query.postId}', '${query.date}')`;
+        var sql = `INSERT INTO Poster VALUES ('${query.mail}', '${query.postId}', '${query.date}')`;
 
-		db.query(sql, function (err, result, fields) {
-			if (err) throw err;
-			console.log(result);
-			res.send(result);
-		});
-		db.end();
-	});
+        db.query(sql, function (err, result, fields) {
+            if (err) throw err;
+            console.log(result);
+            res.send(result);
+        });
+        db.end();
+    });
 });
 
 // 19) /AjoutLike : Enregistre un Like (entrée : FK_utilisateur_mail, FK_post_id -> sortie : 1 ou 0)
@@ -694,20 +703,20 @@ app.get('/AjoutLike',function(req,res){
 	  database: "mydb"
 	});
 
-	db.connect(function(err) {
-		if (err) throw err;
+    db.connect(function (err) {
+        if (err) throw err;
 
-		var query = req.query;
+        var query = req.query;
 
-		var sql = `INSERT INTO Liker VALUES ('${query.mail}', '${query.postId}',NOW())`;
+        var sql = `INSERT INTO Liker VALUES ('${query.mail}', '${query.postId}',NOW())`;
 
-		db.query(sql, function (err, result, fields) {
-			if (err) throw err;
-			console.log(result);
-			res.send(result);
-		});
-		db.end();
-	});
+        db.query(sql, function (err, result, fields) {
+            if (err) throw err;
+            console.log(result);
+            res.send(result);
+        });
+        db.end();
+    });
 });
 
 // 20) /AjoutFollower : Enregistre un Follower (entrée : FK_utilisateur_mail_1, FK_utilisateur_mail_2 -> sortie : 1 ou 0)
@@ -720,20 +729,20 @@ app.get('/AjoutFollower',function(req,res){
 	  database: "mydb"
 	});
 
-	db.connect(function(err) {
-		if (err) throw err;
+    db.connect(function (err) {
+        if (err) throw err;
 
-		const query = req.query;
+        const query = req.query;
 
-		const sql = `INSERT INTO Follower VALUES ('${query.mail_1}', '${query.mail_2}',NOW())`;
+        const sql = `INSERT INTO Follower VALUES ('${query.mail_1}', '${query.mail_2}',NOW())`;
 
-		db.query(sql, function (err, result, fields) {
-			if (err) throw err;
-			console.log(result);
-			res.send(result);
-		});
-		db.end();
-	});
+        db.query(sql, function (err, result, fields) {
+            if (err) throw err;
+            console.log(result);
+            res.send(result);
+        });
+        db.end();
+    });
 });
 
 // 21) /AjoutCommentaire : Enregistre un commentaire (entrée : FK_utilisateur_mail, FK_post_id, date_commentaire, message_commentaire -> sortie : 1 ou 0)
@@ -746,20 +755,20 @@ app.get('/AjoutCommentaire',function(req,res){
 	  database: "mydb"
 	});
 
-	db.connect(function(err) {
-		if (err) throw err;
+    db.connect(function (err) {
+        if (err) throw err;
 
-		const query = req.query;
+        const query = req.query;
 
-		const sql = `INSERT INTO Commenter VALUES ('${query.mail}', '${query.postId}', '${query.date}', '${query.message}')`;
+        const sql = `INSERT INTO Commenter VALUES ('${query.mail}', '${query.postId}', '${query.date}', '${query.message}')`;
 
-		db.query(sql, function (err, result, fields) {
-			if (err) throw err;
-			console.log(result);
-			res.send(result);
-		});
-		db.end();
-	});
+        db.query(sql, function (err, result, fields) {
+            if (err) throw err;
+            console.log(result);
+            res.send(result);
+        });
+        db.end();
+    });
 });
 
 // 22) /AjoutPartage : Enregistre un partage de post (entrée : FK_utilisateur_mail, FK_post_id -> sortie : 1 ou 0)
@@ -772,20 +781,20 @@ app.get('/AjoutPartage',function(req,res){
 	  database: "mydb"
 	});
 
-	db.connect(function(err) {
-		if (err) throw err;
+    db.connect(function (err) {
+        if (err) throw err;
 
-		const query = req.query;
+        const query = req.query;
 
-		const sql = `INSERT INTO Partager VALUES ('${query.mail}', '${query.postId}',NOW())`;
+        const sql = `INSERT INTO Partager VALUES ('${query.mail}', '${query.postId}',NOW())`;
 
-		db.query(sql, function (err, result, fields) {
-			if (err) throw err;
-			console.log(result);
-			res.send(result);
-		});
-		db.end();
-	});
+        db.query(sql, function (err, result, fields) {
+            if (err) throw err;
+            console.log(result);
+            res.send(result);
+        });
+        db.end();
+    });
 });
 
 // 23) /ModifUtilisateur : Update un utilisateur déjà dans la bdd (entrée : pseudo, nom, prenom, mail, motdepass, date_naissance, sexe, CP, ville, adresse -> sortie : nb (1 ou 0))
@@ -798,20 +807,20 @@ app.get('/ModifUtilisateur',function(req,res){
 	  database: "mydb"
 	});
 
-	db.connect(function(err) {
-		if (err) throw err;
+    db.connect(function (err) {
+        if (err) throw err;
 
-		const query = req.query;
+        const query = req.query;
 
-		const sql = `UPDATE utilisateur SET pseudo ='${query.pseudo}', nom ='${query.nom}', prenom ='${query.prenom}', mail ='${query.mail}', motdepass ='${query.motdepass}', date_naissance ='${query.date_naissance}',sexe ='${query.sexe}', CP ='${query.CP}', ville ='${query.ville}', adresse ='${query.adresse}' WHERE mail ='${query.mail}' `;
+        const sql = `UPDATE utilisateur SET pseudo ='${query.pseudo}', nom ='${query.nom}', prenom ='${query.prenom}', mail ='${query.mail}', motdepass ='${query.motdepass}', date_naissance ='${query.date_naissance}',sexe ='${query.sexe}', CP ='${query.CP}', ville ='${query.ville}', adresse ='${query.adresse}' WHERE mail ='${query.mail}' `;
 
-		db.query(sql, function (err, result, fields) {
-			if (err) throw err;
-			console.log(result);
-			res.send(result);
-		});
-		db.end();
-	});
+        db.query(sql, function (err, result, fields) {
+            if (err) throw err;
+            console.log(result);
+            res.send(result);
+        });
+        db.end();
+    });
 });
 
 // 23 bis) /ModifMDPUtilisateur : Update un mdp utilisateur déjà dans la bdd (entrée : mail, motdepass -> sortie : nb (1 ou 0))
@@ -824,8 +833,8 @@ app.get('/ModifMDPUtilisateur',function(req,res){
 	  database: "mydb"
 	});
 
-	db.connect(function(err) {
-		if (err) throw err;
+    db.connect(function (err) {
+        if (err) throw err;
 
         const query = req.query;
         console.log("le mail est : '${query.mail}'");
@@ -833,13 +842,13 @@ app.get('/ModifMDPUtilisateur',function(req,res){
 
         const sql = `UPDATE utilisateur SET motdepass ='${query.motdepass}' WHERE pseudo ='${query.pseudo}'`;
 
-		db.query(sql, function (err, result, fields) {
-			if (err) throw err;
-			console.log(result);
-			res.send(result);
-		});
-		db.end();
-	});
+        db.query(sql, function (err, result, fields) {
+            if (err) throw err;
+            console.log(result);
+            res.send(result);
+        });
+        db.end();
+    });
 });
 
 // 24) /ModifPost : modifie un ou plusieurs éléments d'un post : (entrée : PK_post_id, FK_utilisateur_mail, titre, message, date_publication -> sortie : 1 ou 0)
@@ -852,20 +861,20 @@ app.get('/ModifPost',function(req,res){
 	  database: "mydb"
 	});
 
-	db.connect(function(err) {
-		if (err) throw err;
+    db.connect(function (err) {
+        if (err) throw err;
 
-		const query = req.query;
+        const query = req.query;
 
-		const sql = `UPDATE post SET FK_utilisateur_mail ='${query.mail}', titre ='${query.titre}', message ='${query.message}', date_publication ='${query.date_publication}' WHERE PK_post_id ='${query.postId}'`;
+        const sql = `UPDATE post SET FK_utilisateur_mail ='${query.mail}', titre ='${query.titre}', message ='${query.message}', date_publication ='${query.date_publication}' WHERE PK_post_id ='${query.postId}'`;
 
-		db.query(sql, function (err, result, fields) {
-			if (err) throw err;
-			console.log(result);
-			res.send(result);
-		});
-		db.end();
-	});
+        db.query(sql, function (err, result, fields) {
+            if (err) throw err;
+            console.log(result);
+            res.send(result);
+        });
+        db.end();
+    });
 });
 
 // 25) /EnleveLike : supprime le like de la base de donnée : (entrée : FK_utilisateur_mail, FK_post_id -> sortie : nb 0 ou 1)
@@ -878,20 +887,20 @@ app.get('/EnleveLike',function(req,res){
 	  database: "mydb"
 	});
 
-	db.connect(function(err) {
-		if (err) throw err;
+    db.connect(function (err) {
+        if (err) throw err;
 
-		const query = req.query;
+        const query = req.query;
 
-		const sql = `DELETE FROM Liker WHERE FK_utilisateur_mail='${query.mail}' AND FK_post_id ='${query.post}' `;
+        const sql = `DELETE FROM Liker WHERE FK_utilisateur_mail='${query.mail}' AND FK_post_id ='${query.post}' `;
 
-		db.query(sql, function (err, result, fields) {
-			if (err) throw err;
-			console.log(result);
-			res.send(result);
-		});
-		db.end();
-	});
+        db.query(sql, function (err, result, fields) {
+            if (err) throw err;
+            console.log(result);
+            res.send(result);
+        });
+        db.end();
+    });
 });
 
 // 26) /EnleveFollower : supprime un follower de la bdd : (entrée : FK_utilisateur_mail_1, FK_utilisateur_mail_2 -> sortie nb 0 ou 1)
@@ -904,20 +913,20 @@ app.get('/EnleveFollower',function(req,res){
 	  database: "mydb"
 	});
 
-	db.connect(function(err) {
-		if (err) throw err;
+    db.connect(function (err) {
+        if (err) throw err;
 
-		const query = req.query;
+        const query = req.query;
 
-		const sql = `DELETE FROM Follower WHERE FK_utilisateur_mail_1='${query.mail_1}' AND FK_utilisateur_mail_2 ='${query.mail_2}' `;
+        const sql = `DELETE FROM Follower WHERE FK_utilisateur_mail_1='${query.mail_1}' AND FK_utilisateur_mail_2 ='${query.mail_2}' `;
 
-		db.query(sql, function (err, result, fields) {
-			if (err) throw err;
-			console.log(result);
-			res.send(result);
-		});
-		db.end();
-	});
+        db.query(sql, function (err, result, fields) {
+            if (err) throw err;
+            console.log(result);
+            res.send(result);
+        });
+        db.end();
+    });
 });
 
 // 27) /EnleveCommentaire : supprime un commentaire de la bdd : (entrée : FK_utilisateur_mail, FK_post_id -> sortie : nb 0 ou 1)
@@ -930,20 +939,20 @@ app.get('/EnleveCommentaire',function(req,res){
 	  database: "mydb"
 	});
 
-	db.connect(function(err) {
-		if (err) throw err;
+    db.connect(function (err) {
+        if (err) throw err;
 
-		const query = req.query;
+        const query = req.query;
 
-		const sql = `DELETE FROM Commenter WHERE FK_utilisateur_mail='${query.mail}' AND FK_post_id ='${query.postId}' `;
+        const sql = `DELETE FROM Commenter WHERE FK_utilisateur_mail='${query.mail}' AND FK_post_id ='${query.postId}' `;
 
-		db.query(sql, function (err, result, fields) {
-			if (err) throw err;
-			console.log(result);
-			res.send(result);
-		});
-		db.end();
-	});
+        db.query(sql, function (err, result, fields) {
+            if (err) throw err;
+            console.log(result);
+            res.send(result);
+        });
+        db.end();
+    });
 });
 
 // 28) /EnlevePost : supprime un post : (entrée : PK_post_id -> sortie : nb 0 ou 1)
@@ -956,20 +965,20 @@ app.get('/EnlevePost',function(req,res){
 	  database: "mydb"
 	});
 
-	db.connect(function(err) {
-		if (err) throw err;
+    db.connect(function (err) {
+        if (err) throw err;
 
-		const query = req.query;
+        const query = req.query;
 
-		const sql = `DELETE FROM post WHERE PK_post_id='${query.postId}'`;
+        const sql = `DELETE FROM post WHERE PK_post_id='${query.postId}'`;
 
-		db.query(sql, function (err, result, fields) {
-			if (err) throw err;
-			console.log(result);
-			res.send(result);
-		});
-		db.end();
-	});
+        db.query(sql, function (err, result, fields) {
+            if (err) throw err;
+            console.log(result);
+            res.send(result);
+        });
+        db.end();
+    });
 });
 
 // 29) /NbFemmeHomme : nombre de femme et d'homme follower d'un utilisateur (entrée : mail -> sortie : liste)
@@ -982,13 +991,13 @@ app.get('/NbFemmeHomme',function(req,res){
 	  database: "mydb"
 	});
 
-	db.connect(function(err) {
-		if (err) throw err;
+    db.connect(function (err) {
+        if (err) throw err;
 
-		const query = req.query;
+        const query = req.query;
 
-        const sql = 
-        `SELECT COUNT(sexe) AS sexe
+        const sql =
+            `SELECT COUNT(sexe) AS sexe
                 FROM utilisateur
                 INNER JOIN (SELECT FK_utilisateur_mail_2 FROM follower WHERE FK_utilisateur_mail_1 = '${query.mail}') AS table1 
                 WHERE utilisateur.mail = table1.FK_utilisateur_mail_2 AND sexe='F'
@@ -1004,13 +1013,49 @@ app.get('/NbFemmeHomme',function(req,res){
                 WHERE utilisateur.mail = table1.FK_utilisateur_mail_2 AND sexe='A'
         `;
 
-		db.query(sql, function (err, result, fields) {
-			if (err) throw err;
-			console.log(result);
-			res.send(result);
-		});
-		db.end();
-	});
+        db.query(sql, function (err, result, fields) {
+            if (err) throw err;
+            console.log(result);
+            res.send(result);
+        });
+        db.end();
+
+    });
+});
+
+// 31) /nbFollowersByCity : nombre de followers par ville d'un utilisateur (entrée : mail -> sortie : liste)
+app.get('/nbFollowersByCity', function (req, res) {
+    // connection à la bdd créée
+    const db = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "root",
+        database: "mydb",
+        port: "8889"
+    });
+
+    db.connect(function (err) {
+        if (err) throw err;
+
+        const query = req.query;
+
+        const sql =
+            `SELECT DISTINCT ville, COUNT(ville) as nb
+                FROM utilisateur
+                INNER JOIN (SELECT FK_utilisateur_mail_2 FROM follower WHERE FK_utilisateur_mail_1 = '${query.mail}') AS table1 
+                WHERE utilisateur.mail = table1.FK_utilisateur_mail_2
+                GROUP BY ville
+                ORDER BY nb DESC
+        `;
+
+        db.query(sql, function (err, result, fields) {
+            if (err) throw err;
+            console.log(result);
+            res.send(result);
+        });
+        db.end();
+
+    });
 });
 /*
 
