@@ -157,24 +157,42 @@ new Vue({
         }
     }
 });
-//TODO: trouver comment faire apparaître une notif
-//requête sql faite ? si oui -> requête + css
-//si non -> en coder une qui fasse apparaître le like + le post liké ?
+
 new Vue ({
-   el: "#likes",
+    el: "#likes",
     data: function() {
-       return {
-           display_notif: false
+        return {
+            display_notif: false
         }
     },
-   template: `<span v-on:click="notif"><i class='far fa-heart fa-lg'></i>
-                <span id="notif" v-if="display_notif">ok</span>
-               </span>
-`,
+    template: `<div><a class="dropdown-item" href="#">Prochainement</a>
+                    <a class="dropdown-item" href="#">Les notifications</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">Mais pas tout de suite</a>
+                    <a class="dropdown-item" href="#">Patience</a></div>`,
     methods: {
-       notif: function() {
-           console.log("notification");
-           this.display_notif = !this.display_notif;
-       }
+        notif: function () {
+            console.log("notification");
+            this.display_notif = !this.display_notif;
+        }
+    }
+});
+
+new Vue ({
+    el: "#config",
+    data: function() {
+        return {
+            display_notif: false
+        }
+    },
+    template: `<div>
+                   <a class="dropdown-item" href="modifProfile">Modifier mes informations</a>
+                   <a class="dropdown-item" href="modifPswd">Modifier mon mot de passe</a>
+               </div>`,
+    methods: {
+        notif: function () {
+            console.log("notification");
+            this.display_notif = !this.display_notif;
+        }
     }
 });
