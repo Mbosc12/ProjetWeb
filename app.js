@@ -54,6 +54,11 @@ app.get('/repart-pays', function (req, res) {
     res.sendFile('repart_pays.html', {'root': __dirname + '/templates'})
 });
 
+app.get('/evol-follow', function (req, res) {
+    res.sendFile('evol_follow.html', {'root': __dirname + '/templates'})
+});
+
+
 
 // Requete pour avoir les abonnés d'un utilisateur
 app.get('/Followers',function(req,res){
