@@ -96,6 +96,12 @@ body {
     border-left: 3px solid #dadada;
 }
 
+canvas {
+    margin: 0 auto;
+    width:600px !important;
+    height:300px !important;
+}
+
 
 /* -------------------- Footer -------------------- */
 .footer {
