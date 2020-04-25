@@ -175,6 +175,24 @@ con.connect(function(err) {
     console.log("17 - gretathunber est followé par donaldtrump");
   });
 
+  var sql = "INSERT INTO Follower VALUES('gretathunberg@gmail.com','HaloMora@gmail.com','2020-04-19')";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log("17 bis - gretathunber est followé par HaloMora");
+  });
+
+  var sql = "INSERT INTO Follower VALUES('gretathunberg@gmail.com','PereCastor@gmail.com','2020-04-09')";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log("17 ter - gretathunber est followé par PereCastor");
+  });
+
+  var sql = "INSERT INTO Follower VALUES('gretathunberg@gmail.com','gretathunberg@gmail.com','2020-04-25')";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log("17 quad - gretathunber est followé par gretathunberg");
+  });
+
   var sql = "INSERT INTO Follower VALUES('donaldtrump@gmail.com','gretathunberg@gmail.com','2020-03-29')";
   con.query(sql, function (err, result) {
     if (err) throw err;
