@@ -68,7 +68,7 @@ con.connect(function(err) {
     if (err) throw err;
     console.log("0 - utilisateur admin inserted");
   });
-  var sql = "INSERT INTO utilisateur VALUES ('GretaThunberg','Greta','Thunberg','gretathunberg@gmail.com','superadmin','2020-03-09','F','Suède', '81000','StockHolm','20 rue de la poudriere',null,'2020-03-09')";
+  var sql = "INSERT INTO utilisateur VALUES ('GretaThunberg','Greta','Thunberg','gretathunberg@gmail.com','superadmin','2020-03-09','F','Suède', '81000','StockHolm','20 rue de la poudriere',3,'2020-03-09')";
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log("1 - utilisateur GretaThumberg inserted");
@@ -109,6 +109,12 @@ con.connect(function(err) {
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log("7 - Photo halo.jpg HaloMora inserted");
+  });
+
+  var sql = "INSERT INTO photo (FK_utilisateur_mail, titre) VALUES ('gretathunberg@gmail.com', 'greta.png')";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log("7 bis - Photo greta.png greataThunber inserted");
   });
 
 

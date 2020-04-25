@@ -77,7 +77,7 @@ let vm = new Vue({
         FetchPosts() {
         axios.get('http://localhost:3000/AllPostUtilisateur', {
         	params: {
-				mail: localStorage.username
+				mail: localStorage.mail
         	}
         }).then(response => {
             this.posts = response.data;
@@ -89,7 +89,7 @@ let vm = new Vue({
         FetchFollowers() {
         axios.get('http://localhost:3000/Followers', {
         	params: {
-				mail: localStorage.username
+				mail: localStorage.mail
         	}
         }).then(response => {
             this.followers = response.data;
@@ -109,7 +109,7 @@ let vm = new Vue({
         FetchInfos() {
         axios.get('http://localhost:3000/unUtilisateur', {
         	params: {
-				mail: localStorage.username
+				mail: localStorage.mail
         	}
         }).then(response => {
             this.FetchPhotoProfil(response.data[0].photo_profil);
@@ -123,7 +123,7 @@ let vm = new Vue({
             var email = 'admin@gmail.com';
             var photo = '1';
             if(photo_profil!=null){
-                email = localStorage.username;
+                email = localStorage.mail;
                 photo = photo_profil;
             }
             axios.get('http://localhost:3000/photoProfil', {
@@ -143,23 +143,25 @@ new Vue({
     el: "#disconnect",
     data: function () {
         return {
-            username: localStorage.username
+            username: localStorage.mail
         }
     },
     template: `<a class="nav-link" href="connexion" v-on:click="disconnect"><i class="fas fa-power-off fa-lg"></i></a>`,
     methods: {
         disconnect: function () {
-            localStorage.mail = "";
-            localStorage.password = "";
-            localStorage.cp = "";
-            localStorage.adresse = "";
-            localStorage.datenaiss = "";
-            localStorage.sexe = "";
+            localStorage.pseudo = "";
             localStorage.nom = "";
             localStorage.prenom = "";
+            localStorage.mail = "";
+            localStorage.password = "";
+            localStorage.datenaiss = "";
+            localStorage.sexe = "";
             localStorage.pays = "";
-            localStorage.username = "";
+            localStorage.cp = "";
             localStorage.ville = "";
+            localStorage.adresse = "";
+            localStorage.photo_profil = "";
+            localStorage.date_inscription = "";
         }
     }
 });
