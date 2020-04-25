@@ -60,30 +60,7 @@ app.get('/evol-follow', function (req, res) {
 
 
 
-// Requete pour avoir les abonnés d'un utilisateur
-app.get('/Followers',function(req,res){
-	// connection à la bdd créée
-	var db = mysql.createConnection({
-	  host: "localhost",
-	  user: "root",
-	  password: "",
-	  database: "mydb"
-	});
-	db.connect(function(err) {
-		if (err) throw err;
 
-		var query = req.query;
-
-		var sql = `SELECT pseudo FROM utilisateur, follower WHERE FK_utilisateur_mail_1 = '${query.mail}' AND follower.FK_utilisateur_mail_2 = utilisateur.mail`;
-		db.query(sql, function (err, result, fields) {
-			if (err) throw err;
-			console.log(result);
-			res.send(result);
-		});
-		
-		db.end();
-	}); 
-});
 /* Liste des requêtes disponibles :
    1) /NbUtilisateur : Nombre d'utilisateur (sortie : nb)
    2) /AllUtilisateur : Tous les utilisateurs (sortie : liste)
@@ -94,7 +71,7 @@ app.get('/Followers',function(req,res){
    5) /NbPostUtilisateur : Nombre de Post d'un utilisateur (entrée : mail -> sortie : nb)
    6) /AllPostUtilisateur : Tous les Posts d'un utilisateur (entrée : mail -> sortie : list)
    7) /NbFollowerUtilisateur : Nombre de Follower d'un utilisateur (entrée : mail -> sortie : nb)
-   8) /ListeFollowerUtilisateur : Liste des Follower d'un utilisateur (entrée : mail -> sortie : liste de pseudo)
+   8) /Followers : Liste des Follower d'un utilisateur (entrée : mail -> sortie : liste de pseudo)
    9) /NbCommentaireUtilisateur : Nombre de commentaires d'un utilisateur (entrée : mail -> sortie : nb)
    10) /AllCommentaireUtilisateur : Liste des Commentaires d'un utilisateur (entrée : mail -> sortie : liste)
    11) /unPost : Toutes les info d'un post (entrée : id_post -> sortie : liste)
@@ -393,7 +370,7 @@ app.get('/NbFollowerUtilisateur', function (req, res) {
 
         var query = req.query;
 
-        var sql = `SELECT COUNT(FK_utilisateur_mail_2) AS NumberOfFollower FROM Follower WHERE FK_utilisateur_mail_1 = '${query.mail}'`;
+        var sql = `SELECT COUNT(*) AS NumberOfFollower FROM Follower WHERE FK_utilisateur_mail_1 = '${query.mail}'`;
 
         db.query(sql, function (err, result, fields) {
             if (err) throw err;
@@ -404,31 +381,29 @@ app.get('/NbFollowerUtilisateur', function (req, res) {
     });
 });
 
-// 8) /ListeFollowerUtilisateur : Liste des Follower d'un utilisateur (entrée : mail -> sortie : liste de pseudo)
-app.get('/ListeFollowerUtilisateur', function (req, res) {
-    // connection à la bdd créée
-    var db = mysql.createConnection({
-        host: "localhost",
-        user: "root",
-        password: "",
-        database: "mydb"
+// 8) /Followers : Liste des Follower d'un utilisateur (entrée : mail -> sortie : liste de pseudo)
+app.get('/Followers',function(req,res){
+	// connection à la bdd créée
+	var db = mysql.createConnection({
+	  host: "localhost",
+	  user: "root",
+	  password: "",
+	  database: "mydb"
+	});
+	db.connect(function(err) {
+		if (err) throw err;
 
-    });
+		var query = req.query;
 
-    db.connect(function (err) {
-        if (err) throw err;
-
-        var query = req.query;
-
-        var sql = `SELECT FK_utilisateur_mail_2 AS Followers FROM Follower WHERE FK_utilisateur_mail_1 = '${query.mail}'`;
-
-        db.query(sql, function (err, result, fields) {
-            if (err) throw err;
-            console.log(result);
-            res.send(result);
-        });
-        db.end();
-    });
+		var sql = `SELECT pseudo FROM utilisateur, follower WHERE FK_utilisateur_mail_1 = '${query.mail}' AND follower.FK_utilisateur_mail_2 = utilisateur.mail`;
+		db.query(sql, function (err, result, fields) {
+			if (err) throw err;
+			console.log(result);
+			res.send(result);
+		});
+		
+		db.end();
+	}); 
 });
 
 // 9) /NbCommentaireUtilisateur : Nombre de commentaires d'un utilisateur (entrée : mail -> sortie : nb)
@@ -606,7 +581,7 @@ app.get('/newUser', function (req, res) {
 
         const query = req.query;
 
-        const sql = `INSERT INTO utilisateur (pseudo, nom, prenom, mail, motdepass, date_naissance,sexe, pays, cp, ville, adresse) VALUES ('${query.pseudo}', '${query.nom}', '${query.prenom}', '${query.mail}', '${query.motdepass}', '${query.date_naissance}','${query.sexe}','${query.pays}', '${query.CP}', '${query.ville}', '${query.adresse}') `;
+        const sql = `INSERT INTO utilisateur (pseudo, nom, prenom, mail, motdepass, date_naissance,sexe, pays, cp, ville, adresse, date_inscription) VALUES ('${query.pseudo}', '${query.nom}', '${query.prenom}', '${query.mail}', '${query.motdepass}', '${query.date_naissance}','${query.sexe}','${query.pays}', '${query.CP}', '${query.ville}', '${query.adresse}', NOW()) `;
 
         db.query(sql, function (err, result, fields) {
             if (err) throw err;
@@ -669,7 +644,7 @@ app.get('/mailExisting', function (req, res) {
     });
 });
 
-// 18) /AjoutPost : Enregistre un post et poster (entrée : PK_post_id, FK_utilisateur_mail, titre, message, date_publication -> sortie : 1 ou 0)
+// 18) /AjoutPost : Enregistre un post et poster (entrée : FK_utilisateur_mail, titre, message, date_publication -> sortie : 1 ou 0)
 app.get('/AjoutPost',function(req,res){
 	// connection à la bdd créée
 	var db = mysql.createConnection({
@@ -684,7 +659,7 @@ app.get('/AjoutPost',function(req,res){
 
         var query = req.query;
 
-        var sql = `INSERT INTO post VALUES ('${query.postId}', '${query.mail}', '${query.titre}', '${query.message}')`;
+        var sql = `INSERT INTO post (FK_utilisateur_mail, titre, message) VALUES ('${query.mail}', '${query.titre}', '${query.message}')`;
 
         db.query(sql, function (err, result, fields) {
             if (err) throw err;
@@ -692,7 +667,7 @@ app.get('/AjoutPost',function(req,res){
             res.send(result);
         });
 
-        var sql = `INSERT INTO Poster VALUES ('${query.mail}', '${query.postId}', '${query.date}')`;
+        var sql = `INSERT INTO Poster VALUES ('${query.mail}', '${query.postId}', NOW())`;
 
         db.query(sql, function (err, result, fields) {
             if (err) throw err;
@@ -718,7 +693,7 @@ app.get('/AjoutLike',function(req,res){
 
         var query = req.query;
 
-        var sql = `INSERT INTO Liker VALUES ('${query.mail}', '${query.postId}',NOW())`;
+        var sql = `INSERT INTO Liker (FK_utilisateur_mail, FK_post_id, date_like) VALUES ('${query.mail}', '${query.postId}', NOW())`;
 
         db.query(sql, function (err, result, fields) {
             if (err) throw err;
@@ -744,7 +719,7 @@ app.get('/AjoutFollower',function(req,res){
 
         const query = req.query;
 
-        const sql = `INSERT INTO Follower VALUES ('${query.mail_1}', '${query.mail_2}',NOW())`;
+        const sql = `INSERT INTO Follower VALUES ('${query.mail_1}', '${query.mail_2}', NOW())`;
 
         db.query(sql, function (err, result, fields) {
             if (err) throw err;
@@ -755,7 +730,7 @@ app.get('/AjoutFollower',function(req,res){
     });
 });
 
-// 21) /AjoutCommentaire : Enregistre un commentaire (entrée : FK_utilisateur_mail, FK_post_id, date_commentaire, message_commentaire -> sortie : 1 ou 0)
+// 21) /AjoutCommentaire : Enregistre un commentaire (entrée : FK_utilisateur_mail, FK_post_id, message_commentaire -> sortie : 1 ou 0)
 app.get('/AjoutCommentaire',function(req,res){
 	// connection à la bdd créée
 	const db = mysql.createConnection({
@@ -770,7 +745,7 @@ app.get('/AjoutCommentaire',function(req,res){
 
         const query = req.query;
 
-        const sql = `INSERT INTO Commenter VALUES ('${query.mail}', '${query.postId}', '${query.date}', '${query.message}')`;
+        const sql = `INSERT INTO Commenter VALUES ('${query.mail}', '${query.postId}', NOW(), '${query.message}')`;
 
         db.query(sql, function (err, result, fields) {
             if (err) throw err;
@@ -796,7 +771,7 @@ app.get('/AjoutPartage',function(req,res){
 
         const query = req.query;
 
-        const sql = `INSERT INTO Partager VALUES ('${query.mail}', '${query.postId}',NOW())`;
+        const sql = `INSERT INTO Partager VALUES ('${query.mail}', '${query.postId}', NOW())`;
 
         db.query(sql, function (err, result, fields) {
             if (err) throw err;
@@ -808,6 +783,7 @@ app.get('/AjoutPartage',function(req,res){
 });
 
 // 23) /ModifUtilisateur : Update un utilisateur déjà dans la bdd (entrée : pseudo, nom, prenom, mail, motdepass, date_naissance, sexe, CP, ville, adresse -> sortie : nb (1 ou 0))
+// (pseudo, nom, prenom, mail, motdepass, date_naissance, sexe, pays, CP, ville, adresse, photo_profil, date_inscription)
 app.get('/ModifUtilisateur',function(req,res){
 	// connection à la bdd créée
 	const db = mysql.createConnection({
@@ -822,7 +798,7 @@ app.get('/ModifUtilisateur',function(req,res){
 
         const query = req.query;
 
-        const sql = `UPDATE utilisateur SET pseudo ='${query.pseudo}', nom ='${query.nom}', prenom ='${query.prenom}', mail ='${query.mail}', motdepass ='${query.motdepass}', date_naissance ='${query.date_naissance}',sexe ='${query.sexe}', CP ='${query.CP}', ville ='${query.ville}', adresse ='${query.adresse}' WHERE mail ='${query.mail}' `;
+        const sql = `UPDATE utilisateur SET pseudo ='${query.pseudo}', nom ='${query.nom}', prenom ='${query.prenom}', mail ='${query.mail}', motdepass ='${query.motdepass}', date_naissance ='${query.date_naissance}', sexe ='${query.sexe}', pays ='${query.pays}', CP ='${query.CP}', ville ='${query.ville}', adresse ='${query.adresse}', photo_profil ='${query.photo_profil}', date_inscription ='${query.date_inscription}' WHERE mail ='${query.mail}' `;
 
         db.query(sql, function (err, result, fields) {
             if (err) throw err;
@@ -1038,10 +1014,9 @@ app.get('/nbFollowersByCity', function (req, res) {
     // connection à la bdd créée
     const db = mysql.createConnection({
         host: "localhost",
-        user: "root",
-        password: "root",
-        database: "mydb",
-        port: "8889"
+	    user: "root",
+	    password: "",
+	    database: "mydb"
     });
 
     db.connect(function (err) {
@@ -1073,10 +1048,9 @@ app.get('/nbFollowersByCountry', function (req, res) {
     // connection à la bdd créée
     const db = mysql.createConnection({
         host: "localhost",
-        user: "root",
-        password: "root",
-        database: "mydb",
-        port: "8889"
+	    user: "root",
+	    password: "",
+	    database: "mydb"
     });
 
     db.connect(function (err) {
@@ -1120,6 +1094,16 @@ SELECT COUNT(sexe)
       FROM utilisateur
       INNER JOIN (SELECT FK_utilisateur_mail_2 FROM follower WHERE FK_utilisateur_mail_1 = 'gretathunberg@gmail.com') AS table1 
       WHERE utilisateur.mail = table1.FK_utilisateur_mail_2 AND sexe='A'
+
+
+
+
+
+SELECT COUNT(*) FROM Follower, utilisateur WHERE FK_utilisateur_mail_1 = 'gretathunberg@gmail.com' 
+    AND date_follow BETWEEN utilisateur.date_inscription + (7*`${query.date}`) AND utilisateur.date_inscription + (7*(`${query.date}`+1));
+
+SELECT COUNT(*) FROM Follower, utilisateur WHERE Follower.FK_utilisateur_mail_1 = 'gretathunberg@gmail.com' 
+    AND Follower.date_follow BETWEEN utilisateur.date_inscription + (7*`0`) AND utilisateur.date_inscription + (7*(`0`+1));
 
 */
 
