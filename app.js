@@ -98,6 +98,7 @@ app.get('/evol-follow', function (req, res) {
    30) /NbFollowParJour : Nb de follow pour un jour donné (entrée : mail, date -> sortie : nb)
    31) /nbFollowersByCity : nombre de followers par ville d'un utilisateur (entrée : mail -> sortie : liste)
    32) /nbFollowersByCountry : nombre de followers par ville d'un utilisateur (entrée : mail -> sortie : liste)
+   33) /nbFollowersSince4w : nombre de followers depuis 4 semaines d'un utilisateur (entrée : mail -> sortie : liste)
 
  */
 
@@ -581,7 +582,7 @@ app.get('/newUser', function (req, res) {
 
         const query = req.query;
 
-        const sql = `INSERT INTO utilisateur (pseudo, nom, prenom, mail, motdepass, date_naissance,sexe, pays, cp, ville, adresse, date_inscription) VALUES ('${query.pseudo}', '${query.nom}', '${query.prenom}', '${query.mail}', '${query.motdepass}', '${query.date_naissance}','${query.sexe}','${query.pays}', '${query.CP}', '${query.ville}', '${query.adresse}', NOW()) `;
+        const sql = `INSERT INTO utilisateur (pseudo, nom, prenom, mail, motdepass, date_naissance, sexe, pays, cp, ville, adresse, photo_profil, date_inscription) VALUES ('${query.pseudo}', '${query.nom}', '${query.prenom}', '${query.mail}', '${query.motdepass}', '${query.date_naissance}','${query.sexe}','${query.pays}', '${query.CP}', '${query.ville}', '${query.adresse}', '${query.photo_profil}', NOW()) `;
 
         db.query(sql, function (err, result, fields) {
             if (err) throw err;
@@ -1077,6 +1078,45 @@ app.get('/nbFollowersByCountry', function (req, res) {
     });
 });
 
+// 33) /nbFollowersSince4w : nombre de followers depuis 4 semaines d'un utilisateur (entrée : mail -> sortie : liste)
+app.get('/nbFollowersSince4w', function (req, res) {
+    // connection à la bdd créée
+    const db = mysql.createConnection({
+        host: "localhost",
+	    user: "root",
+	    password: "",
+	    database: "mydb"
+    });
+
+    db.connect(function (err) {
+        if (err) throw err;
+
+        const query = req.query;
+
+        const sql =
+            `SELECT COUNT(*) AS nb_follower FROM Follower WHERE Follower.FK_utilisateur_mail_1 = '${query.mail}' 
+            AND Follower.date_follow BETWEEN NOW()-28 AND NOW()-21
+        UNION ALL
+        SELECT COUNT(*) FROM Follower WHERE Follower.FK_utilisateur_mail_1 = '${query.mail}' 
+            AND Follower.date_follow BETWEEN NOW()-21 AND NOW()-14
+        UNION ALL
+        SELECT COUNT(*) FROM Follower WHERE Follower.FK_utilisateur_mail_1 = '${query.mail}' 
+            AND Follower.date_follow BETWEEN NOW()-14 AND NOW()-7
+        UNION ALL
+        SELECT COUNT(*) FROM Follower WHERE Follower.FK_utilisateur_mail_1 = '${query.mail}' 
+            AND Follower.date_follow BETWEEN NOW()-7 AND NOW();
+        `;
+
+        db.query(sql, function (err, result, fields) {
+            if (err) throw err;
+            console.log(result);
+            res.send(result);
+        });
+        db.end();
+
+    });
+});
+
 /*
 
 
@@ -1098,12 +1138,17 @@ SELECT COUNT(sexe)
 
 
 
-
-SELECT COUNT(*) FROM Follower, utilisateur WHERE FK_utilisateur_mail_1 = 'gretathunberg@gmail.com' 
-    AND date_follow BETWEEN utilisateur.date_inscription + (7*`${query.date}`) AND utilisateur.date_inscription + (7*(`${query.date}`+1));
-
-SELECT COUNT(*) FROM Follower, utilisateur WHERE Follower.FK_utilisateur_mail_1 = 'gretathunberg@gmail.com' 
-    AND Follower.date_follow BETWEEN utilisateur.date_inscription + (7*`0`) AND utilisateur.date_inscription + (7*(`0`+1));
+SELECT COUNT(*) FROM Follower WHERE Follower.FK_utilisateur_mail_1 = 'gretathunberg@gmail.com' 
+    AND Follower.date_follow BETWEEN NOW()-28 AND NOW()-21
+UNION ALL
+SELECT COUNT(*) FROM Follower WHERE Follower.FK_utilisateur_mail_1 = 'gretathunberg@gmail.com' 
+    AND Follower.date_follow BETWEEN NOW()-21 AND NOW()-14
+UNION ALL
+SELECT COUNT(*) FROM Follower WHERE Follower.FK_utilisateur_mail_1 = 'gretathunberg@gmail.com' 
+    AND Follower.date_follow BETWEEN NOW()-14 AND NOW()-7
+UNION ALL
+SELECT COUNT(*) FROM Follower WHERE Follower.FK_utilisateur_mail_1 = 'gretathunberg@gmail.com' 
+    AND Follower.date_follow BETWEEN NOW()-7 AND NOW();
 
 */
 
