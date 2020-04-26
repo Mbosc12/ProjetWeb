@@ -1084,6 +1084,46 @@ app.get('/nbFollowersSince4w', function (req, res) {
     const db = mysql.createConnection({
         host: "localhost",
 	    user: "root",
+        password: "root",
+        database: "mydb",
+        port: "8889"
+    });
+
+    db.connect(function (err) {
+        if (err) throw err;
+
+        const query = req.query;
+
+        const sql =
+            `SELECT COUNT(*) AS nb_follower FROM Follower WHERE Follower.FK_utilisateur_mail_1 = '${query.mail}' 
+            AND Follower.date_follow BETWEEN date_sub(now(), interval 28 day) AND date_sub(now(), interval 21 day)
+        UNION ALL
+        SELECT COUNT(*) FROM Follower WHERE Follower.FK_utilisateur_mail_1 = '${query.mail}' 
+            AND Follower.date_follow BETWEEN date_sub(now(), interval 21 day) AND date_sub(now(), interval 14 day)
+        UNION ALL
+        SELECT COUNT(*) FROM Follower WHERE Follower.FK_utilisateur_mail_1 = '${query.mail}' 
+            AND Follower.date_follow BETWEEN date_sub(now(), interval 14 day) AND date_sub(now(), interval 7 day)
+        UNION ALL
+        SELECT COUNT(*) FROM Follower WHERE Follower.FK_utilisateur_mail_1 = '${query.mail}' 
+            AND Follower.date_follow BETWEEN date_sub(now(), interval 7 day) AND NOW();
+        `;
+
+        db.query(sql, function (err, result, fields) {
+            if (err) throw err;
+            console.log(result);
+            res.send(result);
+        });
+        db.end();
+
+    });
+});
+
+// 33) /nbFollowersSince4w : nombre de followers depuis 4 semaines d'un utilisateur (entrée : mail -> sortie : liste)
+app.get('/nbFollowersSince4w', function (req, res) {
+    // connection à la bdd créée
+    const db = mysql.createConnection({
+        host: "localhost",
+	    user: "root",
 	    password: "",
 	    database: "mydb"
     });
