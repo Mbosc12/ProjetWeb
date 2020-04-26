@@ -783,7 +783,7 @@ app.get('/AjoutPartage',function(req,res){
     });
 });
 
-// 23) /ModifUtilisateur : Update un utilisateur déjà dans la bdd (entrée : pseudo, nom, prenom, mail, motdepass, date_naissance, sexe, CP, ville, adresse -> sortie : nb (1 ou 0))
+// 23) /ModifUtilisateur : Update un utilisateur déjà dans la bdd (entrée : pseudo, nom, prenom, mail, motdepass, date_naissance, sexe, pays, CP, ville, adresse, photo_profil, date_inscription -> sortie : nb (1 ou 0))
 // (pseudo, nom, prenom, mail, motdepass, date_naissance, sexe, pays, CP, ville, adresse, photo_profil, date_inscription)
 app.get('/ModifUtilisateur',function(req,res){
 	// connection à la bdd créée
