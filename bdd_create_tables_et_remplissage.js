@@ -8,7 +8,6 @@ var con = mysql.createConnection({
     password: "",
     database: "mydb"
 });
-
 // création des tables et insertions de valeurs
 con.connect(function(err) {
   if (err) throw err;
@@ -68,31 +67,31 @@ con.connect(function(err) {
     if (err) throw err;
     console.log("0 - utilisateur admin inserted");
   });
-  var sql = "INSERT INTO utilisateur VALUES ('GretaThunberg','Greta','Thunberg','gretathunberg@gmail.com','superadmin','2020-03-09','F','Suède', '81000','StockHolm','20 rue de la poudriere',3,'2020-03-09')";
+  var sql = "INSERT INTO utilisateur VALUES ('GretaThunberg','Greta','Thunberg','gretathunberg@gmail.com','superadmin','2020-03-09','F','Suède', '81000','Stockholm','20 rue de la poudriere',3,'2020-03-09')";
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log("1 - utilisateur GretaThumberg inserted");
   });
 
-  var sql = "INSERT INTO utilisateur VALUES ('EmmanuelMacron','Emmanuel','Macron','emmanuelmacron@gmail.com','superadmin','2020-03-09','M','France','81000','Albi','20 rue de la poudriere',null,'2020-03-19')";
+  var sql = "INSERT INTO utilisateur VALUES ('EmmanuelMacron','Emmanuel','Macron','emmanuelmacron@gmail.com','superadmin','2020-03-09','M','France','75008','Paris','55 Rue du Faubourg Saint-Honoré',null,'2020-03-19')";
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log("2 - utilisateur emmanuelmacron inserted");
   });
 
-  var sql = "INSERT INTO utilisateur VALUES ('DonaldTrump','Donald','Trump','donaldtrump@gmail.com','superadmin','2020-03-09','M','France' ,'81000','Albi','20 rue de la poudriere',null,'2020-03-29')";
+  var sql = "INSERT INTO utilisateur VALUES ('DonaldTrump','Donald','Trump','donaldtrump@gmail.com','superadmin','2020-03-09','M','Etats-unis' ,'DC 20500','Washington','1600 Pennsylvania Ave NW',null,'2020-03-29')";
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log("3 - utilisateur donaldtrump inserted");
   });
 
-  var sql = "INSERT INTO utilisateur VALUES ('HaloMora','Halo','Mora','HaloMora@gmail.com','HaloMoradu69','2020-04-10','A','France','81000','Albi','20 rue de la poudriere','2','2020-04-09')";
+  var sql = "INSERT INTO utilisateur VALUES ('HaloMora','Halo','Mora','HaloMora@gmail.com','HaloMoradu69','2020-04-10','A','France','31000','Toulouse','10 chemin des Tuileries','2','2020-04-09')";
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log("4 - utilisateur HaloMora inserted");
   });
 
-  var sql = "INSERT INTO utilisateur VALUES ('PereCastor','Pere','Castor','PereCastor@gmail.com','RaconteNousUneHistoire','2020-04-10','M','France','81000','Albi','20 rue de la poudriere',null,'2020-04-19')";
+  var sql = "INSERT INTO utilisateur VALUES ('PereCastor','Pere','Castor','PereCastor@gmail.com','RaconteNousUneHistoire','2020-04-10','M','France','32000','Auch','12 impasse des peupliers',null,'2020-04-19')";
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log("5 - utilisateur PereCastor inserted");
