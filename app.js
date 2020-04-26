@@ -1096,16 +1096,16 @@ app.get('/nbFollowersSince4w', function (req, res) {
 
         const sql =
             `SELECT COUNT(*) AS nb_follower FROM Follower WHERE Follower.FK_utilisateur_mail_1 = '${query.mail}' 
-            AND Follower.date_follow BETWEEN date_sub(now(), interval 28 day) AND date_sub(now(), interval 21 day)
-        UNION ALL
-        SELECT COUNT(*) FROM Follower WHERE Follower.FK_utilisateur_mail_1 = '${query.mail}' 
-            AND Follower.date_follow BETWEEN date_sub(now(), interval 21 day) AND date_sub(now(), interval 14 day)
+            AND Follower.date_follow BETWEEN date_sub(now(), interval 7 day) AND NOW()
         UNION ALL
         SELECT COUNT(*) FROM Follower WHERE Follower.FK_utilisateur_mail_1 = '${query.mail}' 
             AND Follower.date_follow BETWEEN date_sub(now(), interval 14 day) AND date_sub(now(), interval 7 day)
         UNION ALL
         SELECT COUNT(*) FROM Follower WHERE Follower.FK_utilisateur_mail_1 = '${query.mail}' 
-            AND Follower.date_follow BETWEEN date_sub(now(), interval 7 day) AND NOW();
+            AND Follower.date_follow BETWEEN date_sub(now(), interval 21 day) AND date_sub(now(), interval 14 day)
+        UNION ALL
+        SELECT COUNT(*) FROM Follower WHERE Follower.FK_utilisateur_mail_1 = '${query.mail}' 
+            AND Follower.date_follow BETWEEN date_sub(now(), interval 28 day) AND date_sub(now(), interval 21 day);
         `;
 
         db.query(sql, function (err, result, fields) {
