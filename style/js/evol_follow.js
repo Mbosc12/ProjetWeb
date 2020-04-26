@@ -3,10 +3,11 @@ new Vue ({
     el: "#evol",
     data: function() {
         return {
-            nb: ""
+            nb: "",
+            abo: ""
         }
     },
-    template: `<div id ="new_follow">+ <span id="nb">{{ nb }}</span> abonné(s) cette semaine</div>`,
+    template: `<div id ="new_follow">+ <span id="nb">{{ nb }}</span> {{ abo }} cette semaine</div>`,
     methods: {
         get_followers: function() {
             axios.get('http://localhost:3000/nbFollowersSince4w', {
@@ -14,9 +15,13 @@ new Vue ({
                     mail: localStorage.mail
                 }
             }).then(response => {
-                console.log("1.", response);
                 if (response.data.length !== 0) {
                     this.nb = response.data[response.data.length -1].nb;
+                    if (this.nb > 1) {
+                        this.abo = "abonés";
+                    } else {
+                        this.abo = "aboné";
+                    }
                 } else {
                     console.log("erreur /nbFollowersSince4w");
                 }
@@ -43,7 +48,6 @@ new Vue({
                     mail: localStorage.mail
                 }
             }).then(response => {
-                console.log("2.", response);
                 if (response.data.length !== 0) {
                     for (let i = 0; i < response.data.length; i++) {
                         let d = new Date(response.data[i].date);
