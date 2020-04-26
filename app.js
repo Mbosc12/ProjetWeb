@@ -1084,9 +1084,8 @@ app.get('/nbFollowersSince4w', function (req, res) {
     const db = mysql.createConnection({
         host: "localhost",
 	    user: "root",
-        password: "root",
-        database: "mydb",
-        port: "8889"
+	    password: "",
+	    database: "mydb"
     });
 
     db.connect(function (err) {
@@ -1156,41 +1155,6 @@ app.get('/nbFollowersSince4w', function (req, res) {
 
     });
 });
-
-/*
-
-
-SELECT COUNT(sexe) AS sexe
-      FROM utilisateur
-      INNER JOIN (SELECT FK_utilisateur_mail_2 FROM follower WHERE FK_utilisateur_mail_1 = 'gretathunberg@gmail.com') AS table1 
-      WHERE utilisateur.mail = table1.FK_utilisateur_mail_2 AND sexe='F'
-UNION ALL
-SELECT COUNT(sexe)
-      FROM utilisateur
-      INNER JOIN (SELECT FK_utilisateur_mail_2 FROM follower WHERE FK_utilisateur_mail_1 = 'gretathunberg@gmail.com') AS table1 
-      WHERE utilisateur.mail = table1.FK_utilisateur_mail_2 AND sexe='M'
-UNION ALL
-SELECT COUNT(sexe)
-      FROM utilisateur
-      INNER JOIN (SELECT FK_utilisateur_mail_2 FROM follower WHERE FK_utilisateur_mail_1 = 'gretathunberg@gmail.com') AS table1 
-      WHERE utilisateur.mail = table1.FK_utilisateur_mail_2 AND sexe='A'
-
-
-
-
-SELECT COUNT(*) FROM Follower WHERE Follower.FK_utilisateur_mail_1 = 'gretathunberg@gmail.com' 
-    AND Follower.date_follow BETWEEN NOW()-28 AND NOW()-21
-UNION ALL
-SELECT COUNT(*) FROM Follower WHERE Follower.FK_utilisateur_mail_1 = 'gretathunberg@gmail.com' 
-    AND Follower.date_follow BETWEEN NOW()-21 AND NOW()-14
-UNION ALL
-SELECT COUNT(*) FROM Follower WHERE Follower.FK_utilisateur_mail_1 = 'gretathunberg@gmail.com' 
-    AND Follower.date_follow BETWEEN NOW()-14 AND NOW()-7
-UNION ALL
-SELECT COUNT(*) FROM Follower WHERE Follower.FK_utilisateur_mail_1 = 'gretathunberg@gmail.com' 
-    AND Follower.date_follow BETWEEN NOW()-7 AND NOW();
-
-*/
 
 
 
