@@ -53,8 +53,6 @@ new Vue({
                             /* the mail and the password are localy stored to create an user session  */
                             localStorage.mail = this.mail;
                             localStorage.password = this.password;
-                            /* redirection */
-                            window.location.href = "feed";
                             /* deletion of the alerts */
                             this.display_mdp = false;
                             this.display_mail = false;
@@ -65,7 +63,6 @@ new Vue({
                                     mail: this.mail,
                                 }
                             }).then(response => {
-                                console.log(response);
                                 if (response.data.length !== 0) {
                                     localStorage.cp = response.data[0].CP;
                                     localStorage.adresse = response.data[0].adresse;
@@ -76,6 +73,8 @@ new Vue({
                                     localStorage.username = response.data[0].pseudo;
                                     localStorage.ville = response.data[0].ville;
                                     localStorage.sexe = response.data[0].sexe;
+                                    /* redirection */
+                                    window.location.href = "feed";
                                 }
                             });
                         } else {

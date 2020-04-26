@@ -7,19 +7,17 @@ new Vue({
         }
     },
     methods: {
-        get_cities: function () {
+        get_countries: function () {
             axios.get('http://localhost:3000/nbFollowersByCountry', {
                 params: {
                     mail: localStorage.mail
                 }
             }).then(response => {
-                console.log(response);
                 if (response.data.length !== 0) {
                     for (let i = 0; i < response.data.length; i++) {
                         this.pays.push(response.data[i].pays);
                         this.nb.push(response.data[i].nb);
                     }
-                    console.log(this.ville, this.nb);
                     new Chart(document.getElementById("horizontalBar"), {
                         "type": "horizontalBar",
                         "data": {
@@ -38,6 +36,7 @@ new Vue({
                             }]
                         },
                         "options": {
+                            responsive: true,
                             legend: {
                                 display: false
                             },
@@ -59,7 +58,7 @@ new Vue({
         },
     },
     created: function () {
-        this.get_cities();
+        this.get_countries();
     }
 });
 

@@ -1084,6 +1084,46 @@ app.get('/nbFollowersSince4w', function (req, res) {
     const db = mysql.createConnection({
         host: "localhost",
 	    user: "root",
+        password: "root",
+        database: "mydb",
+        port: "8889"
+    });
+
+    db.connect(function (err) {
+        if (err) throw err;
+
+        const query = req.query;
+
+        const sql =
+            `SELECT date_sub(CURDATE(), interval 21 day) as date, COUNT(*) as nb FROM Follower WHERE Follower.FK_utilisateur_mail_1 = '${query.mail}' 
+            AND Follower.date_follow BETWEEN date_sub(CURDATE(), interval 27 day) AND date_sub(CURDATE(), interval 21 day)
+        UNION ALL
+        SELECT date_sub(CURDATE(), interval 14 day) as date, COUNT(*) as nb FROM Follower WHERE Follower.FK_utilisateur_mail_1 = '${query.mail}' 
+            AND Follower.date_follow BETWEEN date_sub(CURDATE(), interval 20 day) AND date_sub(CURDATE(), interval 14 day)
+        UNION ALL
+        SELECT date_sub(CURDATE(), interval 7 day) as date, COUNT(*) as nb FROM Follower WHERE Follower.FK_utilisateur_mail_1 = '${query.mail}' 
+            AND Follower.date_follow BETWEEN date_sub(CURDATE(), interval 13 day) AND date_sub(CURDATE(), interval 7 day)
+        UNION ALL
+        SELECT CURDATE() as date, COUNT(*) as nb FROM Follower WHERE Follower.FK_utilisateur_mail_1 = '${query.mail}' 
+        AND Follower.date_follow BETWEEN date_sub(CURDATE(), interval 6 day) AND CURDATE();
+        `;
+
+        db.query(sql, function (err, result, fields) {
+            if (err) throw err;
+            console.log(result);
+            res.send(result);
+        });
+        db.end();
+
+    });
+});
+
+// 33) /nbFollowersSince4w : nombre de followers depuis 4 semaines d'un utilisateur (entrée : mail -> sortie : liste)
+app.get('/nbFollowersSince4w', function (req, res) {
+    // connection à la bdd créée
+    const db = mysql.createConnection({
+        host: "localhost",
+	    user: "root",
 	    password: "",
 	    database: "mydb"
     });

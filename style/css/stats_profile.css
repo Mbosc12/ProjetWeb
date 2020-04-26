@@ -20,7 +20,6 @@ nav ul {
 }
 
 
-
 /* -------------------- Body -------------------- */
 body {
     background-color: #fafafa;
@@ -37,7 +36,7 @@ body {
     width: 940px;
 }
 
-#graphic p{
+#graphic p {
     border: 2px solid #68d89b;
     border-radius: 25px;
     text-align: center;
@@ -96,10 +95,19 @@ body {
     border-left: 3px solid #dadada;
 }
 
+#new_follow {
+    text-align: center;
+}
+
+#new_follow span {
+    color: #68d89b;
+    font-weight: bold;
+}
+
 canvas {
     margin: 0 auto;
-    width:600px !important;
-    height:300px !important;
+    width: 600px !important;
+    height: 300px !important;
 }
 
 
