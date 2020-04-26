@@ -13,13 +13,11 @@ new Vue({
                     mail: localStorage.mail
                 }
             }).then(response => {
-                console.log(response);
                 if (response.data.length !== 0) {
                     for (let i = 0; i < response.data.length; i++) {
                         this.ville.push(response.data[i].ville);
                         this.nb.push(response.data[i].nb);
                     }
-                    console.log(this.ville, this.nb);
                     new Chart(document.getElementById("horizontalBar"), {
                         "type": "horizontalBar",
                         "data": {
