@@ -1117,45 +1117,6 @@ app.get('/nbFollowersSince4w', function (req, res) {
     });
 });
 
-// 33) /nbFollowersSince4w : nombre de followers depuis 4 semaines d'un utilisateur (entrée : mail -> sortie : liste)
-app.get('/nbFollowersSince4w', function (req, res) {
-    // connection à la bdd créée
-    const db = mysql.createConnection({
-        host: "localhost",
-	    user: "root",
-	    password: "",
-	    database: "mydb"
-    });
-
-    db.connect(function (err) {
-        if (err) throw err;
-
-        const query = req.query;
-
-        const sql =
-            `SELECT COUNT(*) AS nb_follower FROM Follower WHERE Follower.FK_utilisateur_mail_1 = '${query.mail}' 
-            AND Follower.date_follow BETWEEN NOW()-28 AND NOW()-21
-        UNION ALL
-        SELECT COUNT(*) FROM Follower WHERE Follower.FK_utilisateur_mail_1 = '${query.mail}' 
-            AND Follower.date_follow BETWEEN NOW()-21 AND NOW()-14
-        UNION ALL
-        SELECT COUNT(*) FROM Follower WHERE Follower.FK_utilisateur_mail_1 = '${query.mail}' 
-            AND Follower.date_follow BETWEEN NOW()-14 AND NOW()-7
-        UNION ALL
-        SELECT COUNT(*) FROM Follower WHERE Follower.FK_utilisateur_mail_1 = '${query.mail}' 
-            AND Follower.date_follow BETWEEN NOW()-7 AND NOW();
-        `;
-
-        db.query(sql, function (err, result, fields) {
-            if (err) throw err;
-            console.log(result);
-            res.send(result);
-        });
-        db.end();
-
-    });
-});
-
 
 
 
