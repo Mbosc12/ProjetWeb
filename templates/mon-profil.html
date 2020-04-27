@@ -94,7 +94,7 @@
                 </div>
             </div>
         </header>
-
+        <!---
         <div id="publi" style="display: none;">
             <strong>Mes Followers</strong>
             <li v-for="f in followers">
@@ -119,10 +119,39 @@
         </div>
 
         <a href="home">• Home</a> <br>
+        -->
     </section>
 </div>
 
 <script type="module" src="../style/js/mon-profil.js"></script>
 
+<div class="container" id="galerie">
+    
+    <div class="row">
+        
+        <div class="col-xs-6 col-sm-3" v-for="item in items" :key="item" >
+            <a :href="item.titre" class="thumbnail">
+                <img :src="`style/img/`+item.titre" alt="Small picture : Autumn" /> 
+            </a>
+        </div>
+<!---
+        <div class="col-xs-6 col-sm-3">
+            
+            <a href="img/landscape.jpg" class="thumbnail">
+                <img src="style/img/halo.jpg" alt="Landscape" />
+            </a>
+            
+        </div>
+-->     
+        
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="style/css/bootstrap-gallery.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="style/js/bootstrap-gallery.js"></script>
 </body>
 </html>

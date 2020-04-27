@@ -138,6 +138,28 @@ let vm = new Vue({
 	}
 });
 
+new Vue ({
+    el: '#galerie',
+    created() {
+        this.FetchPhoto();
+    },
+	data: {
+        items: []
+    },
+	methods: {
+        FetchPhoto() {
+        axios.get('http://localhost:3000/AllPhoto', {
+        	params: {
+				mail: localStorage.mail
+        	}
+        }).then(response => {
+            this.items = response.data;
+            console.log("chemins photo = "+this.items)
+            });
+        }
+    }
+});
+
 
 new Vue({
     el: "#disconnect",

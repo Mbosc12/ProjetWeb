@@ -115,7 +115,26 @@ con.connect(function(err) {
     if (err) throw err;
     console.log("7 bis - Photo greta.png greataThunber inserted");
   });
-
+  var sql = "INSERT INTO photo (FK_utilisateur_mail, titre) VALUES ('gretathunberg@gmail.com', 'halo.jpg')";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log("7 ter - Photo halo.jpg greataThunber inserted");
+  });
+  var sql = "INSERT INTO photo (FK_utilisateur_mail, titre) VALUES ('gretathunberg@gmail.com', 'ouf.png')";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log("7 quatre - Photo ouf.png greataThunber inserted");
+  });
+  var sql = "INSERT INTO photo (FK_utilisateur_mail, titre) VALUES ('gretathunberg@gmail.com', 'hardMetal.jpg')";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log("7 cinq - Photo hardMetal.jpg greataThunber inserted");
+  });
+  var sql = "INSERT INTO photo (FK_utilisateur_mail, titre) VALUES ('gretathunberg@gmail.com', 'poney.jpg')";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log("7 six - Photo poney.jpg greataThunber inserted");
+  });
 
   // Posts + Poster (4 posts au total)
   var sql = "INSERT INTO post VALUES ('1','gretathunberg@gmail.com', 'Premier message','Ceci est le premier post de GretaGram')";
