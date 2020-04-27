@@ -1,11 +1,3 @@
-/*
- * Bootstrap gallery v1.1
- * https://github.com/ludovicscribe/bootstrap-gallery
- * https://ludovicscribe.fr/blog/galerie-images-bootstrap
- *
- * Copyright 2016, Scribe Ludovic
- * https://ludovicscribe.fr/
- */
 
 #bootstrap-gallery .modal-dialog {
 	margin-left: auto;
@@ -24,6 +16,16 @@
 
 #bootstrap-gallery .modal-body {
 	padding: 0;
+}
+
+
+.thumbnail > img{
+	margin-right: auto;
+	margin-left: auto;
+	display: block;
+	max-width: 100%;
+	height: auto;
+
 }
 
 #bootstrap-gallery .modal-body img {

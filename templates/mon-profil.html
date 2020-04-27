@@ -19,6 +19,11 @@
     <script src="https://use.fontawesome.com/releases/v5.13.0/js/all.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+    <!-- Gallery -->
+    <link rel="stylesheet" href="style/css/bootstrap-gallery.css">
+    <script src="style/js/bootstrap-gallery.js"></script>
+
+
     <script>
         /* if the username or password are not localy stored, the user is redirected to the connexion page */
         if (localStorage.username === "" || localStorage.password === "") {
@@ -131,7 +136,7 @@
         
         <div class="col-xs-6 col-sm-3" v-for="item in items" :key="item" >
             <a :href="item.titre" class="thumbnail">
-                <img :src="`style/img/`+item.titre" alt="Small picture : Autumn" /> 
+                <img :src="`style/img/`+item.titre" /> 
             </a>
         </div>
 <!---
@@ -148,10 +153,7 @@
 
 </div>
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<link rel="stylesheet" href="style/css/bootstrap-gallery.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script src="style/js/bootstrap-gallery.js"></script>
+
+
 </body>
 </html>
