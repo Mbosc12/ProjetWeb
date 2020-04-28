@@ -99,6 +99,7 @@ app.get('/evol-follow', function (req, res) {
    31) /nbFollowersByCity : nombre de followers par ville d'un utilisateur (entrée : mail -> sortie : liste)
    32) /nbFollowersByCountry : nombre de followers par ville d'un utilisateur (entrée : mail -> sortie : liste)
    33) /nbFollowersSince4w : nombre de followers depuis 4 semaines d'un utilisateur (entrée : mail -> sortie : liste)
+   34) /showFeed : id de tous les posts à afficher dans le feed (entrée : mail -> sortie : liste)
 
  */
 
@@ -1118,10 +1119,36 @@ app.get('/nbFollowersSince4w', function (req, res) {
     });
 });
 
+// 34) /showFeed : id de tous les posts à afficher dans le feed (entrée : mail -> sortie : liste)
+app.get('/showFeed', function (req, res) {
+    // connection à la bdd créée
+    const db = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "root",
+        database: "mydb",
+        port: "8889"
+    });
 
+    db.connect(function (err) {
+        if (err) throw err;
 
+        const query = req.query;
 
+        const sql = `SELECT post.PK_post_id AS id_post 
+                     FROM post 
+                     INNER JOIN Follower on Follower.FK_utilisateur_mail_2=post.FK_utilisateur_mail 
+                     WHERE Follower.FK_utilisateur_mail_1='${query.mail}'`;
 
+        db.query(sql, function (err, result, fields) {
+            if (err) throw err;
+            console.log(result);
+            res.send(result);
+        });
+        db.end();
+
+    });
+});
 
 const multer = require("multer");
 
