@@ -1134,12 +1134,20 @@ app.get('/showFeed', function (req, res) {
         if (err) throw err;
 
         const query = req.query;
-
+        /*
         const sql = `SELECT post.PK_post_id AS id_post 
                      FROM post 
                      INNER JOIN Follower on Follower.FK_utilisateur_mail_2=post.FK_utilisateur_mail 
                      WHERE Follower.FK_utilisateur_mail_1='${query.mail}'`;
-
+        */
+        const sql = `
+                    SELECT post.PK_post_id AS id_post , poster.date_publication AS date_publication
+                    FROM post
+                    INNER JOIN follower on follower.FK_utilisateur_mail_1 = post.FK_utilisateur_mail
+                    INNER JOIN poster on poster.FK_post_id=post.PK_post_id
+                    WHERE follower.FK_utilisateur_mail_2 = '${query.mail}'
+                    ORDER BY poster.date_publication DESC
+                    `
         db.query(sql, function (err, result, fields) {
             if (err) throw err;
             console.log(result);
