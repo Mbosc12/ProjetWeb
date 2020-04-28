@@ -26,3 +26,63 @@ body {
     position: relative;
     margin-bottom: 20px;
 }
+
+/* -------------------- Posts -------------------- */
+#posts {
+    float: left;
+}
+
+#posts ul {
+    list-style-type: none;
+}
+
+#posts li {
+    background-color: #FFFFFF;
+    border: 1px solid #dbdbdb;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 125px;
+    width: 640px;
+}
+
+#posts #user {
+    color: #4F9D69;
+    font-size: 12px;
+    padding: 10px;
+}
+
+#posts #title {
+    border-top: 1px solid #dadada;
+    border-bottom: 1px solid #dadada;
+    text-align: center;
+    padding: 30px;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #68d89b;
+}
+
+#posts #msg {
+    padding: 15px;
+    font-size: 14px;
+    text-align: justify;
+}
+
+#posts #date {
+    font-size: 12px;
+    font-weight: bold;
+    color: #dadada;
+    text-align: right;
+    padding: 5px;
+    border-top: 1px solid #dbdbdb;
+}
+
+/* -------------------- User card -------------------- */
+#user_card {
+    float: right;
+    background-color: #FFFFFF;
+    border: 1px solid #dbdbdb;
+    margin-top: 20px;
+    margin-right: 150px;
+    padding: 20px;
+    width: 310px;
+}
