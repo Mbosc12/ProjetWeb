@@ -355,6 +355,7 @@ app.get('/AllPostUtilisateur', function (req, res) {
     });
 });
 
+
 // 7) /NbFollowerUtilisateur : Nombre de Follower d'un utilisateur (entrée : mail -> sortie : nb)
 app.get('/NbFollowerUtilisateur', function (req, res) {
     // connection à la bdd créée
