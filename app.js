@@ -584,7 +584,7 @@ app.get('/newUser', function (req, res) {
 
         const query = req.query;
 
-        const sql = `INSERT INTO utilisateur (pseudo, nom, prenom, mail, motdepass, date_naissance, sexe, pays, cp, ville, adresse, photo_profil, date_inscription) VALUES ('${query.pseudo}', '${query.nom}', '${query.prenom}', '${query.mail}', '${query.motdepass}', '${query.date_naissance}','${query.sexe}','${query.pays}', '${query.CP}', '${query.ville}', '${query.adresse}', '${query.photo_profil}', NOW()) `;
+        const sql = `INSERT INTO utilisateur (pseudo, nom, prenom, mail, motdepass, date_naissance, sexe, pays, cp, ville, adresse, photo_profil, date_inscription) VALUES ('${query.pseudo}', '${query.nom}', '${query.prenom}', '${query.mail}', '${query.motdepass}', '${query.date_naissance}','${query.sexe}','${query.pays}', '${query.CP}', '${query.ville}', '${query.adresse}', NULL, CURDATE()) `;
 
         db.query(sql, function (err, result, fields) {
             if (err) throw err;
