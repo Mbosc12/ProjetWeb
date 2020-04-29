@@ -100,7 +100,7 @@ app.get('/evol-follow', function (req, res) {
    32) /nbFollowersByCountry : nombre de followers par ville d'un utilisateur (entrée : mail -> sortie : liste)
    33) /nbFollowersSince4w : nombre de followers depuis 4 semaines d'un utilisateur (entrée : mail -> sortie : liste)
    34) /showFeed : id de tous les posts à afficher dans le feed (entrée : mail -> sortie : liste)
-
+   35) /ajoutPhoto : ajoute une photo (entrée : mail, titre -> sortie : nb)
  */
 
 /* Liste des requêtes manquantes :
@@ -1124,10 +1124,9 @@ app.get('/showFeed', function (req, res) {
     // connection à la bdd créée
     const db = mysql.createConnection({
         host: "localhost",
-        user: "root",
-        password: "root",
-        database: "mydb",
-        port: "8889"
+	    user: "root",
+	    password: "",
+	    database: "mydb"
     });
 
     db.connect(function (err) {
@@ -1157,6 +1156,35 @@ app.get('/showFeed', function (req, res) {
 
     });
 });
+
+// 35) /ajoutPhoto : ajoute une photo (entrée : mail, titre -> sortie : nb)
+// INSERT INTO photo (FK_utilisateur_mail, titre) VALUES ('gretathunberg@gmail.com', 'poney.jpg')
+app.get('/ajoutPhoto',function(req,res){
+	// connection à la bdd créée
+	const db = mysql.createConnection({
+	  host: "localhost",
+	  user: "root",
+	  password: "",
+	  database: "mydb"
+	});
+
+    db.connect(function (err) {
+        if (err) throw err;
+
+        const query = req.query;
+
+        const sql = `INSERT INTO photo (FK_utilisateur_mail, titre) VALUES ('${query.mail}', '${query.titre}')`;
+
+        db.query(sql, function (err, result, fields) {
+            if (err) throw err;
+            console.log(result);
+            res.send(result);
+        });
+        db.end();
+    });
+});
+
+
 
 const multer = require("multer");
 
