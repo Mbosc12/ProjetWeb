@@ -1,30 +1,3 @@
-
-//VUE JS
-let publication = {
-    props: {
-        message: String,
-        listlike: Array,
-        shares: Array,
-        Comments: Array
-    },
-    template: `<div class="publication">
-                    <p>{{ message }} </p>
-                    <div class="interaction">
-                        <div class="event">
-                            <button class="btnlike btnevent"> Likes : {{listlike.length}}                             
-                                <ul class="l-liste">
-                                    <li v-for="like in listlike">
-                                        <p>{{ like.pseudo }}</p>
-                                    </li>
-                                </ul>
-                            </button>
-                            <button class="btnshare btnevent"> Partager </button>
-                        </div>
-                        <button> Afficher les commentaires </button>
-                    </div>
-                </div>`
-}
-
 let user = {
 	props: {
 		name: String
@@ -64,14 +37,18 @@ let vm = new Vue({
         this.FetchInfos();
         this.FetchLikes();
         this.FetchPhotoProfil();
+        this.FetchPhoto();
     },
-	components: { categorie, state, user, publication},
+	components: {categorie, state, user},
 	data: {
-		GretaPic: "",
+        showModal: null,
+		imagePic: "",
 		posts: [],
 		infos: [],
 		followers: [],
-        likes: []
+        likes: [],
+        items: [],
+        activeImageUrl: null
 	},
 	methods: {
         FetchPosts() {
@@ -132,32 +109,23 @@ let vm = new Vue({
                     photoId : photo
                 }
             }).then(response => {
-                this.GretaPic =  "style/img/"+response.data[0].titre; 
+                this.imagePic =  "style/img/"+response.data[0].titre; 
             });
-        }
-	}
-});
-
-new Vue ({
-    el: '#galerie',
-    created() {
-        this.FetchPhoto();
-    },
-	data: {
-        items: []
-    },
-	methods: {
+        },
         FetchPhoto() {
         axios.get('http://localhost:3000/AllPhoto', {
-        	params: {
-				mail: localStorage.mail
-        	}
+            params: {
+                mail: localStorage.mail
+            }
         }).then(response => {
             this.items = response.data;
             console.log("chemins photo = "+this.items)
             });
+        },
+        showLightbox: function(imageName) {
+            this.$refs.lightbox.show(imageName);
         }
-    }
+	}
 });
 
 

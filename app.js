@@ -58,7 +58,9 @@ app.get('/evol-follow', function (req, res) {
     res.sendFile('evol_follow.html', {'root': __dirname + '/templates'})
 });
 
-
+app.get('/test', function (req, res) {
+    res.sendFile('test.html', {'root': __dirname + '/templates'})
+});
 
 
 /* Liste des requêtes disponibles :
@@ -584,7 +586,7 @@ app.get('/newUser', function (req, res) {
 
         const query = req.query;
 
-        const sql = `INSERT INTO utilisateur (pseudo, nom, prenom, mail, motdepass, date_naissance, sexe, pays, cp, ville, adresse, photo_profil, date_inscription) VALUES ('${query.pseudo}', '${query.nom}', '${query.prenom}', '${query.mail}', '${query.motdepass}', '${query.date_naissance}','${query.sexe}','${query.pays}', '${query.CP}', '${query.ville}', '${query.adresse}', '${query.photo_profil}', NOW()) `;
+        const sql = `INSERT INTO utilisateur (pseudo, nom, prenom, mail, motdepass, date_naissance, sexe, pays, cp, ville, adresse, photo_profil, date_inscription) VALUES ('${query.pseudo}', '${query.nom}', '${query.prenom}', '${query.mail}', '${query.motdepass}', '${query.date_naissance}','${query.sexe}','${query.pays}', '${query.CP}', '${query.ville}', '${query.adresse}', NULL, CURDATE()) `;
 
         db.query(sql, function (err, result, fields) {
             if (err) throw err;
@@ -1130,7 +1132,7 @@ app.get('/showFeed', function (req, res) {
     });
 
     db.connect(function (err) {
-        if (err) throw err;
+        if (err) return;
 
         const query = req.query;
         /*

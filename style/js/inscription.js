@@ -5,16 +5,17 @@ new Vue({
     data: function () {
         return {
             username: '',
-            mail: '',
-            password: '',
             nom: '',
             prenom: '',
+            mail: '',
+            password: '',
             datenaiss: '',
             sexe: '',
-            adresse: '',
+            pays: '',
             cp: '',
             ville: '',
-            pays: '',
+            adresse: '',
+            date: '',
             display_mdp: false,
             display_carac: false,
             display_user: false,
@@ -157,16 +158,16 @@ new Vue({
             axios.get('http://localhost:3000/newUser', {
                 params: {
                     pseudo: this.username,
-                    mail: this.mail,
-                    motdepass: this.password,
                     nom: this.nom,
                     prenom: this.prenom,
+                    mail: this.mail,
+                    motdepass: this.password,
                     date_naissance: this.datenaiss,
                     sexe: this.sexe,
-                    adresse: this.adresse,
+                    pays: this.pays,
                     CP: this.cp,
                     ville: this.ville,
-                    pays: this.pays
+                    adresse: this.adresse,
                 }
             }).then(response => {
                 if (response.data.length !== 0) {
