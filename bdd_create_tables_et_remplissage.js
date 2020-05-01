@@ -112,11 +112,13 @@ con.connect(function(err) {
     if (err) throw err;
     console.log("7 bis - Photo greta.png greataThunber inserted");
   });
+
   var sql = "INSERT INTO photo (FK_utilisateur_mail, titre, FK_post_id) VALUES ('gretathunberg@gmail.com', 'halo.jpg', 2)";
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log("7 ter - Photo halo.jpg greataThunber inserted");
   });
+
   var sql = "INSERT INTO photo (FK_utilisateur_mail, titre, FK_post_id) VALUES ('gretathunberg@gmail.com', 'ouf.png', 3)";
   con.query(sql, function (err, result) {
     if (err) throw err;
@@ -278,13 +280,13 @@ con.connect(function(err) {
     console.log("23 - donaldtrump like post 1");
   });
 
-  var sql = "INSERT INTO Liker VALUES(2, 'emmanuelmacron@gmail.com', 1,'2020-03-09')";
+  var sql = "INSERT INTO Liker VALUES(2, 'emmanuelmacron@gmail.com', 1,'2020-03-19')";
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log("24 - emmanuelmacron like post 1");
   });
   
-  var sql = "INSERT INTO Liker VALUES(3, 'emmanuelmacron@gmail.com', 2,'2020-03-09')";
+  var sql = "INSERT INTO Liker VALUES(3, 'emmanuelmacron@gmail.com', 2,'2020-04-09')";
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log("25 - emmanuelmacron like post 2");
@@ -296,13 +298,13 @@ con.connect(function(err) {
     console.log("26 - PereCastor Like post 1");
   });
 
-  var sql = "INSERT INTO Liker (FK_utilisateur_mail,FK_post_id,date_like) VALUES ('PereCastor@gmail.com','2','2020-03-09')";
+  var sql = "INSERT INTO Liker (FK_utilisateur_mail,FK_post_id,date_like) VALUES ('PereCastor@gmail.com','2','2020-03-19')";
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log("27 - PereCastor Like post 2");
   });
 
-  var sql = "INSERT INTO Liker (FK_utilisateur_mail,FK_post_id,date_like) VALUES ('gretathunberg@gmail.com','3','2020-03-09')";
+  var sql = "INSERT INTO Liker (FK_utilisateur_mail,FK_post_id,date_like) VALUES ('gretathunberg@gmail.com','3','2020-03-29')";
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log("28 - gretathunberg Like post 3");
