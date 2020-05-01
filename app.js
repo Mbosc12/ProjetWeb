@@ -103,11 +103,9 @@ app.get('/test', function (req, res) {
    33) /nbFollowersSince4w : nombre de followers depuis 4 semaines d'un utilisateur (entrée : mail -> sortie : liste)
    34) /showFeed : id de tous les posts à afficher dans le feed (entrée : mail -> sortie : liste)
    35) /ajoutPhoto : ajoute une photo (entrée : mail, titre -> sortie : nb)
+   36) /notifLike : mail, titre, id et date_like de tous les utilisateurs qui ont liké un de tes post (entrée : mail -> sortie : liste)
  */
 
-/* Liste des requêtes manquantes :
-
- */
 
 
 
@@ -1186,6 +1184,38 @@ app.get('/ajoutPhoto',function(req,res){
     });
 });
 
+// 36) /notifLike : mail, titre, id et date_like de tous les utilisateurs qui ont liké un de tes post (entrée : mail -> sortie : liste)
+app.get('/notifLike', function (req, res) {
+    // connection à la bdd créée
+    const db = mysql.createConnection({
+        host: "localhost",
+	    user: "root",
+	    password: "",
+	    database: "mydb"
+    });
+
+    db.connect(function (err) {
+        if (err) return;
+
+        const query = req.query;
+
+        const sql = `
+                    SELECT liker.FK_utilisateur_mail, post.titre, liker.FK_post_id, liker.date_like
+                    FROM liker
+                    INNER JOIN post on liker.FK_post_id = post.PK_post_id
+                    INNER JOIN follower on follower.FK_utilisateur_mail_1 = post.FK_utilisateur_mail
+                    WHERE follower.FK_utilisateur_mail_2 = '${query.mail}'
+                    ORDER BY liker.date_like DESC
+                    `
+        db.query(sql, function (err, result, fields) {
+            if (err) throw err;
+            console.log(result);
+            res.send(result);
+        });
+        db.end();
+
+    });
+});
 
 
 const multer = require("multer");
