@@ -3,29 +3,6 @@
 <head>
     <title>Test</title>
 
-    <!-- CSS -->
-    <link rel="stylesheet" type="text/css" href="../style/css/mon-profile.css"/>
-    <!-- Script JS -->
-    <link rel="stylesheet" type="text/css" href="style/css/header-profile.css"/>
-    <!-- Vue.js -->
-    <script src="//unpkg.com/vue"></script>
-    <!-- Axios -->
-    <script src="//cdnjs.cloudflare.com/ajax/libs/axios/0.15.3/axios.min.js"></script>
-    <!-- Bootstrap -->
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <!-- Font Awesome (icon) -->
-    <script src="https://use.fontawesome.com/releases/v5.13.0/js/all.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-    <!-- Gallery -->
-    <link rel="stylesheet" href="style/css/bootstrap-gallery.css">
-    <script src="style/js/bootstrap-gallery.js"></script>
-    <!-- Modal -->
-    <link rel="stylesheet" href="style/css/modal.css">
-
-
     <script>
         /* if the username or password are not localy stored, the user is redirected to the connexion page */
         if (localStorage.username === "" || localStorage.password === "") {
@@ -33,8 +10,26 @@
         }
     </script>
 
+    <link rel="stylesheet" type="text/css" href="../style/css/mon-profile.css"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css"/>
+    <!-- Script JS -->
+    <link rel="stylesheet" type="text/css" href="style/css/header-profile.css"/>
+    <!-- Vue.js -->
+    <script src="//unpkg.com/vue"></script>
+    <!-- Axios -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/axios/0.15.3/axios.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+
+    <!-- Font Awesome (icon) -->
+    <script src="https://use.fontawesome.com/releases/v5.13.0/js/all.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js"></script>
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-light ">
     <a class="navbar-brand" href="feed">
@@ -91,7 +86,7 @@
     <section class="profile">
         <header class="header">
             <div class="details">
-                <img :src="GretaPic" class="profile-pic">
+                <img :src="imagePic" class="profile-pic">
                 <user :name="infos.pseudo"></user>
                 <state :city="infos.ville" :country="infos.pays"></state>
                 <div class="stats">
@@ -101,85 +96,37 @@
                 </div>
             </div>
         </header>
-        <!---
-        <div id="publi" style="display: none;">
-            <strong>Mes Followers</strong>
-            <li v-for="f in followers">
-                {{f.pseudo}}
-            </li>
-            <strong>Mes Infos personnelles</strong>
-            <li>
-                {{infos}}
-            </li>
-            <br>
-            <li v-for="post in posts" style="list-style-type: none;">
-                <publication :message="post.message" :listlike="likes[post.PK_post_id-1]"></publication>
-            </li>
-
-        </div>
-
-        <div id="create">
-            <form method="post" enctype="multipart/form-data" action="/upload">
-                <input type="file" name="file">
-                <input type="submit" value="Submit">
-            </form>
-        </div>
-
-        <a href="home">• Home</a> <br>
-        -->
     </section>
-</div>
-
-<script type="module" src="../style/js/mon-profil.js"></script>
-
-<!--  ###################################### LAURIE AIDE MOI STP (à partir d'ici) ######################################## -->
-    <div class="container" id="galerie">
-        <div class="row">
-       
-            <div class="col-xs-6 col-sm-3" v-for="item in items" :key="item" >
-                <a :href="`style/img/`+item.titre" class="thumbnail">
-                    <img :src="`style/img/`+item.titre" alt="item.titre" /> 
-                </a>
-            </div>
-
-    <!---
-            <div class="col-xs-6 col-sm-3">
-                <a href="img/landscape.jpg" class="thumbnail">
-                    <img src="style/img/halo.jpg" alt="Landscape" />
-                </a>
-            </div>
-    -->     
-            
-        </div>  
-    </div>
 
 
-<!-- app2 -->
-<div id="app2">
-    <button id="show-modal" @click="showModal = true">Show Modal</button>
-     <!--use the modal component, pass in the prop-->
-    <modal v-if="showModal" @close="showModal = false">
-    <!-- you can use custom content here to overwrite default content -->
-        <h3 slot="header">custom header</h3>
-    </modal>
-</div>
+    <section id="gallery" class="thumbnail">
+        <img class="gallery-image" v-b-modal.modal2 v-for="item in items" :src="`style/img/`+item.titre" @click="showModal = item.titre">
+            <b-modal id="modal2" src="`style/img/`+showModal" hide-footer hide-header>
+                <div id="modalcontainer">
+                    <img id="fatimage" :src="`style/img/`+showModal" alt="Image" style="border:solid">
 
-<!-- Modal -->
-<!-- template for the modal component -->
-<script type="text/x-template" id="modal-template">
-    <transition name="modal">
-        <div class="modal-mask">
-            <div class="modal-wrapper">
-                <div class="modal-container">
-                    
-                    <div class="card">
-                        <div class="card-image">
-                            <div class="image is-square">
-                                <img src="style/img/cactus.jpg" alt="Image" style="border:solid">
+                        <div class="card-content">
+                            <div class="media">
+                                <div class="media-left">
+                                    <div class="image">
+                                        <img :src="imagePic" alt="Image" height="50px" width="50px" style="border-radius: 50%;">
+                                    </div>
+                                </div>
+                                <div class="media-content">
+                                    <span>{{infos.pseudo }}</span>
+                                </div>
+                            </div>
+                            <div class="content">
+                                Content
                             </div>
                         </div>
-                        
-                        <div class="card-content">
+                        <div class="card-footer">
+                            <p class="card-footer-item"><i class="fa fa-heart"></i> 18</p>
+                            <p class="card-footer-item"><i class="fa fa-commenting"></i> 25</p>
+                            <a href="props.feed.link" target="_blank" class="card-footer-item"><i class="fa fa-external-link"></i> Link</a>
+                        </div>
+                </div>
+                      <!--  <div class="card-content">
                             <div class="media">
                                 <div class="media-left">
                                     <div class="image" style="height: 40px; width: 40px;">
@@ -201,107 +148,13 @@
                             <p class="card-footer-item"><i class="fa fa-commenting"></i> 25</p>
                             <a href="props.feed.link" target="_blank" class="card-footer-item"><i class="fa fa-external-link"></i> Link</a>
                         </div>
-                        <button class="modal-default-button" @click="$emit('close')">
-                            OK
-                        </button>
-                    </div>
-                   
-                </div>
-            </div>
-        </div>
-    </transition>
-</script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.0/css/bulma.min.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+                    </div>-->
+            </b-modal>
+    </section>
 
- 
-                    <!-- POST -->
-                     <!--   trucs de base que j'ai repris puis modifié au dessus    
-                    <div class="card">
-                        <div class="card-image">
-                        <figure class="image is-square">
-                            <img src="style/img/cactus.jpg" alt="Image">
-                        </figure>
-                        </div>
-                        
-                        <div class="card-content">
-                            <div class="media">
-                                <div class="media-left">
-                                    <figure class="image" style="height: 40px; width: 40px;">
-                                        <img src="style/img/cactus.jpg" alt="Image">
-                                    </figure>
-                                </div>
-                                <div class="media-content">
-                                    <p class="title is-4">HOLA</p>
-                                    <p class="subtitle is-6">QUETAL</p>
-                                </div>
-                            </div>
-                            <div class="content" style="height: 100px; overflow: auto;">
-                                Content
-                            </div>
-                        </div>
+</div>
 
-                        <footer class="card-footer">
-                            <p class="card-footer-item"><i class="fa fa-heart"></i> &nbsp; 18</p>
-                            <p class="card-footer-item"><i class="fa fa-commenting"></i> &nbsp; 25</p>
-                            <a :href="props.feed.link" target="_blank" class="card-footer-item"><i class="fa fa-external-link"></i> &nbsp; Link</a>
-                        </footer>
-                    
-                    </div>
-                -->
-
-                <!-- Modal -->
-                <!--
-                <script type="text/x-template" id="modal-template">
-                    <transition name="modal">
-                        <div class="modal-mask">
-                            <div class="modal-wrapper">
-                                <div class="modal-container">
-                                    <div class="modal-header">
-                                    <div name="header">
-                                        default header
-                                    </div>
-                                    </div>
-
-                                    <div class="modal-body">
-                                        <div name="body">
-                                        </div>
-                                    </div>
-                                
-                                    <div class="modal-footer">
-                                    <slot name="footer">
-                                        default footer
-                                        <button class="modal-default-button" @click="$emit('close')">
-                                        OK
-                                        </button>
-                                    </slot>
-                                    </div>
-                                
-                                </div>
-                            </div>
-                        </div>
-                    </transition>
-                </script>
-                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.0/css/bulma.min.css">
-                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
--->
-
-
-
-  <script>
-    // register modal component
-    Vue.component("modal", {
-      template: "#modal-template"
-    });
-
-    // start app
-    new Vue({
-      el: "#app2",
-      data: {
-        showModal: false
-      }
-    });
-  </script>
+    <script type="module" src="../style/js/mon-profil.js"></script>
 
 </body>
 </html>

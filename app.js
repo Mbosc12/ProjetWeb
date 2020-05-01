@@ -58,7 +58,9 @@ app.get('/evol-follow', function (req, res) {
     res.sendFile('evol_follow.html', {'root': __dirname + '/templates'})
 });
 
-
+app.get('/test', function (req, res) {
+    res.sendFile('test.html', {'root': __dirname + '/templates'})
+});
 
 
 /* Liste des requêtes disponibles :
@@ -1131,7 +1133,7 @@ app.get('/showFeed', function (req, res) {
     });
 
     db.connect(function (err) {
-        if (err) throw err;
+        if (err) return;
 
         const query = req.query;
         /*
