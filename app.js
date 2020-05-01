@@ -58,8 +58,8 @@ app.get('/evol-follow', function (req, res) {
     res.sendFile('evol_follow.html', {'root': __dirname + '/templates'})
 });
 
-app.get('/test', function (req, res) {
-    res.sendFile('test.html', {'root': __dirname + '/templates'})
+app.get('/profil', function (req, res) {
+    res.sendFile('profil.html', {'root': __dirname + '/templates'})
 });
 
 
@@ -102,7 +102,7 @@ app.get('/test', function (req, res) {
    32) /nbFollowersByCountry : nombre de followers par ville d'un utilisateur (entrée : mail -> sortie : liste)
    33) /nbFollowersSince4w : nombre de followers depuis 4 semaines d'un utilisateur (entrée : mail -> sortie : liste)
    34) /showFeed : id de tous les posts à afficher dans le feed (entrée : mail -> sortie : liste)
-
+   35) /getMail: donne le mail d'un utilisateur à partir de son pseudo (entrée: pseudo -> sortie: mail)
  */
 
 /* Liste des requêtes manquantes :
@@ -224,7 +224,7 @@ app.get('/AllPhoto', function (req, res) {
     db.connect(function (err) {
         if (err) throw err;
         var query = req.query;
-        var sql = `SELECT titre FROM photo WHERE FK_utilisateur_mail='${query.mail}'`;
+        var sql = `SELECT titre, FK_post_id FROM photo WHERE FK_utilisateur_mail='${query.mail}'`;
         db.query(sql, function (err, result, fields) {
             if (err) throw err;
             console.log(result);
@@ -1159,6 +1159,32 @@ app.get('/showFeed', function (req, res) {
 
     });
 });
+
+// 34) /getMail: donne le mail d'un utilisateur via son pseudo(entrée : pseudo -> sortie : mail)
+app.get('/getMail', function (req, res) {
+    // connection à la bdd créée
+    var db = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "",
+        database: "mydb"
+    });
+    db.connect(function (err) {
+        if (err) throw err;
+
+        var query = req.query;
+
+        var sql = `SELECT mail FROM utilisateur WHERE pseudo = '${query.pseudo}'`;
+        db.query(sql, function (err, result, fields) {
+            if (err) throw err;
+            console.log(result);
+            res.send(result);
+        });
+
+        db.end();
+    });
+});
+
 
 const multer = require("multer");
 

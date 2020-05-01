@@ -150,11 +150,25 @@ i, a {
 }
 
 .card-content .content {
-	margin-top: 25px;
-	height: 100px;
+	margin: 25px 0;
+	height: auto;
 }
 
 .card-footer {
 	display: flex;
 	justify-content: space-between;
+}
+
+.card-footer ul {
+	list-style-type: none;
+	padding: 0;
+	display: none;
+	background-position: -50px;
+	position: fixed;
+	background-color: #fff;
+	padding: 10px;
+}
+
+#item-like:hover+ul, #item-comments:hover+ul {
+	display: block
 }

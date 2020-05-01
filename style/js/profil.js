@@ -32,6 +32,10 @@ let categorie = {
 let vm = new Vue({
 	el: '#app',
     created() {
+        console.log(localStorage.username)
+        console.log(localStorage.mailofuser)
+
+        this.FetchMail(localStorage.username);
         this.FetchPosts();
         this.FetchFollowers();
         this.FetchInfos();
@@ -57,24 +61,43 @@ let vm = new Vue({
         comments: [],
         nbcomments: [],
 
-        items: []
+        items: [],
+
+        user: null
 	},
 	methods: {
+        FetchMail: function(name) {
+        axios.get('http://localhost:3000/getMail', {
+            params: {
+                pseudo: name
+            }
+        }).then(response => {
+
+            localStorage.mailofuser = response.data[0].mail;
+            this.FetchPosts();
+            this.FetchFollowers();
+            this.FetchInfos();
+            this.FetchPhotoProfil();
+            this.FetchPhoto();
+            });
+        },
         FetchPosts() {
         axios.get('http://localhost:3000/AllPostUtilisateur', {
         	params: {
-				mail: localStorage.mail
+				mail: localStorage.mailofuser
         	}
         }).then(response => {
+
             this.posts = response.data;
             });
         },
         FetchFollowers() {
         axios.get('http://localhost:3000/Followers', {
         	params: {
-				mail: localStorage.mail
+				mail: localStorage.mailofuser
         	}
         }).then(response => {
+
             this.followers = response.data;
             });
         },
@@ -84,6 +107,7 @@ let vm = new Vue({
 				id: pid
         	}
         }).then(response => {
+
             this.nblikes = response.data.length;
             this.likes = response.data;
             });
@@ -100,20 +124,22 @@ let vm = new Vue({
             })
         },
         FetchInfos() {
+
         axios.get('http://localhost:3000/unUtilisateur', {
         	params: {
-				mail: localStorage.mail
+				mail: localStorage.mailofuser
         	}
         }).then(response => {
-            this.FetchPhotoProfil(response.data[0].photo_profil);
-            this.infos = response.data[0];
+                this.FetchPhotoProfil(response.data[0].photo_profil);
+                this.infos = response.data[0];
+
             });
         },
         FetchPhotoProfil: function(photo_profil){
             var email = 'admin@gmail.com';
             var photo = '1';
             if(photo_profil!=null){
-                email = localStorage.mail;
+                email = localStorage.mailofuser;
                 photo = photo_profil;
             }
             axios.get('http://localhost:3000/photoProfil', {
@@ -126,9 +152,10 @@ let vm = new Vue({
             });
         },
         FetchPhoto() {
+
         axios.get('http://localhost:3000/AllPhoto', {
             params: {
-                mail: localStorage.mail
+                mail: localStorage.mailofuser
             }
         }).then(response => {
             this.items = response.data;
@@ -151,7 +178,7 @@ new Vue({
     el: "#disconnect",
     data: function () {
         return {
-            username: localStorage.mail
+            username: localStorage.mailofuser
         }
     },
     template: `<a class="nav-link" href="connexion" v-on:click="disconnect"><i class="fas fa-power-off fa-lg"></i></a>`,

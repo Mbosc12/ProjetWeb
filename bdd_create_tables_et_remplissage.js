@@ -24,12 +24,11 @@ con.connect(function(err) {
     if (err) throw err;
     console.log("Table post created");
   });
-  var sql = "CREATE TABLE photo(PK_photo_id INT AUTO_INCREMENT, FK_utilisateur_mail VARCHAR(50), titre VARCHAR(50) NOT NULL,PRIMARY KEY(PK_photo_id), FOREIGN KEY(FK_utilisateur_mail) REFERENCES utilisateur(mail))";
+  var sql = "CREATE TABLE photo(PK_photo_id INT AUTO_INCREMENT, FK_utilisateur_mail VARCHAR(50), titre VARCHAR(50) NOT NULL, FK_post_id INT, PRIMARY KEY(PK_photo_id), FOREIGN KEY(FK_utilisateur_mail) REFERENCES utilisateur(mail), FOREIGN KEY(FK_post_id) REFERENCES post(PK_post_id))";
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log("Table photo created");
   });
-
   var sql = "CREATE TABLE Poster(FK_utilisateur_mail VARCHAR(50),FK_post_id INT,date_publication DATE NOT NULL,PRIMARY KEY(FK_utilisateur_mail, FK_post_id),FOREIGN KEY(FK_utilisateur_mail) REFERENCES utilisateur(mail),FOREIGN KEY(FK_post_id) REFERENCES post(PK_post_id))";
   con.query(sql, function (err, result) {
     if (err) throw err;
@@ -67,13 +66,13 @@ con.connect(function(err) {
     if (err) throw err;
     console.log("0 - utilisateur admin inserted");
   });
-  var sql = "INSERT INTO utilisateur VALUES ('GretaThunberg','Greta','Thunberg','gretathunberg@gmail.com','superadmin','2020-03-09','F','Suède', '81000','Stockholm','20 rue de la poudriere',3,'2020-03-09')";
+  var sql = "INSERT INTO utilisateur VALUES ('GretaThunberg','Greta','Thunberg','gretathunberg@gmail.com','superadmin','2020-03-09','F','Suède', '81000','Stockholm','20 rue de la poudriere', 3,'2020-03-09')";
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log("1 - utilisateur GretaThumberg inserted");
   });
 
-  var sql = "INSERT INTO utilisateur VALUES ('EmmanuelMacron','Emmanuel','Macron','emmanuelmacron@gmail.com','superadmin','2020-03-09','M','France','75008','Paris','55 Rue du Faubourg Saint-Honoré',null,'2020-03-19')";
+  var sql = "INSERT INTO utilisateur VALUES ('emmanuelmacron','Emmanuel','Macron','emmanuelmacron@gmail.com','superadmin','2020-03-09','M','France','75008','Paris','55 Rue du Faubourg Saint-Honoré',null,'2020-03-19')";
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log("2 - utilisateur emmanuelmacron inserted");
@@ -98,45 +97,43 @@ con.connect(function(err) {
   });
   
   // photo
-  var sql = "INSERT INTO photo VALUES ('1','admin@gmail.com', 'cactus.jpg')";
+  var sql = "INSERT INTO photo VALUES ('1','admin@gmail.com', 'cactus.jpg', 1)";
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log("6 - Photo cactus.jpg  inserted");
   });
-
-  var sql = "INSERT INTO photo (FK_utilisateur_mail, titre) VALUES ('HaloMora@gmail.com', 'halo.jpg')";
+  var sql = "INSERT INTO photo (FK_utilisateur_mail, titre, FK_post_id) VALUES ('HaloMora@gmail.com', 'halo.jpg', 4)";
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log("7 - Photo halo.jpg HaloMora inserted");
   });
-
-  var sql = "INSERT INTO photo (FK_utilisateur_mail, titre) VALUES ('gretathunberg@gmail.com', 'greta.png')";
+  var sql = "INSERT INTO photo (FK_utilisateur_mail, titre, FK_post_id) VALUES ('gretathunberg@gmail.com', 'greta.png', 1)";
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log("7 bis - Photo greta.png greataThunber inserted");
   });
-  var sql = "INSERT INTO photo (FK_utilisateur_mail, titre) VALUES ('gretathunberg@gmail.com', 'halo.jpg')";
+  var sql = "INSERT INTO photo (FK_utilisateur_mail, titre, FK_post_id) VALUES ('gretathunberg@gmail.com', 'halo.jpg', 2)";
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log("7 ter - Photo halo.jpg greataThunber inserted");
   });
-  var sql = "INSERT INTO photo (FK_utilisateur_mail, titre) VALUES ('gretathunberg@gmail.com', 'ouf.png')";
+  var sql = "INSERT INTO photo (FK_utilisateur_mail, titre, FK_post_id) VALUES ('gretathunberg@gmail.com', 'ouf.png', 3)";
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log("7 quatre - Photo ouf.png greataThunber inserted");
   });
-  var sql = "INSERT INTO photo (FK_utilisateur_mail, titre) VALUES ('gretathunberg@gmail.com', 'hardMetal.jpg')";
+  var sql = "INSERT INTO photo (FK_utilisateur_mail, titre, FK_post_id) VALUES ('gretathunberg@gmail.com', 'hardMetal.jpg', 5)";
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log("7 cinq - Photo hardMetal.jpg greataThunber inserted");
   });
-  var sql = "INSERT INTO photo (FK_utilisateur_mail, titre) VALUES ('gretathunberg@gmail.com', 'poney.jpg')";
+  var sql = "INSERT INTO photo (FK_utilisateur_mail, titre, FK_post_id) VALUES ('gretathunberg@gmail.com', 'poney.jpg', 6)";
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log("7 six - Photo poney.jpg greataThunber inserted");
   });
 
-  // Posts + Poster (4 posts au total)
+  // Posts + Poster (6 posts au total)
   var sql = "INSERT INTO post VALUES ('1','gretathunberg@gmail.com', 'Premier message','Ceci est le premier post de GretaGram')";
   con.query(sql, function (err, result) {
     if (err) throw err;
@@ -182,6 +179,30 @@ con.connect(function(err) {
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log("15 - HaloMora Poster 4 inserted");
+  });
+
+    var sql = `INSERT INTO post (FK_utilisateur_mail, titre, message) VALUES ('gretathunberg@gmail.com', 'quatrième post', "La porte s'ouvre")`;
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log("14bis - Post 4 GretaThunberg ");
+  });
+
+  var sql = "INSERT INTO Poster VALUES ('HaloMora@gmail.com','5','2020-04-10')";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log("15bis - Post 4 GretaThunberg inserted ");
+  });
+
+  var sql = `INSERT INTO post (FK_utilisateur_mail, titre, message) VALUES ('gretathunberg@gmail.com', 'cinquieme post', "La porte se referme")`;
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log("14ter - Post 5 GretaThunberg ");
+  });
+
+  var sql = "INSERT INTO Poster VALUES ('HaloMora@gmail.com','6','2020-04-10')";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log("15ter - Post 5 GretaThunberg inserted ");
   });
  
 
@@ -295,6 +316,27 @@ con.connect(function(err) {
     if (err) throw err;
     console.log("29 - gretathunberg Comment HaloMora 3 inserted");
   });
+
+    var sql = "INSERT INTO Commenter VALUES ('emmanuelmacron@gmail.com','1','2020-04-10', 'Magique !')";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log("29 - emmanuel Comment greta 1 inserted");
+  });
+
+
+  var sql = "INSERT INTO Commenter VALUES ('gretathunberg@gmail.com','1','2020-04-10', 'Merci !')";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log("29 - greta Comment greta 1 inserted");
+  });
+
+
+  var sql = "INSERT INTO Commenter VALUES ('donaldtrump@gmail.com','2','2020-04-10', 'Enfin !')";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log("29 - donald Comment greta 2 inserted");
+  });
+
 
 
   //Partager

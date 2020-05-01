@@ -20,8 +20,9 @@ body {
 }
 
 .profile-pic {
-  height: 20vh;
-  width: 20vh;
+  margin-top: 30px;
+  height: 25vh;
+  width: 25vh;
   object-fit: center;
   border-radius: 50%;
   border: 2px solid #fff;
