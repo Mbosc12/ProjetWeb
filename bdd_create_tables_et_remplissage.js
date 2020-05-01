@@ -24,7 +24,7 @@ con.connect(function(err) {
     if (err) throw err;
     console.log("Table post created");
   });
-  var sql = "CREATE TABLE photo(PK_photo_id INT AUTO_INCREMENT, FK_utilisateur_mail VARCHAR(50), titre VARCHAR(50) NOT NULL,PRIMARY KEY(PK_photo_id), FOREIGN KEY(FK_utilisateur_mail) REFERENCES utilisateur(mail))";
+  var sql = "CREATE TABLE photo(PK_photo_id INT AUTO_INCREMENT, FK_utilisateur_mail VARCHAR(50), FK_post_id INT, titre VARCHAR(50) NOT NULL,PRIMARY KEY(PK_photo_id), FOREIGN KEY(FK_utilisateur_mail) REFERENCES utilisateur(mail), FOREIGN KEY(FK_post_id) REFERENCES post(PK_post_id))";
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log("Table photo created");
@@ -98,29 +98,29 @@ con.connect(function(err) {
   });
   
   // photo
-  var sql = "INSERT INTO photo VALUES ('1','admin@gmail.com', 'cactus.jpg')";
+  var sql = "INSERT INTO photo VALUES ('1','admin@gmail.com', null , 'cactus.jpg')";
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log("6 - Photo cactus.jpg  inserted");
   });
 
-  var sql = "INSERT INTO photo (FK_utilisateur_mail, titre) VALUES ('HaloMora@gmail.com', 'halo.jpg')";
+  var sql = "INSERT INTO photo (FK_utilisateur_mail, FK_post_id, titre) VALUES ('HaloMora@gmail.com', '4', 'halo.jpg')";
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log("7 - Photo halo.jpg HaloMora inserted");
   });
 
-  var sql = "INSERT INTO photo (FK_utilisateur_mail, titre) VALUES ('gretathunberg@gmail.com', 'greta.png')";
+  var sql = "INSERT INTO photo (FK_utilisateur_mail, FK_post_id, titre) VALUES ('gretathunberg@gmail.com', '1', 'greta.png')";
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log("7 bis - Photo greta.png greataThunber inserted");
   });
-  var sql = "INSERT INTO photo (FK_utilisateur_mail, titre) VALUES ('gretathunberg@gmail.com', 'halo.jpg')";
+  var sql = "INSERT INTO photo (FK_utilisateur_mail, FK_post_id, titre) VALUES ('gretathunberg@gmail.com', '2', 'halo.jpg')";
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log("7 ter - Photo halo.jpg greataThunber inserted");
   });
-  var sql = "INSERT INTO photo (FK_utilisateur_mail, titre) VALUES ('gretathunberg@gmail.com', 'ouf.png')";
+  var sql = "INSERT INTO photo (FK_utilisateur_mail, FK_post_id, titre) VALUES ('gretathunberg@gmail.com', '3', 'ouf.png')";
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log("7 quatre - Photo ouf.png greataThunber inserted");
