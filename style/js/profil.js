@@ -32,10 +32,7 @@ let categorie = {
 let vm = new Vue({
 	el: '#app',
     created() {
-        console.log(localStorage.username)
-        console.log(localStorage.mailofuser)
-
-        this.FetchMail(localStorage.username);
+        this.FetchMail(localStorage.searchname);
         this.FetchPosts();
         this.FetchFollowers();
         this.FetchInfos();
@@ -178,25 +175,23 @@ new Vue({
     el: "#disconnect",
     data: function () {
         return {
-            username: localStorage.mailofuser
+            username: localStorage.username
         }
     },
     template: `<a class="nav-link" href="connexion" v-on:click="disconnect"><i class="fas fa-power-off fa-lg"></i></a>`,
     methods: {
         disconnect: function () {
-            localStorage.pseudo = "";
-            localStorage.nom = "";
-            localStorage.prenom = "";
             localStorage.mail = "";
             localStorage.password = "";
+            localStorage.cp = "";
+            localStorage.adresse = "";
             localStorage.datenaiss = "";
             localStorage.sexe = "";
+            localStorage.nom = "";
+            localStorage.prenom = "";
             localStorage.pays = "";
-            localStorage.cp = "";
+            localStorage.username = "";
             localStorage.ville = "";
-            localStorage.adresse = "";
-            localStorage.photo_profil = "";
-            localStorage.date_inscription = "";
         }
     }
 });
@@ -215,6 +210,7 @@ new Vue ({
                     <a class="dropdown-item" href="#">Patience</a></div>`,
     methods: {
         notif: function () {
+            console.log("notification");
             this.display_notif = !this.display_notif;
         }
     }
@@ -233,9 +229,8 @@ new Vue ({
                </div>`,
     methods: {
         notif: function () {
+            console.log("notification");
             this.display_notif = !this.display_notif;
         }
     }
 });
-
-
