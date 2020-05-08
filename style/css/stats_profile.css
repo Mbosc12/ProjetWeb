@@ -1,3 +1,23 @@
+/* -------------------- Notification -------------------- */
+.dropdown-item {
+    font-size: 12px;
+}
+
+#notif {
+    margin-left: -175px;
+}
+
+#date{
+    font-weight: bold;
+    font-size: 10px;
+    color: #dbdbdb;
+}
+
+/* -------------------- Settings -------------------- */
+#settings {
+    margin-left: -75px;
+}
+
 /* -------------------- Nav -------------------- */
 nav {
     background-color: #ffffff;
