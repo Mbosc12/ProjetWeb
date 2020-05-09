@@ -5,6 +5,9 @@
 
 #notif {
     margin-left: -175px;
+    width: 425px;
+    height: 250px;
+    overflow: scroll;
 }
 
 #date{
@@ -13,10 +16,12 @@
     color: #dbdbdb;
 }
 
+
 /* -------------------- Settings -------------------- */
 #settings {
     margin-left: -75px;
 }
+
 
 /* -------------------- Nav -------------------- */
 nav {
