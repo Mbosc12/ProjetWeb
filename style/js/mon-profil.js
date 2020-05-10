@@ -94,7 +94,6 @@ let vm = new Vue({
                     postId: pid
                 }
             }).then(response => {
-                console.log(response.data)
                 this.nbcomments = response.data.length;
                 this.comments = response.data;
             })

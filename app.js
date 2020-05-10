@@ -229,7 +229,7 @@ app.get('/AllPhoto', function (req, res) {
     db.connect(function (err) {
         if (err) throw err;
         var query = req.query;
-        var sql = `SELECT titre FROM photo WHERE FK_utilisateur_mail='${query.mail}'`;
+        var sql = `SELECT titre, FK_post_id FROM photo WHERE FK_utilisateur_mail='${query.mail}'`;
         db.query(sql, function (err, result, fields) {
             if (err) throw err;
             console.log(result);
