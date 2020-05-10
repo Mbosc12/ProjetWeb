@@ -58,8 +58,8 @@ app.get('/evol-follow', function (req, res) {
     res.sendFile('evol_follow.html', {'root': __dirname + '/templates'})
 });
 
-app.get('/test', function (req, res) {
-    res.sendFile('test.html', {'root': __dirname + '/templates'})
+app.get('/profil', function (req, res) {
+    res.sendFile('profil.html', {'root': __dirname + '/templates'})
 });
 
 
@@ -1310,6 +1310,33 @@ app.get('/notifPartage', function (req, res) {
                     INNER JOIN follower on follower.FK_utilisateur_mail_1 = post.FK_utilisateur_mail
                     WHERE follower.FK_utilisateur_mail_2 = '${query.mail}'
                     ORDER BY Partager.date_partage DESC
+                    `
+        db.query(sql, function (err, result, fields) {
+            if (err) throw err;
+            console.log(result);
+            res.send(result);
+        });
+        db.end();
+
+    });
+});
+
+// 39) /notifPartage : mail, titre, id et date_like de tous les utilisateurs qui ont partagé un de tes post (entrée : mail -> sortie : liste)
+app.get('/getMail', function (req, res) {
+    // connection à la bdd créée
+    const db = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "",
+        database: "mydb"
+    });
+
+    db.connect(function (err) {
+        if (err) return;
+
+        const query = req.query;
+
+        const sql = `SELECT mail from utilisateur where pseudo = '${query.pseudo}'
                     `
         db.query(sql, function (err, result, fields) {
             if (err) throw err;

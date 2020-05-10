@@ -33,11 +33,6 @@ let vm = new Vue({
 	el: '#app',
     created() {
         this.FetchMail(localStorage.searchname);
-        this.FetchPosts();
-        this.FetchFollowers();
-        this.FetchInfos();
-        this.FetchPhotoProfil();
-        this.FetchPhoto();
     },
 	components: {categorie, state, user},
 	data: {
@@ -69,12 +64,10 @@ let vm = new Vue({
                 pseudo: name
             }
         }).then(response => {
-
             localStorage.mailofuser = response.data[0].mail;
             this.FetchPosts();
             this.FetchFollowers();
             this.FetchInfos();
-            this.FetchPhotoProfil();
             this.FetchPhoto();
             });
         },
@@ -115,7 +108,6 @@ let vm = new Vue({
                     postId: pid
                 }
             }).then(response => {
-                console.log(response.data)
                 this.nbcomments = response.data.length;
                 this.comments = response.data;
             })
