@@ -131,19 +131,19 @@ i, a {
 
 /******************************************* GALLERY ***********************************/
 
-#gallery {
-    width: 75%;
+.gallery {
+    width: 50%;
     margin: 0 auto;
     display: flex;
     flex-wrap: wrap;
-}#gallery>* {
+}.gallery>* {
 		padding: 30px;
         flex: 0 0 33.333%;
         width: 33%;
 }
 
-.gallery-image:scope {
-	background-color: red;
+.gcontainer {
+	width: 100%;
 }
 
 .gallery-image:hover {
@@ -196,4 +196,20 @@ i, a {
 
 #item-like:hover+ul, #item-comments:hover+ul {
 	display: block
+}
+
+#followers {
+	background-color: red;
+}
+
+#events {
+	background-color: blue;
+}
+
+.active {
+	display: all;
+}
+
+.hide {
+	display: none;
 }

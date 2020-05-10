@@ -1,3 +1,17 @@
+let userfollow = {
+    props: {
+        pseudo: String,
+        img: String
+    },
+    template: `<div class="followuser">
+                    <img :src="{{img}}" :alt="{{pseudo}} photo">
+                    <div class="left-side">
+                        <span>{{pseudo}}</span>
+                        <button>Voir le profil</button>
+                    </div>
+                </div>`
+}
+
 let user = {
 	props: {
 		name: String
@@ -38,7 +52,7 @@ let vm = new Vue({
         this.FetchPhotoProfil();
         this.FetchPhoto();
     },
-	components: {categorie, state, user},
+	components: {categorie, state, user, userfollow},
 	data: {
         showModal: null,
         modalContent: null,
@@ -66,6 +80,8 @@ let vm = new Vue({
 				mail: localStorage.mail
         	}
         }).then(response => {
+            console.log(response.data)
+            console.log(localStorage.mail)
             this.posts = response.data;
             });
         },
@@ -134,8 +150,11 @@ let vm = new Vue({
             });
         },
         searchContent: function(image) {
+            console.log("image", image)
+            console.log(this.posts)
             for(var i = 0; i < this.posts.length; i++ ) {
                 if(this.posts[i].PK_post_id == image) {
+                    console.log(this.posts[i].message)
                     this.modalContent = this.posts[i].message;
                 }
             }

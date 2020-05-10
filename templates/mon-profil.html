@@ -10,15 +10,25 @@
         }
     </script>
 
+    <!-- CSS -->
     <link rel="stylesheet" type="text/css" href="../style/css/mon-profile.css"/>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="style/css/header-profile.css"/>
 
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css"/>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+
     <!-- Script JS -->
     <script type="module" src="style/js/allPages.js"></script>
-    <link rel="stylesheet" type="text/css" href="style/css/header-profile.css"/>
+    <script type="module" src="../style/js/mon-profil.js"></script>
+    <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
     <!-- Vue.js -->
-    <script src="//unpkg.com/vue"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js"></script>
+
     <!-- Axios -->
     <script src="//cdnjs.cloudflare.com/ajax/libs/axios/0.15.3/axios.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
@@ -28,9 +38,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
-
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <script src="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js"></script>
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-light ">
     <a class="navbar-brand" href="feed">
@@ -91,16 +98,16 @@
                 <user :name="infos.pseudo"></user>
                 <state :city="infos.ville" :country="infos.pays"></state>
                 <div class="stats">
-                    <categorie type="Publications" :count="posts.length"></categorie>
-                    <categorie type="Abonnés" :count="followers.length"></categorie>
-                    <categorie type="Evenements" :count="10"></categorie>
+                    <categorie type="Publications" onclick="swapcat(`publications`)" :count="posts.length"></categorie>
+                    <categorie type="Abonnés" onclick="swapcat(`followers`)" :count="followers.length"></categorie>
+                    <categorie type="Evenements" onclick="swapcat(`events`)" :count="10"></categorie>
                 </div>
             </div>
         </header>
     </section>
 
 
-    <section id="gallery" class="thumbnail">
+    <section id="thumbnail" class="gallery thumbnail">
         <img class="gallery-image" v-b-modal.modal2 v-for="item in items" :src="`style/img/`+item.titre" @click="showModal = item.titre; searchContent(item.FK_post_id)">
             <b-modal id="modal2" src="`style/img/`+showModal" hide-footer hide-header>
                 <div id="modalcontainer">
@@ -135,15 +142,77 @@
                                 <p class="card-footer-item" id="item-comments"><i class="fa fa-commenting"></i> {{nbcomments}}
                                 </p>
                             </div>
-                            <a href="props.feed.link" target="_blank" class="card-footer-item"><i class="fa fa-external-link"></i> Link</a>
+                            <a class="card-footer-item"><i class="fa fa-external-link"></i></a>
                         </div>
                 </div>
             </b-modal>
     </section>
 
+    <section id="followers" class="gallery hide">
+                <ul>
+            <li>ca marche</li><br>
+            <li>ca marche</li><br>
+            <li>ca marche</li><br>
+            <li>ca marche</li><br>
+            <li>ca marche</li><br>
+            <li>ca marche</li><br>
+            <li>ca marche</li><br>
+        </ul>
+    </section>
+
+    <section id="events" class="gallery hide">
+        <ul>
+            <li>ca marche</li><br>
+            <li>ca marche</li><br>
+            <li>ca marche</li><br>
+            <li>ca marche</li><br>
+            <li>ca marche</li><br>
+            <li>ca marche</li><br>
+            <li>ca marche</li><br>
+        </ul>
+    </section>
 </div>
 
-    <script type="module" src="../style/js/mon-profil.js"></script>
-
+    <div id="map" style="width:100%; height:100%"></div>
 </body>
 </html>
+
+
+<script type="text/javascript">
+    function swapcat(categorie) {
+        switch(categorie) {
+            case 'publications':
+                document.getElementById("events").classList.remove("active")
+                document.getElementById("events").classList.add("hide")
+
+                document.getElementById("followers").classList.remove("active")
+                document.getElementById("followers").classList.add("hide")
+
+                document.getElementById("thumbnail").classList.remove("hide")
+                document.getElementById("thumbnail").classList.add("active");
+            break;
+            case 'followers':
+                document.getElementById("events").classList.remove("active")
+                document.getElementById("events").classList.add("hide")
+
+                document.getElementById("thumbnail").classList.remove("active")
+                document.getElementById("thumbnail").classList.add("hide")
+
+                document.getElementById("followers").classList.remove("hide")
+                document.getElementById("followers").classList.add("active");
+            break;
+            case 'events':
+                document.getElementById("thumbnail").classList.remove("active")
+                document.getElementById("thumbnail").classList.add("hide")
+
+                document.getElementById("followers").classList.remove("active")
+                document.getElementById("followers").classList.add("hide")
+
+                document.getElementById("events").classList.remove("hide")
+                document.getElementById("events").classList.add("active");
+            break;
+          default:
+            console.log('marche pas');
+        }
+    }
+</script>
