@@ -64,15 +64,18 @@ new Vue({
                                 }
                             }).then(response => {
                                 if (response.data.length !== 0) {
-                                    localStorage.cp = response.data[0].CP;
-                                    localStorage.adresse = response.data[0].adresse;
-                                    localStorage.datenaiss = response.data[0].date_naissance;
+                                    localStorage.username = response.data[0].pseudo;
                                     localStorage.nom = response.data[0].nom;
                                     localStorage.prenom = response.data[0].prenom;
-                                    localStorage.pays = response.data[0].pays;
-                                    localStorage.username = response.data[0].pseudo;
-                                    localStorage.ville = response.data[0].ville;
+                                    localStorage.datenaiss = response.data[0].date_naissance;
                                     localStorage.sexe = response.data[0].sexe;
+                                    localStorage.pays = response.data[0].pays;
+                                    localStorage.cp = response.data[0].CP;
+                                    localStorage.ville = response.data[0].ville;
+                                    localStorage.adresse = response.data[0].adresse;
+                                    localStorage.photoprofil = response.data[0].photo_profil;
+                                    localStorage.dateInscription = response.data[0].date_inscription;
+
                                     /* redirection */
                                     window.location.href = "feed";
                                 }
