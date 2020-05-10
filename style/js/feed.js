@@ -7,7 +7,8 @@ new Vue({
             prenom: localStorage.prenom
         }
     },
-    template: `<div id="user_card">Vous êtes connecté(e) en tant que : {{ nom }} {{ prenom }}</div>`
+    template: `
+        <div id="user_card">Vous êtes connecté(e) en tant que : {{ nom }} {{ prenom }}</div>`
 });
 
 /* All the post from accounts the user follow */
@@ -15,116 +16,79 @@ const v = new Vue({
     el: "#feed",
     data: function () {
         return {
-            id_post: [],
-            post_complets: [],
-            items: [],
-            date: [],
+            today: new Date,
+            feed: []
         }
     },
-    template: `<div id="posts">
-                   <ul>
-                      <li v-for="item in items">
-                        <div id="user">@{{ item.user }}</div>
-                        <div id="title">{{ item.title }}</div>
-                        <div id="msg">{{ item.msg }}</div>
-                        <div id="date">{{ item.date }}</div>
-                      </li>
-                   </ul>
-               </div>`,
+    template: `
+        <div id="posts">
+            <ul>
+                <li v-for="item in feed">
+                    <div id="user">@{{ item.user }}</div>
+                    <div id="title">{{ item.title }}</div>
+                    <div id="msg">{{ item.msg }}</div>
+                    <div id="date">{{ item.date }} jours</div>
+                </li>
+            </ul>
+        </div>`,
     methods: {
-        get_posts: function () {
-            axios.get('http://localhost:3000/showFeed', {
+        compare: function (a, b) {
+            const dateA = a.date;
+            const dateB = b.date;
+
+            let comparison = 0;
+            if (dateA > dateB) {
+                comparison = 1;
+            } else if (dateA < dateB) {
+                comparison = -1;
+            }
+            return comparison;
+        },
+        get_posts: async function () {
+            /* -------------------- Get id post + publication date -------------------- */
+            await axios.get('http://localhost:3000/showFeed', {
                 params: {
                     mail: localStorage.mail
                 }
-            }).then(showFeed => {
-
-                // Test debug
-                /*
-                for (let i = 0; i < showFeed.data.length; i++) {
-                    // on est sensé avoir 4 3 1 2 
-                    console.log("posts : "+ showFeed.data[i].id_post);
-                    console.log("dates : "+ showFeed.data[i].date_publication);
-                }
-                */
-                // fin test
-                
+            }).then(async showFeed => {
+                //console.log(showFeed); //date_publication + id_post
                 if (showFeed.data.length !== 0) {
                     for (let i = 0; i < showFeed.data.length; i++) {
-                        this.id_post.push(showFeed.data[i].id_post);
-                    }
-                    for (let i = 0; i < showFeed.data.length; i++) {
-                        this.date.push(showFeed.data[i].date_publication);
-                    }
+                        let d = new Date(showFeed.data[i].date_publication);
 
-                    // verif ip_post et date
-                    /*
-                    console.log("après for ");
-                    console.log("id_post : "+ this.id_post);
-                    console.log("date : "+ this.date);
-                    */
-                    // fin test
-                    // test lecture avec un for
-                    /*
-                    for (let i = 0; i < this.id_post.length; i++) {
-                        console.log(i +" : "+ this.id_post[i]+" : "+ this.date[i]);
-                    }
-                    */
-                    //fin test
+                        const diffTime = Math.abs(this.today - d);
+                        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
-                    for (let i = 0; i < this.id_post.length; i++) {
-                        axios.get('http://localhost:3000/unPost', {
-                            params: {
-                                postId: this.id_post[i]
-                            }
-                        }).then(unPostRes => {
-                            
-                            // test retour de unPost 
-                               // console.log("un post : "+ unPostRes.data[0]);
-                            //fin test jusqu'ici c'est ok
-                            //console.log(" i après : "+i);
-                            //console.log("idpost : "+this.id_post[i]);
-                            // le i ici est caca mais marche en fonction de je ne sais quoi sur certains trucs
-
-                            this.post_complets[this.id_post[i]] = unPostRes.data[0];
-                            
-                            console.log(i+" : "+"post_complets : "+this.post_complets[this.id_post[i]].PK_post_id+" "+this.post_complets[this.id_post[i]].FK_utilisateur_mail+" "+this.post_complets[this.id_post[i]].titre+" "+this.post_complets[this.id_post[i]].message+" "+this.date[i]);
-
-                            if (unPostRes.data.length !== 0) {
-                                /* --- User username --- */
-                                axios.get('http://localhost:3000/unUtilisateur', {
-                                    params: {
-                                        mail: this.post_complets[this.id_post[i]].FK_utilisateur_mail
-                                    }
-                                }).then(unUtilisateur => {
-                                    //Test
-                                    console.log("i : "+i+" idpost[i] : "+this.id_post[i]+" mail : "+this.post_complets[this.id_post[i]].FK_utilisateur_mail);
-                                    console.log(" date : "+this.date[i]);
-                                    // fin test
-                                    let d = new Date(this.date[i]);
-                                    let day = d.getDate();
-                                    let month = d.getMonth()+1;
-                                    let year = d.getFullYear();
-                                    let new_date = day + "-" + month + "-" + year;
-
-                                    /* --- Posts properties --- */
-                                    v.items.push({
-                                        user: unUtilisateur.data[0].pseudo,
-                                        title: unPostRes.data[0].titre,
-                                        msg: unPostRes.data[0].message,
-                                        date: new_date
-                                    });
-                                });
-                            }
+                        this.feed.push({
+                            date: diffDays,
+                            IDpost: showFeed.data[i].id_post
                         });
                     }
-                    // Test 
-                    /*
-                    for (let i = 0; i < this.post_complets.length; i++) {
-                        console.log(i +" : "+ this.post_complets[i]);
+                    for (let i = 0; i < this.feed.length; i++) {
+                        /* -------------------- Get post information -------------------- */
+                        await axios.get('http://localhost:3000/unPost', {
+                            params: {
+                                postId: this.feed[i].IDpost
+                            }
+                        }).then(async unPost => {
+                            if (unPost.data.length !== 0) {
+                                this.feed[i].title = unPost.data[0].titre;
+                                this.feed[i].msg = unPost.data[0].message;
+
+                                /* -------------------- Get post author username -------------------- */
+                                await axios.get('http://localhost:3000/unUtilisateur', {
+                                    params: {
+                                        mail: unPost.data[0].FK_utilisateur_mail
+                                    }
+                                }).then(unUtilisateur => {
+                                    /* --- Posts properties --- */
+                                    this.feed[i].user = unUtilisateur.data[0].pseudo;
+                                });
+                            }
+                            this.feed.sort(this.compare);
+                            return this.feed;
+                        });
                     }
-                    */
-                    //fin test
                 }
             });
         },
