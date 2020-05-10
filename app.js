@@ -1324,7 +1324,7 @@ app.get('/notifPartage', function (req, res) {
     });
 });
 
-// 39) /notifPartage : mail, titre, id et date_like de tous les utilisateurs qui ont partagé un de tes post (entrée : mail -> sortie : liste)
+// 40) /getMail : donne le mail à partir du pseudo (entrée : pseudo -> sortie : mail)
 app.get('/getMail', function (req, res) {
     // connection à la bdd créée
     const db = mysql.createConnection({
@@ -1340,6 +1340,33 @@ app.get('/getMail', function (req, res) {
         const query = req.query;
 
         const sql = `SELECT mail from utilisateur where pseudo = '${query.pseudo}'
+                    `
+        db.query(sql, function (err, result, fields) {
+            if (err) throw err;
+            console.log(result);
+            res.send(result);
+        });
+        db.end();
+
+    });
+});
+
+// 41) /getImage : donne la photo d'un post à partir de son id (entrée : id -> sortie : photo)
+app.get('/getImage', function (req, res) {
+    // connection à la bdd créée
+    const db = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "",
+        database: "mydb"
+    });
+
+    db.connect(function (err) {
+        if (err) return;
+
+        const query = req.query;
+
+        const sql = `SELECT titre FROM photo WHERE FK_post_id = '${query.FK_post_id}'
                     `
         db.query(sql, function (err, result, fields) {
             if (err) throw err;

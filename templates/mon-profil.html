@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr">
 <head>
     <title>Test</title>
 
@@ -13,29 +13,50 @@
     <!-- CSS -->
     <link rel="stylesheet" type="text/css" href="../style/css/mon-profile.css"/>
     <link rel="stylesheet" type="text/css" href="style/css/header-profile.css"/>
-
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css"/>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin=""/>
+    
     <!-- Script JS -->
     <script type="module" src="style/js/allPages.js"></script>
     <script type="module" src="../style/js/mon-profil.js"></script>
-    <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
 
     <!-- Vue.js -->
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js"></script>
-
     <!-- Axios -->
     <script src="//cdnjs.cloudflare.com/ajax/libs/axios/0.15.3/axios.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-
     <!-- Font Awesome (icon) -->
     <script src="https://use.fontawesome.com/releases/v5.13.0/js/all.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
+        <script>
+            function searchCity(adress) {
+                $.ajax({
+                    method: 'GET',
+                    url: 'https://api-adresse.data.gouv.fr/search/',
+                    dataType: 'json',
+                    data:{q: adress},
+                    success: function (data) {
+                        var lat = data.features[0].geometry.coordinates[1]
+                        var long = data.features[0].geometry.coordinates[0]
+
+                        cart(lat, long);
+                    }
+                });
+            }
+
+        </script>
+
 </head>
 <body>
 <!-- Navbar -->
@@ -100,7 +121,7 @@
                 <div class="stats">
                     <categorie type="Publications" onclick="swapcat(`publications`)" :count="posts.length"></categorie>
                     <categorie type="Abonnés" onclick="swapcat(`followers`)" :count="followers.length"></categorie>
-                    <categorie type="Evenements" onclick="swapcat(`events`)" :count="10"></categorie>
+                    <categorie type="Evenements" onclick="swapcat(`events`)" :count="events.length"></categorie>
                 </div>
             </div>
         </header>
@@ -161,22 +182,70 @@
     </section>
 
     <section id="events" class="gallery hide">
-        <ul>
-            <li>ca marche</li><br>
-            <li>ca marche</li><br>
-            <li>ca marche</li><br>
-            <li>ca marche</li><br>
-            <li>ca marche</li><br>
-            <li>ca marche</li><br>
-            <li>ca marche</li><br>
-        </ul>
+        <img class="gallery-image" v-b-modal.modal3 v-for="event in events" :src="`style/img/`+event[1][0].titre" @click="showModal = event[1][0].titre; searchContent(event[0].PK_post_id, event[0].ville, event[0].date_event)">
+            <b-modal id="modal3" src="`style/img/`+showModal" hide-footer hide-header>
+                <div id="modalcontainer">
+                    <img id="fatimage" :src="`style/img/`+showModal" alt="Image" style="border:solid">
+                    <div id="map" style="width: 450px; height: 450px; margin: 0 auto; display: none;"></div>
+                        <div class="card-content">
+                            <div class="media">
+                                <div class="media-left">
+                                    <div class="image">
+                                        <img :src="imagePic" alt="Image" height="50px" width="50px" style="border-radius: 50%;">
+                                    </div>
+                                </div>
+                                <div class="media-content">
+                                    <span>{{infos.pseudo }}</span>
+                                </div>
+                            </div>
+                            <div class="content">
+                                {{modalContent}}
+                            </div>
+                            <div id="cartes">
+                                <p id="ville">{{modalVille}}</p> - {{modalDate}}
+                                <button onclick="searchCity(document.getElementById('ville').innerHTML)">Voir où se trouve l'évenement</button>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="media-use">
+                                <p class="card-footer-item" id="item-like"><i class="fa fa-heart"></i> {{nblikes}}
+                                </p>
+                                 <ul>
+                                    <li id="listoflike" v-for="like in likes">
+                                        {{like.pseudo}}
+                                    </li>
+                                </ul>
+                            </div>
+                            <div>
+                                <p class="card-footer-item" id="item-comments"><i class="fa fa-commenting"></i> {{nbcomments}}
+                                </p>
+                            </div>
+                            <a class="card-footer-item"><i class="fa fa-external-link"></i></a>
+                        </div>
+                </div>
+            </b-modal>
     </section>
 </div>
-
-    <div id="map" style="width:100%; height:100%"></div>
 </body>
 </html>
 
+<script>
+    function cart(lat, long) {
+        document.getElementById("fatimage").classList.add("hide");
+        $("#map").css("display", "block");
+        
+        var map = L.map('map').setView([lat, long], 15); // LIGNE 18
+
+        var osmLayer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', { // LIGNE 20
+            attribution: '© OpenStreetMap contributors',
+            maxZoom: 19
+        });
+    
+        map.addLayer(osmLayer);
+
+        L.marker([lat, long]).addTo(map);
+    }
+</script>
 
 <script type="text/javascript">
     function swapcat(categorie) {

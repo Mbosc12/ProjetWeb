@@ -151,7 +151,7 @@ i, a {
 	transition: 0.3s;
 }
 
-#modalcontainer, #modal2___BV_modal_body_ img {
+#modalcontainer, #modal2___BV_modal_body_ img, #modal3___BV_modal_body_ img {
 	width: 100%;
 }
 
@@ -200,10 +200,6 @@ i, a {
 
 #followers {
 	background-color: red;
-}
-
-#events {
-	background-color: blue;
 }
 
 .active {

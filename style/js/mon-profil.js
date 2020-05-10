@@ -56,6 +56,8 @@ let vm = new Vue({
 	data: {
         showModal: null,
         modalContent: null,
+        modalVille: null,
+        modalDate: null,
         modalLike: null,
         modalComments: null,
 
@@ -63,6 +65,7 @@ let vm = new Vue({
         infos: [],
 
 		posts: [],
+        events: [],
 		followers: [],
 
         likes: [],
@@ -80,9 +83,13 @@ let vm = new Vue({
 				mail: localStorage.mail
         	}
         }).then(response => {
-            console.log(response.data)
-            console.log(localStorage.mail)
-            this.posts = response.data;
+            for(var i = 0; i < response.data.length; i++) {
+                if(response.data[i].ville != null) {
+                    this.FetchImage(response.data[i], response.data[i].PK_post_id)
+                }
+            }
+            console.log(this.events)
+                this.posts = response.data
             });
         },
         FetchFollowers() {
@@ -149,18 +156,28 @@ let vm = new Vue({
             this.items = response.data;
             });
         },
-        searchContent: function(image) {
-            console.log("image", image)
-            console.log(this.posts)
+        searchContent: function(image, ville, date) {
             for(var i = 0; i < this.posts.length; i++ ) {
                 if(this.posts[i].PK_post_id == image) {
-                    console.log(this.posts[i].message)
+
                     this.modalContent = this.posts[i].message;
                 }
             }
+            this.modalVille = ville;
+            console.log(date)
+            this.modalDate = date;
             this.FetchLikes(image)
             this.FetchComments(image)
-        }
+        },
+        FetchImage: function(post, pid) {
+            axios.get('http://localhost:3000/getImage', {
+                params: {
+                    FK_post_id: pid
+                }
+            }).then(response => {
+                this.events.push([post, response.data])
+                });
+            }
 	}
 });
 

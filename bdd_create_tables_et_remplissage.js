@@ -97,7 +97,7 @@ con.connect(function(err) {
   });
   
   // photo
-  var sql = "INSERT INTO photo VALUES ('1','admin@gmail.com', 'cactus.jpg', 1)";
+  var sql = "INSERT INTO photo VALUES ('1','admin@gmail.com', 'cactus.jpg', 0)";
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log("6 - Photo cactus.jpg  inserted");
