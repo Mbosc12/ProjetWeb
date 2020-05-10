@@ -21,7 +21,7 @@
 
     <script>
         /* if the username or password are not localy stored, the user is redirected to the connexion page */
-        if (localStorage.username != "" && localStorage.password != "") {
+        if (localStorage.length > 0 && localStorage.username != "") {
             window.location.href = "/feed";
         }
     </script>
@@ -51,11 +51,6 @@
             Vous n'avez pas de compte ?
             <a class="underlineHover" href="/inscription">Inscrivez-vous</a>
         </div>
-    </div>
-
-    <!-- Phone template -->
-    <div>
-        <img src="style/img/iphone.png" id="phone" alt="phone"/>
     </div>
 </div>
 
