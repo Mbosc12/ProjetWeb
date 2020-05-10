@@ -10,7 +10,8 @@ new Vue({
             display_wrong: false,
             display_mdp: false,
             display_carac: false,
-            display_id: false
+            display_id: false,
+            display_old_mdp: false
         }
     },
     template: `<div id="content">
@@ -32,6 +33,14 @@ new Vue({
                       <label><strong>Nouveau mot de passe</strong></label>
                       <input type="password" id="new_password" name="new_password" v-model="new_password" v-on:change="mdp">
                       </li>
+
+                        <!-- Alert : password is the same as the old one -->
+                        <div class="alert alert-danger alert-dismissible fade show" id="alert_msg" role="alert" v-if="display_old_mdp">
+                            Votre <strong>nouveau</strong> mot de passe doit être différent de votre ancien mot de passe.
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close" v-on:click="close_mdp">
+                                <span aria-hidden="true" >&times;</span>
+                            </button>
+                        </div>
                       
                       <!-- Alert : password is not long enough -->
                     <div class="alert alert-danger alert-dismissible fade show" id="alert_msg" role="alert" v-if="display_mdp">
@@ -105,17 +114,34 @@ new Vue({
             });
         },
         mdp: function() {
-            console.log(this.new_password);
+            /* ----- Password contains not allowed characters ----- */
             if (this.new_password.includes("`") || this.new_password.includes('"') || this.new_password.includes("'")) {
                 this.display_carac = true;
             } else {
                 this.display_carac = false;
             }
+
+            /* ----- Password length ----- */
             if (this.new_password.length >= 8) {
                 this.display_mdp = false;
             } else {
                 this.display_mdp = true;
             }
+
+            /* ----- Password is the same as the old one ----- */
+            axios.get('http://localhost:3000/VerifUtilisateur', {
+                params: {
+                    mail: localStorage.mail
+                }
+            }).then(response => {
+                if (response.data.length !== 0) {
+                    if (this.new_password === response.data[0].motdepass) {
+                        this.display_old_mdp = true;
+                    } else {
+                        this.display_old_mdp = false;
+                    }
+                }
+            });
         },
         pswd_id: function() {
             if (this.new_password !== this.re_password) {
