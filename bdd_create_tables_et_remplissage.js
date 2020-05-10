@@ -19,7 +19,7 @@ con.connect(function(err) {
     if (err) throw err;
     console.log("Table utilisateur created");
   });
-  var sql = "CREATE TABLE post(PK_post_id INT AUTO_INCREMENT, FK_utilisateur_mail VARCHAR(50), titre VARCHAR(50) NOT NULL, message VARCHAR(50) NOT NULL,PRIMARY KEY(PK_post_id), FOREIGN KEY(FK_utilisateur_mail) REFERENCES utilisateur(mail))";
+  var sql = "CREATE TABLE post(PK_post_id INT AUTO_INCREMENT, FK_utilisateur_mail VARCHAR(50), titre VARCHAR(50) NOT NULL, message VARCHAR(50) NOT NULL, ville VARCHAR(50), date_event DATE, PRIMARY KEY(PK_post_id), FOREIGN KEY(FK_utilisateur_mail) REFERENCES utilisateur(mail))";
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log("Table post created");
@@ -136,7 +136,7 @@ con.connect(function(err) {
   });
 
   // Posts + Poster (6 posts au total)
-  var sql = "INSERT INTO post VALUES ('1','gretathunberg@gmail.com', 'Premier message','Ceci est le premier post de GretaGram')";
+  var sql = "INSERT INTO post VALUES ('1','gretathunberg@gmail.com', 'Premier message','Ceci est le premier post de GretaGram', 'Paris', '2020-05-10')";
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log("8 - Post 1 greta inserted");
@@ -148,7 +148,7 @@ con.connect(function(err) {
     console.log("9 - greta Poster 1 inserted");
   });
 
-  var sql = "INSERT INTO post VALUES ('2','gretathunberg@gmail.com', 'Second message','Ceci est le second post de GretaGram')";
+  var sql = "INSERT INTO post VALUES ('2','gretathunberg@gmail.com', 'Second message','Ceci est le second post de GretaGram', null, null)";
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log("10 - Post 1 greta inserted");
@@ -160,7 +160,7 @@ con.connect(function(err) {
     console.log("11 - greta Poster 2 inserted");
   });
 
-  var sql = "INSERT INTO post (FK_utilisateur_mail, titre, message) VALUES ('gretathunberg@gmail.com', 'troisieme message','Ceci est le troisieme post de GretaGram')";
+  var sql = "INSERT INTO post VALUES (3, 'gretathunberg@gmail.com', 'troisieme message','Ceci est le troisieme post de GretaGram', null, null)";
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log("12 - Post 3 greta inserted");
@@ -171,7 +171,7 @@ con.connect(function(err) {
     console.log("13 - greta Poster 3 inserted");
   });
 
-  var sql = `INSERT INTO post (FK_utilisateur_mail, titre, message) VALUES ('HaloMora@gmail.com', 'HaloMora', "La porte s'ouvre")`;
+  var sql = `INSERT INTO post VALUES (4, 'HaloMora@gmail.com', 'HaloMora', "La porte s'ouvre", null, null)`;
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log("14 - HaloMora Post ");
@@ -183,7 +183,7 @@ con.connect(function(err) {
     console.log("15 - HaloMora Poster 4 inserted");
   });
 
-    var sql = `INSERT INTO post (FK_utilisateur_mail, titre, message) VALUES ('gretathunberg@gmail.com', 'quatrième post', "La porte s'ouvre")`;
+    var sql = `INSERT INTO post VALUES (5, 'gretathunberg@gmail.com', 'quatrième post', "La porte s'ouvre", null, null)`;
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log("14bis - Post 4 GretaThunberg ");
@@ -195,7 +195,7 @@ con.connect(function(err) {
     console.log("15bis - Post 4 GretaThunberg inserted ");
   });
 
-  var sql = `INSERT INTO post (FK_utilisateur_mail, titre, message) VALUES ('gretathunberg@gmail.com', 'cinquieme post', "La porte se referme")`;
+  var sql = `INSERT INTO post VALUES (6, 'gretathunberg@gmail.com', 'cinquieme post', "La porte se referme", null, null)`;
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log("14ter - Post 5 GretaThunberg ");

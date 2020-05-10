@@ -62,6 +62,9 @@ app.get('/profil', function (req, res) {
     res.sendFile('profil.html', {'root': __dirname + '/templates'})
 });
 
+app.get('/testmap', function (req, res) {
+    res.sendFile('testmap.html', {'root': __dirname + '/templates'})
+});
 
 /* Liste des requêtes disponibles :
    1) /NbUtilisateur : Nombre d'utilisateur (sortie : nb)
