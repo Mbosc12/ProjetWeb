@@ -3,12 +3,15 @@ new Vue({
     el: "#connected",
     data: function () {
         return {
-            nom: localStorage.nom,
-            prenom: localStorage.prenom
+            prenom: localStorage.prenom,
+            pseudo: localStorage.username
         }
     },
-    template: `
-        <div id="user_card">Vous êtes connecté(e) en tant que : {{ nom }} {{ prenom }}</div>`
+    template: `<div id="user_card">
+        <div id="img"><img id="uneImage"></div>
+        <div id="text"><a href="mon-profil">{{ pseudo }}</a> <p id="prenom">{{ prenom }}</p></div>
+        
+    </div>`
 });
 
 /* All the post from accounts the user follow */
@@ -43,6 +46,17 @@ const v = new Vue({
                 comparison = -1;
             }
             return comparison;
+        },
+        get_info: function() {
+            /* ----- Get user profile picture ------ */
+            axios.get('http://localhost:3000/photoProfil', {
+                params: {
+                    photoId: localStorage.photoprofil,
+                    mail: localStorage.mail
+                }
+            }).then(response => {
+                document.getElementById("uneImage").src = "style/img/" + response.data[0].titre;
+            });
         },
         get_posts: async function () {
             /* -------------------- Get id post + publication date -------------------- */
@@ -94,6 +108,7 @@ const v = new Vue({
         },
     },
     created: function () {
+        this.get_info();
         this.get_posts();
     }
 });
