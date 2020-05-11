@@ -131,78 +131,60 @@ con.connect(function(err) {
     if (err) throw err;
     console.log("6 - Photo cactus.jpg  inserted");
   });
-  var sql = "INSERT INTO photo (FK_utilisateur_mail, titre, FK_post_id) VALUES ('HaloMora@gmail.com', 'halo.jpg', 4)";
-  con.query(sql, function (err, result) {
-    if (err) throw err;
-    console.log("7 - Photo halo.jpg HaloMora inserted");
-  });
-
-  var sql = "INSERT INTO photo (FK_utilisateur_mail, titre, FK_post_id) VALUES ('gretathunberg@gmail.com', 'greta.png', 1)";
-  con.query(sql, function (err, result) {
-    if (err) throw err;
-    console.log("7 bis - Photo greta.png greataThunber inserted");
-  });
-
-  var sql = "INSERT INTO photo (FK_utilisateur_mail, titre, FK_post_id) VALUES ('gretathunberg@gmail.com', 'halo.jpg', 2)";
-  con.query(sql, function (err, result) {
-    if (err) throw err;
-    console.log("7 ter - Photo halo.jpg greataThunber inserted");
-  });
-
-  var sql = "INSERT INTO photo (FK_utilisateur_mail, titre, FK_post_id) VALUES ('gretathunberg@gmail.com', 'ouf.png', 3)";
-  con.query(sql, function (err, result) {
-    if (err) throw err;
-    console.log("7 quatre - Photo ouf.png greataThunber inserted");
-  });
-  var sql = "INSERT INTO photo (FK_utilisateur_mail, titre, FK_post_id) VALUES ('gretathunberg@gmail.com', 'hardMetal.jpg', 5)";
-  con.query(sql, function (err, result) {
-    if (err) throw err;
-    console.log("7 cinq - Photo hardMetal.jpg greataThunber inserted");
-  });
-  var sql = "INSERT INTO photo (FK_utilisateur_mail, titre, FK_post_id) VALUES ('gretathunberg@gmail.com', 'poney.jpg', 6)";
-  con.query(sql, function (err, result) {
-    if (err) throw err;
-    console.log("7 six - Photo poney.jpg greataThunber inserted");
-  });
-
+  
   
 
-  // Posts + Poster + photo (6 posts au total)
+  // Posts + Poster + photo 
   console.log(" Ajout de post : ");
   var sql = "INSERT INTO post VALUES ('1','gretathunberg@gmail.com', 'Premier message','Ceci est le premier post de GretaGram', 'Paris', '2020-05-10')";
   con.query(sql, function (err, result) {
     if (err) throw err;
-    console.log("8 - Post 1 greta inserted");
+    console.log(" - Post 1 greta inserted");
   });
   var sql = "INSERT INTO Poster VALUES ('gretathunberg@gmail.com','1','2020-04-02')";
   con.query(sql, function (err, result) {
     if (err) throw err;
-    console.log("9 - greta Poster 1 inserted");
+    console.log(" - greta Poster 1 inserted");
+  });
+  var sql = "INSERT INTO photo (FK_utilisateur_mail, titre, FK_post_id) VALUES ('gretathunberg@gmail.com', 'greta.png', 1)";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log(" - Photo greta.png greataThunber inserted");
   });
 
   var sql = "INSERT INTO post VALUES ('2','gretathunberg@gmail.com', 'Second message','Ceci est le second post de GretaGram', null, null)";
   con.query(sql, function (err, result) {
     if (err) throw err;
-    console.log("10 - Post 1 greta inserted");
+    console.log(" - Post 1 greta inserted");
   });
   var sql = "INSERT INTO Poster VALUES ('gretathunberg@gmail.com','2','2020-04-02')";
   con.query(sql, function (err, result) {
     if (err) throw err;
-    console.log("11 - greta Poster 2 inserted");
+    console.log(" - greta Poster 2 inserted");
+  });
+  var sql = "INSERT INTO photo (FK_utilisateur_mail, titre, FK_post_id) VALUES ('gretathunberg@gmail.com', 'poney.jpg', 2)";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log(" - Photo poney.jpg greataThunber inserted");
   });
 
   var sql = "INSERT INTO post VALUES (3, 'gretathunberg@gmail.com', 'troisieme message','Ceci est le troisieme post de GretaGram', null, null)";
   con.query(sql, function (err, result) {
     if (err) throw err;
-    console.log("12 - Post 3 greta inserted");
+    console.log(" - Post 3 greta inserted");
   });
   var sql = "INSERT INTO Poster VALUES ('gretathunberg@gmail.com','3','2020-04-03')";
   con.query(sql, function (err, result) {
     if (err) throw err;
-    console.log("13 - greta Poster 3 inserted");
+    console.log(" - greta Poster 3 inserted");
+  });
+  var sql = "INSERT INTO photo (FK_utilisateur_mail, titre, FK_post_id) VALUES ('gretathunberg@gmail.com', 'ouf.png', 3)";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log(" - Photo ouf.png greataThunber inserted");
   });
 
-  var sql = `INSERT INTO post VALUES (4, 'gretathunberg@gmail.com', 'cinquieme post', "La porte se referme", null, null)`;
+  var sql = `INSERT INTO post VALUES (4, 'gretathunberg@gmail.com', 'quatrieme post', "La porte se referme", null, null)`;
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log(" - Post 4 GretaThunberg ");
@@ -211,6 +193,11 @@ con.connect(function(err) {
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log(" - GretaThunberg Poster 4 inserted ");
+  });
+  var sql = "INSERT INTO photo (FK_utilisateur_mail, titre, FK_post_id) VALUES ('gretathunberg@gmail.com', 'hardMetal.jpg', 4)";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log(" - Photo hardMetal.jpg greataThunber inserted");
   });
 
   var sql = `INSERT INTO post VALUES (5, 'emmanuelmacron@gmail.com', "Mes chers compatriotes", "Vive la france, vive la république", null, null)`;
@@ -223,6 +210,11 @@ con.connect(function(err) {
     if (err) throw err;
     console.log(" - emmanuelmacron Poster 5 inserted");
   });
+  var sql = "INSERT INTO photo (FK_utilisateur_mail, titre, FK_post_id) VALUES ('emmanuelmacron@gmail.com', 'manu.jpg', 5)";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log(" - Photo manu.jpg emmanuelmacron inserted");
+  });
   
   var sql = `INSERT INTO post VALUES (6, 'donaldtrump@gmail.com', "covid", "buvez de l'eau de javal pour tuer le virus", null, null)`;
   con.query(sql, function (err, result) {
@@ -233,6 +225,11 @@ con.connect(function(err) {
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log(" - donaldtrump Poster 6 inserted");
+  });
+  var sql = "INSERT INTO photo (FK_utilisateur_mail, titre, FK_post_id) VALUES ('donaldtrump@gmail.com', 'trump.jpg', 6)";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log(" - Photo trump.jpg donaldtrump inserted");
   });
 
   var sql = `INSERT INTO post VALUES (7, 'HaloMora@gmail.com', 'HaloMora', "La porte s'ouvre", null, null)`;
@@ -245,6 +242,11 @@ con.connect(function(err) {
     if (err) throw err;
     console.log(" - HaloMora Poster 7 inserted");
   });
+  var sql = "INSERT INTO photo (FK_utilisateur_mail, titre, FK_post_id) VALUES ('HaloMora@gmail.com', 'halo.jpg', 7)";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log(" - Photo halo.jpg HaloMora inserted");
+  });
   
   var sql = `INSERT INTO post VALUES (8, 'PereCastor@gmail.com', 'Mets tes lunettes', "Et lis nous tout!", null, null)`;
   con.query(sql, function (err, result) {
@@ -255,6 +257,11 @@ con.connect(function(err) {
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log(" - PereCastor Poster 8 inserted");
+  });
+  var sql = "INSERT INTO photo (FK_utilisateur_mail, titre, FK_post_id) VALUES ('PereCastor@gmail.com', 'castor.jpg', 8)";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log(" - Photo castor.jpg PereCastor inserted");
   });
   
   var sql = `INSERT INTO post VALUES (9, 'harrypotter@gmail.com', 'I solemnly swear that i am up to no good', "mischief managed", null, null)`;
@@ -267,6 +274,11 @@ con.connect(function(err) {
     if (err) throw err;
     console.log(" - harrypotter Poster 9 inserted");
   });
+  var sql = "INSERT INTO photo (FK_utilisateur_mail, titre, FK_post_id) VALUES ('harrypotter@gmail.com', 'potter.jpg', 9)";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log(" - Photo potter.jpg harrypotter inserted");
+  });
   
   var sql = `INSERT INTO post VALUES (10, 'darkvador@gmail.com', 'Keep calm and use the force', "Come to the darkside, we have cookies", null, null)`;
   con.query(sql, function (err, result) {
@@ -277,6 +289,11 @@ con.connect(function(err) {
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log(" - darkvador Poster 10 inserted");
+  });
+  var sql = "INSERT INTO photo (FK_utilisateur_mail, titre, FK_post_id) VALUES ('darkvador@gmail.com', 'vador.jpg', 10)";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log(" - Photo vador.jpg darkvador inserted");
   });
 
   var sql = `INSERT INTO post VALUES (11, 'Yoda@gmail.com', 'the greatest teacher, Failure is', "Do, or do not, there is no try", null, null)`;
@@ -289,6 +306,11 @@ con.connect(function(err) {
     if (err) throw err;
     console.log(" - Yoda Poster 11 inserted");
   });
+  var sql = "INSERT INTO photo (FK_utilisateur_mail, titre, FK_post_id) VALUES ('Yoda@gmail.com', 'yoda.jpg', 11)";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log(" - Photo yoda.jpg Yoda inserted");
+  });
 
   var sql = `INSERT INTO post VALUES (12, 'youknowwho@gmail.com', 'Only i can live forever', "I confess myself... disappointed", null, null)`;
   con.query(sql, function (err, result) {
@@ -300,7 +322,11 @@ con.connect(function(err) {
     if (err) throw err;
     console.log(" - youknowwho Poster 12 inserted");
   });
-  
+  var sql = "INSERT INTO photo (FK_utilisateur_mail, titre, FK_post_id) VALUES ('youknowwho@gmail.com', 'voldemort.jpg', 12)";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log(" - Photo voldemort.jpg youknowwho inserted");
+  });
 
 
 
