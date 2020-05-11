@@ -62,8 +62,8 @@ app.get('/profil', function (req, res) {
     res.sendFile('profil.html', {'root': __dirname + '/templates'})
 });
 
-app.get('/testmap', function (req, res) {
-    res.sendFile('testmap.html', {'root': __dirname + '/templates'})
+app.get('/uploads', function (req, res) {
+    res.sendFile('uploads.html', {'root': __dirname + '/templates'})
 });
 
 /* Liste des requêtes disponibles :
@@ -672,7 +672,7 @@ app.get('/AjoutPost',function(req,res){
 
         var query = req.query;
 
-        var sql = `INSERT INTO post (FK_utilisateur_mail, titre, message) VALUES ('${query.mail}', '${query.titre}', '${query.message}')`;
+        var sql = `INSERT INTO post (mail, titre, message, ville, date_event) VALUES ('${query.mail}', '${query.titre}', '${query.message}', '${query.ville}', '${query.date_event}')`;
 
         db.query(sql, function (err, result, fields) {
             if (err) throw err;

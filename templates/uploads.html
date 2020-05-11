@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Bootstrap -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    
+    <!-- Script JS -->
+    <script type="module" src="style/js/allPages.js"></script>
+    <script type="module" src="style/js/upload.js"></script>
+
+    <!-- Vue.js -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="style/css/upload.css">
+
+    <!-- Font Awesome (icon) -->
+    <script src="https://use.fontawesome.com/releases/v5.13.0/js/all.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Axios -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <script>
+        /* if the username or password are not localy stored, the user is redirected to the connexion page */
+        if (localStorage.username === "" || localStorage.password === "") {
+            window.location.href = "/connexion";
+        }
+    </script>
+</head>
+
+<body>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light ">
+    <a class="navbar-brand" href="feed">
+        <!-- Logo -->
+        <img src="../style/img/logo.png" id="logo" alt="Logo GRETAGRAM"/>
+    </a>
+
+    <!-- Search input -->
+    <form class="form-inline my-2 my-lg-0" action="profil" method="GET">
+        <input class="form-control mr-sm-2" type="search" name="user" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit" value>Rechercher</button>
+    </form>
+
+    <!-- Menu -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <!-- Home -->
+            <li class="nav-item active">
+                <a class="nav-link" href="feed"><i class='fa fa-home fa-lg'></i></a>
+            </li>
+            <!-- Stats -->
+            <li class="nav-item">
+                <a class="nav-link" href="repart-sexe"><i class='far fa-chart-bar fa-lg'></i></a>
+            </li>
+            <!-- Likes -->
+            <li class="nav-item dropdown">
+                <a class="nav-link" data-toggle="dropdown">
+                    <i class='far fa-heart fa-lg'></i>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="notif">
+                    <div id="likes"></div>
+                </div>
+            </li>
+            <!-- User profile -->
+            <li class="nav-item ">
+                <a class="nav-link" href="mon-profil"><i class='far fa-user fa-lg'></i></a>
+            </li>
+            <!-- User setting -->
+            <li class="nav-item dropdown">
+                <a class="nav-link" data-toggle="dropdown"><i class="fas fa-cog fa-lg"></i></a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="settings">
+                    <div id="config"></div>
+                </div>
+            </li>
+            <!-- Disconnect button -->
+            <li class="nav-item " id="disconnect">
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="main" role="main">
+	<div class="container">
+		<form id="app" @submit="checkForm" novalidate="true">
+			<div class="photopost" style="margin-right: 50px">
+				<input id="imageinput" type="file" name="inputfile">
+				<div class="containinput" style="display: block; padding: 50px 20px; width: 100%">
+					<div class="logoinput">
+						<img src="/style/img/input.png" style="height: 100px; margin-bottom: 30px;">
+					</div>
+					<span> Glissez-déposez votre image</span>
+					<p class="desc">Votre image doit être un fichier PNG ou JPEG pour pouvoir être publiée </p>
+				</div>
+			</div>
+			<div class="formulaire">
+				<h1>Diffuser du contenu</h1>
+				<div class="form-content">
+					<section id="publication" class="sectioninput">
+						<h2> Publication </h2>
+						<h3>Détails de votre publication </h3>
+						<label for="titrep"><strong>Titre de la publication</strong></label>
+                        <input type="text" id="titrep" v-model="titrep" name="titrep" placeholder="Titre de la publication">
+		                <label for="descp"><strong>Description</strong></label>
+		                <input type="text" id="descp" v-model="descp" name="descp" placeholder="Description">
+		            </section>
+		            <section id="evenement" class="sectioninput">
+		            	<h2> Evenement </h2>
+						<h3>Détails de votre évenement </h3>
+						<label for="titree"><strong>Titre de l'évenement</strong></label>
+                        <input type="text" id="titree" v-model="titree" name="titree" placeholder="Titre d'évenement">
+		                <label for="desce"><strong>Description</strong></label>
+                        <input type="text" id="desce" v-model="desce" name="desce" placeholder="Description">
+		                <label for="date"><strong>Date de l'évenement</strong></label>
+		                <input type="date" id="lieu" name="date" v-model="date" placeholder="Date de l'évenement">
+		                <label for="lieu"><strong>Lieu de l'évenement</strong></label>
+		                <input type="text" id="lieu" v-model="lieu" name="lieu" placeholder="Lieu">
+		            </section>
+                </div>
+                  <p v-if="errors.length">
+                    <b>Please correct the following error(s):</b>
+                    <ul>
+                      <li v-for="error in errors">{{ error }}</li>
+                    </ul>
+                  </p>
+                <div class="publish">
+                    <span>Atteignez plus de personnes en diffusant des publications régulièrement</span>
+                    <button type="submit">Publier</button>
+                </div>
+			</div>
+		</form>
+	</div>
+</div>
+</body>
+</html>

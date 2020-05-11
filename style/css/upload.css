@@ -1,0 +1,99 @@
+.container {
+	margin-top: 60px;
+}
+
+form {
+	display: flex;
+	flex-direction: row;
+}
+
+#imageinput {
+	display: none;
+}
+
+.photopost {
+	background-color: #fafafa;
+	border: 1px dashed #c9c9c9;
+	border-radius: 5px;
+	text-align: center;
+	width: 250px;
+}
+
+h1, h2, h3, span {
+	font-weight: normal;
+}
+
+h1 {
+	margin: 20px 0 60px 0;
+}
+
+h2 {
+	margin-bottom: 30px;
+	text-align: center;
+	padding: 5px 5px;
+	border: 1px dashed #c9c9c9;
+	border-radius: 3px;
+}
+
+h2 {
+	font-size: 1.3em;
+}
+
+h3 {
+	font-size: 1.1em;
+}
+
+.form-content {
+	display: flex;
+	flex-direction: row;
+}
+
+.form-content section {
+	display: flex;
+	flex-direction: column;
+}
+
+#publication {
+	border-right: 1px solid #b8b8b8;
+}
+
+.sectioninput {
+	padding-right: 30px;
+}
+
+#evenement {
+	padding-left: 30px;
+}
+
+input {
+	font-weight: lighter;
+	padding: 5px;
+	border: 1px solid #c9c9c9;
+	border-radius: 3px;
+	font-size: 0.8em;
+}
+
+.publish {
+	margin-top: 20px;
+	display: flex;
+	flex-direction: column;
+}
+
+.publish span {
+	font-weight: lighter;
+	font-size: 0.9em;
+}
+
+.publish button {
+	width: 50%;
+	margin: 0 auto;
+	padding: 5px 10px;
+	background-color: #28a745;
+	color: white;
+	border-radius: 3px;
+	border: none;
+}
+
+.publish button:hover {
+	cursor: pointer;
+}

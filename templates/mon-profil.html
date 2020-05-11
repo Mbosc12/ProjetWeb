@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr">
 <head>
-    <title>Test</title>
+    <title>Mon Profil</title>
 
     <script>
         /* if the username or password are not localy stored, the user is redirected to the connexion page */
@@ -124,12 +124,16 @@
                     <categorie type="Evenements" onclick="swapcat(`events`)" :count="events.length"></categorie>
                 </div>
             </div>
+            <div id="addpost">
+                <a href="/uploads"><button>Ajouter une publication</button></a>
+            </div>
         </header>
     </section>
 
 
     <section id="thumbnail" class="gallery thumbnail">
-        <img class="gallery-image" v-b-modal.modal2 v-for="item in items" :src="`style/img/`+item.titre" @click="showModal = item.titre; searchContent(item.FK_post_id)">
+
+        <img class="gallery-image" v-b-modal.modal2 v-for="item in items" :src="`style/img/`+item.titre" @click="showModal = item.titre; searchContent(item.FK_post_id)" style="max-height:350px;">
             <b-modal id="modal2" src="`style/img/`+showModal" hide-footer hide-header>
                 <div id="modalcontainer">
                     <img id="fatimage" :src="`style/img/`+showModal" alt="Image" style="border:solid">
@@ -182,7 +186,7 @@
     </section>
 
     <section id="events" class="gallery hide">
-        <img class="gallery-image" v-b-modal.modal3 v-for="event in events" :src="`style/img/`+event[1][0].titre" @click="showModal = event[1][0].titre; searchContent(event[0].PK_post_id, event[0].ville, event[0].date_event)">
+        <img class="gallery-image" v-b-modal.modal3 v-for="event in events" :src="`style/img/`+event[1][0].titre" @click="showModal = event[1][0].titre; searchContent(event[0].PK_post_id, event[0].ville, event[0].date_event)" style="max-height:350px;">
             <b-modal id="modal3" src="`style/img/`+showModal" hide-footer hide-header>
                 <div id="modalcontainer">
                     <img id="fatimage" :src="`style/img/`+showModal" alt="Image" style="border:solid">
