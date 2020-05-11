@@ -113,6 +113,7 @@ app.get('/testmap', function (req, res) {
    40) /getMail : donne le mail à partir du pseudo (entrée : pseudo -> sortie : mail)
    41) /getPhotoId : id d'une photo (entrée: titre -> sortie: liste)
    42) /getImage : donne la photo d'un post à partir de son id (entrée : id -> sortie : photo)
+   43) /getPhotoPost : titre d'une photo correspond à un post (entrée: id post -> sortie: liste)
  */
 
 
@@ -1252,7 +1253,7 @@ app.get('/notifCom', function (req, res) {
                     INNER JOIN follower on follower.FK_utilisateur_mail_1 = post.FK_utilisateur_mail
                     WHERE follower.FK_utilisateur_mail_2 = '${query.mail}'
                     ORDER BY Commenter.date_commentaire DESC
-                    `
+                    `;
         db.query(sql, function (err, result, fields) {
             if (err) throw err;
             console.log(result);
@@ -1425,7 +1426,35 @@ app.get('/getImage', function (req, res) {
         const query = req.query;
 
         const sql = `SELECT titre FROM photo WHERE FK_post_id = '${query.FK_post_id}'
-                    `
+                    `;
+        db.query(sql, function (err, result, fields) {
+            if (err) throw err;
+            console.log(result);
+            res.send(result);
+        });
+        db.end();
+
+    });
+});
+
+//43) /getPhotoPost : titre d'une photo correspond à un post (entrée: id post -> sortie: liste)
+app.get('/getPhotoPost', function (req, res) {
+    // connection à la bdd créée
+    const db = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "root",
+        database: "mydb",
+        port: "8889"
+    });
+
+    db.connect(function (err) {
+        if (err) return;
+
+        const query = req.query;
+
+        const sql = `SELECT photo.PK_photo_id, photo.titre 
+        FROM photo INNER JOIN post ON photo.FK_post_id = post.PK_post_id WHERE post.PK_post_id = '${query.id_post}'`;
         db.query(sql, function (err, result, fields) {
             if (err) throw err;
             console.log(result);
