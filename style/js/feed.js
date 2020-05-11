@@ -11,26 +11,57 @@ const v = new Vue({
     },
     template: `
         <div id="feed">
-        <div id="posts">
-            <ul>
-                <li v-for="item in feed">
-                    <div id="user"><a>@{{ item.user }}</a></div>
-                    <div id="title">{{ item.title }}</div>
-                    <div id="photopost"><img :src="'style/img/'+item.photo" id="photoDuPost"></div>
-                    <div id="msg">{{ item.msg }}</div>
-                    <div id="ville">{{ item.ville }}</div>
-                    <div id="date_event">{{ item.date_event }}</div>
-                    <div id="date">{{ item.date }} jours</div>
-                </li>
-            </ul>
-        </div>
+            <button v-on:click="test('villecomtal')">Appuie ici pour voir ta ville</button>
+            <div id="posts">
+                <ul v-for="item in feed">
+                    <li id="user"><a>@{{ item.user }}</a></li>
+                    <li id="title">{{ item.title }}</li>
+                    <li id="photopost"><img :src="'style/img/'+item.photo" id="photoDuPost"></li>
+                    <li id="content">
+                        <div id="msg">{{ item.msg }}</div>
+                        <div id="ville">{{ item.ville}}</div>
+                        <div id="date_event">{{ item.date_event }}</div>
+                        <div id="map" style="width:600px; height:auto" >{{ item.ville }}</div>
+                    </li>
+                    <li id="date">{{ item.date }} jours</li>
+                </ul>
+            </div>
             <div id="user_card">
                 <div id="img"><img id="uneImage"></div>
-                <div id="text"><a href="mon-profil">{{ pseudo }}</a> <p id="prenom">{{ prenom }}</p></div>
+                <div id="text"><a href="mon-profil">{{ pseudo }}</a>
+                    <p id="prenom">{{ prenom }}</p></div>
 
             </div>
         </div>`,
     methods: {
+        cart: function (lat, long) {
+            const map = L.map('map').setView([lat, long], 15); // LIGNE 18
+
+            const osmLayer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', { // LIGNE 20
+                attribution: '© OpenStreetMap contributors',
+                maxZoom: 19
+            });
+
+            map.addLayer(osmLayer);
+
+            L.marker([lat, long]).addTo(map);
+        },
+        test: function (adress) {
+            axios.get('https://api-adresse.data.gouv.fr/search/', {
+                headers: {
+                    method: 'GET',
+                    dataType: 'json',
+                    data: {
+                        q: adress
+                    }
+                }
+            }).then(data => {
+                const lat = data.features[0].geometry.coordinates[1];
+                const long = data.features[0].geometry.coordinates[0];
+
+                this.cart(lat, long);
+            });
+        },
         compare: function (a, b) {
             const dateA = a.date;
             const dateB = b.date;
@@ -43,7 +74,7 @@ const v = new Vue({
             }
             return comparison;
         },
-        get_info: function() {
+        get_info: function () {
             /* ----- Get user profile picture ------ */
             axios.get('http://localhost:3000/photoProfil', {
                 params: {
@@ -83,9 +114,20 @@ const v = new Vue({
                         }).then(async unPost => {
                             //console.log(unPost);
                             if (unPost.data.length !== 0) {
+                                if (unPost.data[0].date_event != null) {
+                                    let d = new Date(unPost.data[0].date_event);
+                                    console.log(unPost);
+
+                                    const diffTime = Math.abs(this.today - d);
+                                    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+                                    this.feed[i].date_event = diffDays;
+                                } else {
+                                    this.feed[i].date_event = null;
+                                }
+
                                 this.feed[i].title = unPost.data[0].titre;
                                 this.feed[i].msg = unPost.data[0].message;
-                                this.feed[i].date_event = unPost.data[0].date_event;
                                 this.feed[i].ville = unPost.data[0].ville;
 
                                 /* -------------------- Get post photo -------------------- */
@@ -94,8 +136,7 @@ const v = new Vue({
                                         id_post: this.feed[i].IDpost
                                     }
                                 }).then(async getPhotoPost => {
-                                    this.feed[i].photo =  getPhotoPost.data[0].titre;
-                                    console.log(this.feed[i].photo)
+                                    this.feed[i].photo = getPhotoPost.data[0].titre;
                                 });
                                 /* -------------------- Get post author username -------------------- */
                                 await axios.get('http://localhost:3000/unUtilisateur', {
