@@ -810,7 +810,7 @@ app.get('/ModifUtilisateur',function(req,res){
 
         const query = req.query;
 
-        const sql = `UPDATE utilisateur SET pseudo ='${query.pseudo}', nom ='${query.nom}', prenom ='${query.prenom}', mail ='${query.new_mail}', motdepass ='${query.motdepass}', date_naissance ='${query.date_naissance}', sexe ='${query.sexe}', pays ='${query.pays}', CP ='${query.CP}', ville ='${query.ville}', adresse ='${query.adresse}', photo_profil ='${query.photo_profil}', date_inscription ='${query.date_inscription}' WHERE mail ='${query.old_mail}' `;
+        const sql = `UPDATE utilisateur SET pseudo ='${query.pseudo}', nom ='${query.nom}', prenom ='${query.prenom}', motdepass ='${query.motdepass}', date_naissance ='${query.date_naissance}', sexe ='${query.sexe}', pays ='${query.pays}', CP ='${query.CP}', ville ='${query.ville}', adresse ='${query.adresse}', photo_profil ='${query.photo_profil}', date_inscription ='${query.date_inscription}' WHERE mail ='${query.old_mail}' `;
 
         db.query(sql, function (err, result, fields) {
             if (err) throw err;
@@ -1155,7 +1155,7 @@ app.get('/showFeed', function (req, res) {
                     INNER JOIN poster on poster.FK_post_id=post.PK_post_id
                     WHERE follower.FK_utilisateur_mail_2 = '${query.mail}'
                     ORDER BY poster.date_publication DESC
-                    `
+                    `;
         db.query(sql, function (err, result, fields) {
             if (err) throw err;
             console.log(result);
@@ -1182,7 +1182,11 @@ app.get('/ajoutPhoto',function(req,res){
 
         const query = req.query;
 
-        const sql = `INSERT IGNORE INTO photo (FK_utilisateur_mail, titre) VALUES ('${query.mail}', '${query.titre}')`;
+        const sql = `INSERT INTO photo (FK_utilisateur_mail, titre) 
+                    SELECT * FROM (SELECT '${query.mail}', '${query.titre}') AS tmp
+                    WHERE NOT EXISTS (
+                        SELECT titre FROM photo WHERE titre='${query.titre}'
+                    ) LIMIT 1`;
 
         db.query(sql, function (err, result, fields) {
             if (err) throw err;
