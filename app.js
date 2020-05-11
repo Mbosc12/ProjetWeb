@@ -110,10 +110,10 @@ app.get('/testmap', function (req, res) {
    37) /notifCom : mail, titre, id et date_like de tous les utilisateurs qui ont commenté un de tes post (entrée : mail -> sortie : liste)
    38) /notifFollow : mail et date_like de tous les utilisateurs qui te follow (entrée : mail -> sortie : liste)
    39) /notifPartage : mail, titre, id et date_like de tous les utilisateurs qui ont partagé un de tes post (entrée : mail -> sortie : liste)
-
-
-
-
+   40) /getMail : donne le mail à partir du pseudo (entrée : pseudo -> sortie : mail)
+   41) /getPhotoId : id d'une photo (entrée: titre -> sortie: liste)
+   42) /getImage : donne la photo d'un post à partir de son id (entrée : id -> sortie : photo)
+   43) /getPhotoPost : titre d'une photo correspond à un post (entrée: id post -> sortie: liste)
  */
 
 
@@ -406,17 +406,17 @@ app.get('/Followers',function(req,res){
 	db.connect(function(err) {
 		if (err) throw err;
 
-		var query = req.query;
+        var query = req.query;
 
-		var sql = `SELECT pseudo FROM utilisateur, follower WHERE FK_utilisateur_mail_1 = '${query.mail}' AND follower.FK_utilisateur_mail_2 = utilisateur.mail`;
-		db.query(sql, function (err, result, fields) {
-			if (err) throw err;
-			console.log(result);
-			res.send(result);
-		});
-		
-		db.end();
-	}); 
+        var sql = `SELECT pseudo FROM utilisateur, follower WHERE FK_utilisateur_mail_1 = '${query.mail}' AND follower.FK_utilisateur_mail_2 = utilisateur.mail`;
+        db.query(sql, function (err, result, fields) {
+            if (err) throw err;
+            console.log(result);
+            res.send(result);
+        });
+
+        db.end();
+    });
 });
 
 // 9) /NbCommentaireUtilisateur : Nombre de commentaires d'un utilisateur (entrée : mail -> sortie : nb)
@@ -811,7 +811,7 @@ app.get('/ModifUtilisateur',function(req,res){
 
         const query = req.query;
 
-        const sql = `UPDATE utilisateur SET pseudo ='${query.pseudo}', nom ='${query.nom}', prenom ='${query.prenom}', mail ='${query.mail}', motdepass ='${query.motdepass}', date_naissance ='${query.date_naissance}', sexe ='${query.sexe}', pays ='${query.pays}', CP ='${query.CP}', ville ='${query.ville}', adresse ='${query.adresse}', photo_profil ='${query.photo_profil}', date_inscription ='${query.date_inscription}' WHERE mail ='${query.mail}' `;
+        const sql = `UPDATE utilisateur SET pseudo ='${query.pseudo}', nom ='${query.nom}', prenom ='${query.prenom}', motdepass ='${query.motdepass}', date_naissance ='${query.date_naissance}', sexe ='${query.sexe}', pays ='${query.pays}', CP ='${query.CP}', ville ='${query.ville}', adresse ='${query.adresse}', photo_profil ='${query.photo_profil}', date_inscription ='${query.date_inscription}' WHERE mail ='${query.old_mail}' `;
 
         db.query(sql, function (err, result, fields) {
             if (err) throw err;
@@ -1156,7 +1156,7 @@ app.get('/showFeed', function (req, res) {
                     INNER JOIN poster on poster.FK_post_id=post.PK_post_id
                     WHERE follower.FK_utilisateur_mail_2 = '${query.mail}'
                     ORDER BY poster.date_publication DESC
-                    `
+                    `;
         db.query(sql, function (err, result, fields) {
             if (err) throw err;
             console.log(result);
@@ -1183,7 +1183,11 @@ app.get('/ajoutPhoto',function(req,res){
 
         const query = req.query;
 
-        const sql = `INSERT INTO photo (FK_utilisateur_mail, titre) VALUES ('${query.mail}', '${query.titre}')`;
+        const sql = `INSERT INTO photo (FK_utilisateur_mail, titre) 
+                    SELECT * FROM (SELECT '${query.mail}', '${query.titre}') AS tmp
+                    WHERE NOT EXISTS (
+                        SELECT titre FROM photo WHERE titre='${query.titre}'
+                    ) LIMIT 1`;
 
         db.query(sql, function (err, result, fields) {
             if (err) throw err;
@@ -1216,7 +1220,7 @@ app.get('/notifLike', function (req, res) {
                     INNER JOIN follower on follower.FK_utilisateur_mail_1 = post.FK_utilisateur_mail
                     WHERE follower.FK_utilisateur_mail_2 = '${query.mail}'
                     ORDER BY liker.date_like DESC
-                    `
+                    `;
         db.query(sql, function (err, result, fields) {
             if (err) throw err;
             console.log(result);
@@ -1249,7 +1253,7 @@ app.get('/notifCom', function (req, res) {
                     INNER JOIN follower on follower.FK_utilisateur_mail_1 = post.FK_utilisateur_mail
                     WHERE follower.FK_utilisateur_mail_2 = '${query.mail}'
                     ORDER BY Commenter.date_commentaire DESC
-                    `
+                    `;
         db.query(sql, function (err, result, fields) {
             if (err) throw err;
             console.log(result);
@@ -1280,7 +1284,7 @@ app.get('/notifFollow', function (req, res) {
                     FROM follower
                     WHERE follower.FK_utilisateur_mail_1 = '${query.mail}'
                     ORDER BY follower.date_follow DESC
-                    `
+                    `;
         db.query(sql, function (err, result, fields) {
             if (err) throw err;
             console.log(result);
@@ -1313,7 +1317,7 @@ app.get('/notifPartage', function (req, res) {
                     INNER JOIN follower on follower.FK_utilisateur_mail_1 = post.FK_utilisateur_mail
                     WHERE follower.FK_utilisateur_mail_2 = '${query.mail}'
                     ORDER BY Partager.date_partage DESC
-                    `
+                    `;
         db.query(sql, function (err, result, fields) {
             if (err) throw err;
             console.log(result);
@@ -1368,6 +1372,89 @@ app.get('/getImage', function (req, res) {
 
         const sql = `SELECT titre FROM photo WHERE FK_post_id = '${query.FK_post_id}'
                     `
+        db.query(sql, function (err, result, fields) {
+            if (err) throw err;
+            console.log(result);
+            res.send(result);
+        });
+        db.end();
+
+    });
+});
+
+
+// 41) /getPhotoId : id d'une photo (entrée: titre -> sortie: liste)
+app.get('/getPhotoId', function (req, res) {
+    // connection à la bdd créée
+    const db = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "root",
+        database: "mydb",
+        port: "8889"
+    });
+
+    db.connect(function (err) {
+        if (err) return;
+
+        const query = req.query;
+
+        const sql = `SELECT PK_photo_id FROM photo WHERE titre='${query.titre}'`;
+        db.query(sql, function (err, result, fields) {
+            if (err) throw err;
+            console.log(result);
+            res.send(result);
+        });
+        db.end();
+
+    });
+});
+
+// 42) /getImage : donne la photo d'un post à partir de son id (entrée : id -> sortie : photo)
+app.get('/getImage', function (req, res) {
+    // connection à la bdd créée
+    const db = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "",
+        database: "mydb"
+    });
+
+    db.connect(function (err) {
+        if (err) return;
+
+        const query = req.query;
+
+        const sql = `SELECT titre FROM photo WHERE FK_post_id = '${query.FK_post_id}'
+                    `;
+        db.query(sql, function (err, result, fields) {
+            if (err) throw err;
+            console.log(result);
+            res.send(result);
+        });
+        db.end();
+
+    });
+});
+
+//43) /getPhotoPost : titre d'une photo correspond à un post (entrée: id post -> sortie: liste)
+app.get('/getPhotoPost', function (req, res) {
+    // connection à la bdd créée
+    const db = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "root",
+        database: "mydb",
+        port: "8889"
+    });
+
+    db.connect(function (err) {
+        if (err) return;
+
+        const query = req.query;
+
+        const sql = `SELECT photo.PK_photo_id, photo.titre 
+        FROM photo INNER JOIN post ON photo.FK_post_id = post.PK_post_id WHERE post.PK_post_id = '${query.id_post}'`;
         db.query(sql, function (err, result, fields) {
             if (err) throw err;
             console.log(result);

@@ -52,9 +52,15 @@ body {
     margin-bottom: 20px;
 }
 
+
 /* -------------------- Posts -------------------- */
+#feed {
+    overflow: auto;
+}
+
 #posts {
     float: left;
+    height: 610px;
 }
 
 #posts ul {
@@ -67,7 +73,7 @@ body {
     margin-top: 20px;
     margin-bottom: 20px;
     margin-left: 125px;
-    width: 640px;
+    width: 660px;
 }
 
 #posts #user {
@@ -92,6 +98,16 @@ body {
     text-align: justify;
 }
 
+#posts #photoDuPost{
+    max-width: 400px;
+    max-height: 200px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
 #posts #date {
     font-size: 10px;
     font-weight: bold;
@@ -107,7 +123,36 @@ body {
     background-color: #FFFFFF;
     border: 1px solid #dbdbdb;
     margin-top: 20px;
-    margin-right: 150px;
-    padding: 20px;
+    margin-left: 850px;
+    padding: 15px;
     width: 310px;
+    overflow: hidden;
+    position: absolute;
+}
+
+#user_card img {
+    width: 50px;
+    float: left;
+    margin-right: 10px;
+}
+
+#user_card #text {
+    font-size: 12px;
+    width: 78%;
+    float: right;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+#user_card #prenom {
+    color: #8E8E8E;
+    font-weight: normal;
+}
+
+#user_card a {
+    color: black;
+}
+
+#user_card a:hover {
+    color: #68d89b;
 }
