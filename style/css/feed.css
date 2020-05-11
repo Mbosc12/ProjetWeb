@@ -52,6 +52,7 @@ body {
     margin-bottom: 20px;
 }
 
+
 /* -------------------- Posts -------------------- */
 #posts {
     float: left;
@@ -108,6 +109,33 @@ body {
     border: 1px solid #dbdbdb;
     margin-top: 20px;
     margin-right: 150px;
-    padding: 20px;
+    padding: 15px;
     width: 310px;
+}
+
+#user_card img {
+    width: 50px;
+    float: left;
+    margin-right: 10px;
+}
+
+#user_card #text {
+    font-size: 12px;
+    width: 78%;
+    float: right;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+#user_card #prenom {
+    color: #8E8E8E;
+    font-weight: normal;
+}
+
+#user_card a {
+    color: black;
+}
+
+#user_card a:hover {
+    color: #68d89b;
 }
