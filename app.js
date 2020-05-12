@@ -758,7 +758,7 @@ app.get('/AjoutCommentaire',function(req,res){
 
         const query = req.query;
 
-        const sql = `INSERT INTO Commenter VALUES ('${query.mail}', '${query.postId}', NOW(), '${query.message}')`;
+        const sql = `INSERT INTO Commenter (FK_utilisateur_mail, FK_post_id, date_commentaire, message_commentaire) VALUES ('${query.mail}', '${query.postId}', CURDATE(), '${query.message}')`;
 
         db.query(sql, function (err, result, fields) {
             if (err) throw err;
@@ -784,7 +784,7 @@ app.get('/AjoutPartage',function(req,res){
 
         const query = req.query;
 
-        const sql = `INSERT INTO Partager VALUES ('${query.mail}', '${query.postId}', NOW())`;
+        const sql = `INSERT INTO Partager (FK_utilisateur_mail, FK_post_id, date_partage) VALUES ('${query.mail}', '${query.postId}', CURDATE())`;
 
         db.query(sql, function (err, result, fields) {
             if (err) throw err;
@@ -1343,7 +1343,7 @@ app.get('/getMail', function (req, res) {
         const query = req.query;
 
         const sql = `SELECT mail from utilisateur where pseudo = '${query.pseudo}'
-                    `
+                    `;
         db.query(sql, function (err, result, fields) {
             if (err) throw err;
             console.log(result);
