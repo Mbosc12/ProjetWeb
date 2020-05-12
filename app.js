@@ -1314,10 +1314,9 @@ app.get('/notifPartage', function (req, res) {
 
         const sql = `
                     SELECT Partager.FK_utilisateur_mail, post.titre, Partager.FK_post_id, Partager.date_partage
-                    FROM Partager
-                    INNER JOIN post on  Partager.FK_post_id = post.PK_post_id
-                    INNER JOIN follower on follower.FK_utilisateur_mail_1 = post.FK_utilisateur_mail
-                    WHERE follower.FK_utilisateur_mail_2 = '${query.mail}'
+                    FROM post, Partager
+                    WHERE post.FK_utilisateur_mail = '${query.mail}'
+                        AND post.PK_post_id = Partager.FK_post_id
                     ORDER BY Partager.date_partage DESC
                     `;
         db.query(sql, function (err, result, fields) {
