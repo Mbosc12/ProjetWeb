@@ -27,7 +27,6 @@
 nav {
     background-color: #ffffff;
     border-bottom: 1px solid #68d89b;
-    margin-top: 5px;
     padding-bottom: 5px;
 }
 
@@ -139,6 +138,15 @@ body {
     margin-bottom: 5px;
 }
 
+#posts #buttons {
+    border-bottom: 1px solid white;
+}
+
+#posts .alert {
+    width : 300px;
+    margin-left: 10px;
+}
+
 #posts #description {
     font-size: 13px;
     padding-left: 10px;
@@ -146,11 +154,39 @@ body {
     padding-right: 10px;
     word-wrap: break-word;
     text-align: justify;
-    height: 80px;
+    max-height: 80px;
     overflow: auto;
     border-left: 1px solid #dadada;
     border-right: 1px solid #dadada;
 }
+
+#posts #add_comment {
+    border-left: 1px solid #dadada;
+    border-right: 1px solid #dadada;
+}
+
+#posts #add_comment textarea {
+    width: 580px;
+    height: 40px;
+    margin: 5px;
+    font-size: 12px;
+    float: left;
+}
+
+#posts #add_comment button {
+    vertical-align: middle;
+    text-align: center;
+    height: 40px;
+    margin: 5px;
+    font-size: 12px;
+}
+
+#posts #exampleModal {
+    margin-top: 200px;
+    text-align: center;
+    font-size: 13px;
+}
+
 
 
 /* -------------------- User card -------------------- */
