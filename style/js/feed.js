@@ -16,12 +16,12 @@ const v = new Vue({
     template: `
         <div id="feed">
             <div id="posts">
-                <ul v-for="item in feed">
+                <ul v-for="item in feed" >
                     <li id="user"><a>@{{ item.user }}</a></li>
                     <li id="title">{{ item.title }}</li>
-                    <li id="photopost"><img :src="'style/img/'+item.photo" id="photoDuPost"></li>
+                    <li id="photopost"><img :src="'style/img/'+item.photo" id="photoDuPost" alt="img"></li>
                     <li id="postContent">
-                            <svg v-on:click="add_like" :class="[like ? 'bi-heart' : 'bi-heart-fill', 'bi']" viewBox="0 0 16 16"
+                            <svg v-on:click="add_like(item.IDpost)" :class="[like ? 'bi-heart' : 'bi-heart-fill', 'bi']" viewBox="0 0 16 16"
                                  fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd"
                                       :d="[like ? 'M8 2.748l-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 01.176-.17C12.72-3.042 23.333 4.867 8 15z' : 'M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z']"
@@ -67,9 +67,32 @@ const v = new Vue({
             </div>
         </div>`,
     methods: {
-        add_like: function () {
+        add_like: function (item) {
             this.like = !this.like;
-            console.log("like");
+
+            if (this.like === true) {
+                axios.get('http://localhost:3000/EnleveLike', {
+                    params: {
+                        post: item,
+                        mail: localStorage.mail
+                    }
+                }).then(EnleveLike => {
+                    if (EnleveLike.data.affectedRows === 1){
+                        console.log(EnleveLike);
+                    }
+                });
+            } else {
+                axios.get('http://localhost:3000/AjoutLike', {
+                    params: {
+                        postId: item,
+                        mail: localStorage.mail
+                    }
+                }).then(AjoutLike => {
+                    if (AjoutLike.data.affectedRows === 1){
+                        console.log(AjoutLike);
+                    }
+                });
+            }
         },
         add_comment: function () {
             console.log("comment");
