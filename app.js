@@ -1264,8 +1264,6 @@ app.get('/notifCom', function (req, res) {
     });
 });
 
-
-
 // 38) /notifFollow : mail et date_like de tous les utilisateurs qui te follow (entrée : mail -> sortie : liste)
 app.get('/notifFollow', function (req, res) {
     // connection à la bdd créée

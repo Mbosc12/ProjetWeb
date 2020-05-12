@@ -154,7 +154,7 @@ new Vue({
                                 const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
                                 this.share.push({
-                                    mail: notifPartage.data[i].FK_utilisateur_mail,
+                                    mail: notifPartage.data[i].FK_utilisateur_mail_2,
                                     text: " a partagé votre post ",
                                     titre: '"' + notifPartage.data[i].titre + '"',
                                     postId: notifPartage.data[i].FK_post_id,
