@@ -658,7 +658,55 @@ app.get('/mailExisting', function (req, res) {
 });
 
 // 18) /AjoutPost : Enregistre un post et poster (entrée : FK_utilisateur_mail, titre, message, date_publication -> sortie : 1 ou 0)
-app.get('/AjoutPost', function (req, res) {
+app.get('/AjoutPost',function(req,res){
+    // connection à la bdd créée
+    var db = mysql.createConnection({
+      host: "localhost",
+      user: "root",
+      password: "",
+      database: "mydb"
+    });
+
+    db.connect(function (err) {
+        if (err) throw err;
+
+        var query = req.query;
+
+        var sql = `INSERT INTO post (FK_utilisateur_mail, titre, message, ville, date_event) VALUES ('${query.FK_utilisateur_mail}', '${query.titre}', '${query.message}', '${query.ville}', '${query.date_event}')`;
+
+        db.query(sql, function (err, result, fields) {
+            if (err) throw err;
+            console.log(result);
+            res.send(result);
+        });
+        db.end();
+    });
+});
+app.get('/getPostID', function (req, res) {
+    var db = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "",
+        database: "mydb"
+
+    });
+    db.connect(function (err) {
+        if (err) throw err;
+
+        const query = req.query;
+
+        const sql = `SELECT PK_post_id FROM post WHERE FK_utilisateur_mail = '${query.mail}' AND titre = '${query.titre}'`;
+
+        db.query(sql, function (err, result, fields) {
+            if (err) throw err;
+            console.log(result);
+            res.send(result);
+        });
+        db.end();
+    });
+});
+
+app.get('/AjoutPoster', function (req, res) {
     var db = mysql.createConnection({
         host: "localhost",
         user: "root",
@@ -672,7 +720,7 @@ app.get('/AjoutPost', function (req, res) {
 
         const query = req.query;
 
-        const sql = `INSERT INTO post (mail, titre, message, ville, date) VALUES ('${query.mail}', '${query.titre}', '${query.message}', '${query.ville}', '${query.date}')`;
+        const sql = `INSERT INTO poster (mail, postid, date) VALUES ('${query.mail}', '${query.postid}', NOW())`;
 
         db.query(sql, function (err, result, fields) {
             if (err) throw err;
@@ -1487,7 +1535,7 @@ SELECT Partager.FK_utilisateur_mail, post.titre, Partager.FK_post_id, Partager.d
                     WHERE follower.FK_utilisateur_mail_2 = 'gretathunberg@gmail.com'
                     ORDER BY Partager.date_partage DESC
 */
-
+/*
 const multer = require("multer");
 
 const handleError = (err, res) => {
@@ -1505,7 +1553,7 @@ app.get("/CV.png", (req, res) => {
 
 app.post(
   "/upload",
-  upload.single("file" /* name attribute of <file> element in your form */),
+  upload.single("file"  name attribute of <file> element in your form ),
   (req, res) => {
     const tempPath = req.file.path;
     const targetPath = path.join(__dirname, "./uploads/" +req.file.originalname+ ".png");
@@ -1523,3 +1571,4 @@ app.post(
     }
   }
 );
+*/

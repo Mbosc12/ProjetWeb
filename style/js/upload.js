@@ -67,7 +67,10 @@ let vm = new Vue({
           console.log(localStorage.mail)
           console.log(this.titrep)
           console.log(this.descp)
-          this.registerp();
+          console.log(this.date)
+          console.log(this.lieu)
+          this.test();
+          this.getId();
         } else {
           console.log("publication")
           console.log(localStorage.mail)
@@ -75,38 +78,36 @@ let vm = new Vue({
           console.log(this.desce)
           console.log(this.date)
           console.log(this.lieu)
-          this.registere();
         }
         //return true;
       }
 
     e.preventDefault();
     },
-    fetete() {
-            axios.get('http://localhost:3000/AjoutPost', {
+    test: function() {
+      console.log("je passe ici")
+      axios.get('http://localhost:3000/AjoutPost', {
+        params: {
+          FK_utilisateur_mail: localStorage.mail,
+          titre: this.titrep,
+          message: this.descp,
+          ville: this.ville,
+          date_event: this.date
+        }
+      }).then(response => {
+        console.log("peut etre ici")
+        console.log(response.data.length)
+      });
+    },
+    getId() {
+            axios.get('http://localhost:3000/getPostID', {
                 params: {
                     mail: localStorage.mail,
-                    titre: this.titrep,
-                    message: this.descp,
-                    ville: null,
-                    date: null
+                    titre: "Premier message"
                 }
             }).then(response => {
               console.log(response.data)
             });
-        },
-        registerp() {
-        axios.get('http://localhost:3000/AjoutPost', {
-          params: {
-        mail: localStorage.mail,
-        titre: this.titrep,
-        message: this.descp,
-        ville: this.ville,
-        date: this.date
-          }
-        }).then(response => {
-            console.log(response.data);
-            });
-        }
+    }
   }
 })
