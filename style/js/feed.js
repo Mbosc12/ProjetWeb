@@ -16,7 +16,8 @@ const v = new Vue({
             share: true,
             shr: true,
             show_success: false,
-            show_error: false
+            show_error: false,
+            show_map_area: false
         }
     },
     template: `
@@ -70,8 +71,7 @@ const v = new Vue({
                             </div>
                         </div>
                     </li>
-                    <li>
-                        <div id="description">
+                    <li id="description">
                             <div><strong>{{ item.nbLike }} Like</strong></div>
                             <div id="msg"><strong>{{ item.user }}</strong> {{ item.msg }}</div>
                             <div v-for="c in item.commentaire">
@@ -79,11 +79,16 @@ const v = new Vue({
                                 {{ c.commentaire }}
                                 <span id="date_commentaire">Il y a {{ c.date_commentaire }} jours</span>
                             </div>
-                            <div id="ville">{{ item.ville}}</div>
-                            <div id="date_event">{{ item.date_event }}</div>
-                            <div id="map" style="width:600px; height:auto">{{ item.ville }}</div>
-                        </div>
                     </li>
+                    
+                    <li id="show_map">
+                        <div id="ville">{{ item.ville}}</div>
+                        <div id="date_event">{{ item.date_event }}</div>
+                        <!-- -------------------------------- BOUTON AFFICHER MAP --------------------------------- -->
+                        <button type="button" class="btn btn-success" v-on:click="show_map_area = !show_map_area">Afficher/Masquer la map</button>
+                        <div id="map_area" v-if="show_map_area"></div>
+                    </li>
+                    
                     <li id="add_comment" v-if=show_comment>
                         <textarea placeholder="Ajouter un commentaire..." v-model="new_commentaire"></textarea>
                         <button type="submit" id="submit" class="btn btn-success btn-sm"
