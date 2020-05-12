@@ -1389,9 +1389,8 @@ app.get('/getPhotoId', function (req, res) {
     const db = mysql.createConnection({
         host: "localhost",
         user: "root",
-        password: "root",
-        database: "mydb",
-        port: "8889"
+        password: "",
+        database: "mydb"
     });
 
     db.connect(function (err) {
@@ -1443,9 +1442,8 @@ app.get('/getPhotoPost', function (req, res) {
     const db = mysql.createConnection({
         host: "localhost",
         user: "root",
-        password: "root",
-        database: "mydb",
-        port: "8889"
+        password: "",
+        database: "mydb"
     });
 
     db.connect(function (err) {
