@@ -1,4 +1,4 @@
-const app = new Vue({
+let vm = new Vue({
   el: '#app',
   data: {
     errors: [],
@@ -7,7 +7,8 @@ const app = new Vue({
     titree: null,
     desce: null,
     date: null,
-    lieu: null
+    lieu: null,
+    postid: null
   },
   methods: {
     checkForm: function (e) {
@@ -81,31 +82,30 @@ const app = new Vue({
 
     e.preventDefault();
     },
-    registerp: function () {
-            console.log("je passe dans la fonction")
+    fetete() {
             axios.get('http://localhost:3000/AjoutPost', {
                 params: {
                     mail: localStorage.mail,
                     titre: this.titrep,
                     message: this.descp,
-                    ville: this.ville,
-                    date_event: this.date,
+                    ville: null,
+                    date: null
                 }
             }).then(response => {
-              console.log("c'est là", response.data)
+              console.log(response.data)
             });
         },
-    registere: function () {
-            axios.get('http://localhost:3000/AjoutPost', {
-                params: {
-                    mail: localStorage.mail,
-                    titre: this.titree,
-                    message: this.desce,
-                    ville: this.ville,
-                    date_event: this.date,
-                }
-            }).then(response => {
-              console.log("c'est là", response.data)
+        registerp() {
+        axios.get('http://localhost:3000/AjoutPost', {
+          params: {
+        mail: localStorage.mail,
+        titre: this.titrep,
+        message: this.descp,
+        ville: this.ville,
+        date: this.date
+          }
+        }).then(response => {
+            console.log(response.data);
             });
         }
   }

@@ -658,29 +658,21 @@ app.get('/mailExisting', function (req, res) {
 });
 
 // 18) /AjoutPost : Enregistre un post et poster (entrée : FK_utilisateur_mail, titre, message, date_publication -> sortie : 1 ou 0)
-app.get('/AjoutPost',function(req,res){
-	// connection à la bdd créée
-	var db = mysql.createConnection({
-	  host: "localhost",
-	  user: "root",
-	  password: "",
-	  database: "mydb"
-	});
+app.get('/AjoutPost', function (req, res) {
+    var db = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "",
+        database: "mydb"
+
+    });
 
     db.connect(function (err) {
         if (err) throw err;
 
-        var query = req.query;
+        const query = req.query;
 
-        var sql = `INSERT INTO post (mail, titre, message, ville, date_event) VALUES ('${query.mail}', '${query.titre}', '${query.message}', '${query.ville}', '${query.date_event}')`;
-
-        db.query(sql, function (err, result, fields) {
-            if (err) throw err;
-            console.log(result);
-            res.send(result);
-        });
-
-        var sql = `INSERT INTO Poster VALUES ('${query.mail}', '${query.postId}', NOW())`;
+        const sql = `INSERT INTO post (mail, titre, message, ville, date) VALUES ('${query.mail}', '${query.titre}', '${query.message}', '${query.ville}', '${query.date}')`;
 
         db.query(sql, function (err, result, fields) {
             if (err) throw err;
