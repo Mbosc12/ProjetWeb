@@ -1218,6 +1218,7 @@ app.get('/notifLike', function (req, res) {
                     FROM post, liker
                     WHERE post.FK_utilisateur_mail = '${query.mail}'
                         AND post.PK_post_id = liker.FK_post_id
+                    ORDER BY liker.date_like DESC
                     `;
         db.query(sql, function (err, result, fields) {
             if (err) throw err;
@@ -1248,10 +1249,9 @@ app.get('/notifCom', function (req, res) {
 
         const sql = `
                     SELECT Commenter.FK_utilisateur_mail, post.titre, Commenter.FK_post_id, Commenter.date_commentaire
-                    FROM Commenter
-                    INNER JOIN post on  Commenter.FK_post_id = post.PK_post_id
-                    INNER JOIN follower on follower.FK_utilisateur_mail_1 = post.FK_utilisateur_mail
-                    WHERE follower.FK_utilisateur_mail_2 = '${query.mail}'
+                    FROM post, Commenter
+                    WHERE post.FK_utilisateur_mail = '${query.mail}'
+                        AND post.PK_post_id = Commenter.FK_post_id
                     ORDER BY Commenter.date_commentaire DESC
                     `;
         db.query(sql, function (err, result, fields) {
@@ -1263,6 +1263,8 @@ app.get('/notifCom', function (req, res) {
 
     });
 });
+
+
 
 // 38) /notifFollow : mail et date_like de tous les utilisateurs qui te follow (entrée : mail -> sortie : liste)
 app.get('/notifFollow', function (req, res) {
