@@ -85,8 +85,15 @@ const v = new Vue({
                         <div id="ville">{{ item.ville}}</div>
                         <div id="date_event">{{ item.date_event }}</div>
                         <!-- -------------------------------- BOUTON AFFICHER MAP --------------------------------- -->
-                        <button type="button" class="btn btn-success" v-on:click="show_map_area = !show_map_area">Afficher/Masquer la map</button>
-                        <div id="map_area" v-if="show_map_area"></div>
+                        <!-- <button onclick="searchCity(document.getElementById('ville').innerHTML)">Voir où se trouve l'évenement</button> -->
+                        <button type="button" class="btn btn-success" v-on:click= "searchCity( item.ville)" >map</button>
+                        <!--  v-if="show_map_area"> -->
+                        <div id="map_area" v-if="show_map_area">
+                                <div id="modalcontainer">
+                                    <img id="fatimage">
+                                    <div id="map" style="width: 450px; height: 450px; margin: 0 auto; display: none;"></div>
+                                </div>
+                        </div>
                     </li>
                     
                     <li id="add_comment" v-if=show_comment>
@@ -127,6 +134,49 @@ const v = new Vue({
             </div>
         </div>`,
     methods: {
+        cart: function (lat, long) {
+            document.getElementById("fatimage").classList.add("hide");
+            $("#map").css("display", "block");
+            
+            var map = L.map('map').setView([lat, long], 15);
+
+            var osmLayer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors',
+                maxZoom: 19
+            });
+        
+            map.addLayer(osmLayer);
+
+            L.marker([lat, long]).addTo(map);
+        },
+        searchCity: function (adress) {
+            this.show_map_area = ! this.show_map_area;
+            
+            /*$.ajax({
+                method: 'GET',
+                url: 'https://api-adresse.data.gouv.fr/search/',
+                dataType: 'json',
+                data:{q: adress},
+                success: function (data) {
+                    var lat = data.features[0].geometry.coordinates[1]
+                    var long = data.features[0].geometry.coordinates[0]
+
+                    cart(lat, long);
+                }
+            });
+            */
+            axios.get('https://api-adresse.data.gouv.fr/search/', {
+                    params: {
+                        q: adress
+                    }
+                }).then(res => {
+                    console.log(res);
+                    var lat = res.data.features[0].geometry.coordinates[1]
+                    var long = res.data.features[0].geometry.coordinates[0]
+
+                    this.cart(lat, long);
+                });
+        },
         add_like: function (item, id) {
             if (this.like === true) {
                 id.nbLike += 1;
