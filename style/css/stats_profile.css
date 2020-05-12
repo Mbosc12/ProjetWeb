@@ -134,16 +134,3 @@ canvas {
     width: 600px !important;
     height: 300px !important;
 }
-
-
-/* -------------------- Footer -------------------- */
-.footer {
-    margin-left: 50px;
-    margin-bottom: 10px;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    font-size: 11px;
-    color: #939393;
-}
