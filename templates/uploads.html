@@ -12,7 +12,7 @@
     <!-- Script JS -->
     <script type="module" src="style/js/allPages.js"></script>
     <script type="module" src="style/js/upload.js"></script>
-
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
     <!-- CSS -->
     <link rel="stylesheet" type="text/css" href="style/css/upload.css">
 
@@ -87,13 +87,14 @@
 
 <div class="main" role="main">
 	<div class="container">
-		<form id="app" @submit="checkForm" novalidate="true">
-			<div class="photopost" style="margin-right: 50px">
-				<input id="imageinput" type="file" name="inputfile">
-				<div class="containinput" style="display: block; padding: 50px 20px; width: 100%">
+		<form id="app" method="post" action="/upload" enctype="multipart/form-data" @submit="checkForm" >
+		<input id="imageinput" type="file" name="file" accept="image/*" multiple >
+            <div class="photopost" style="margin-right: 50px" onClick="input()">
+				<div class="containinput" style="display: block; padding: 50px 20px; width: 100%; margin-top: 50px;">
 					<div class="logoinput">
 						<img src="/style/img/input.png" style="height: 100px; margin-bottom: 30px;">
 					</div>
+                    <p id="inputname"> Votre Image </p>
 					<span> Glissez-déposez votre image</span>
 					<p class="desc">Votre image doit être un fichier PNG ou JPEG pour pouvoir être publiée </p>
 				</div>
@@ -130,11 +131,23 @@
                   </p>
                 <div class="publish">
                     <span>Atteignez plus de personnes en diffusant des publications régulièrement</span>
-                    <button type="submit">Publier</button>
+                    <input type="submit" value="submit" onclick="recup()">
                 </div>
 			</div>
 		</form>
 	</div>
 </div>
+<script>
+    function input() {
+        $('#app #imageinput').click();
+    }
+
+    function recup() {
+        var value = $('#imageinput')[0].value
+        var split = value.split("\\")
+        var title = split[split.length-1];
+        localStorage.upload = title;
+    }
+</script>
 </body>
 </html>

@@ -19,7 +19,7 @@ con.connect(function(err) {
     if (err) throw err;
     console.log("1/8 Table utilisateur created");
   });
-  var sql = "CREATE TABLE post(PK_post_id INT AUTO_INCREMENT, FK_utilisateur_mail VARCHAR(50), titre VARCHAR(50) NOT NULL, message VARCHAR(50) NOT NULL, ville VARCHAR(50), date_event DATE, PRIMARY KEY(PK_post_id), FOREIGN KEY(FK_utilisateur_mail) REFERENCES utilisateur(mail))";
+  var sql = "CREATE TABLE post(PK_post_id INT AUTO_INCREMENT, FK_utilisateur_mail VARCHAR(50), titre VARCHAR(50) NOT NULL, message VARCHAR(50) NOT NULL, ville VARCHAR(50), date_event DATE DEFAULT NULL, PRIMARY KEY(PK_post_id), FOREIGN KEY(FK_utilisateur_mail) REFERENCES utilisateur(mail))";
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log("2/8 Table post created");

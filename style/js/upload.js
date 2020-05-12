@@ -6,13 +6,21 @@ let vm = new Vue({
     descp: null,
     titree: null,
     desce: null,
-    date: null,
+    date: "00-00-00",
     lieu: null,
     postid: null
   },
   methods: {
     checkForm: function (e) {
       this.errors = [];
+
+      console.log("titrep", this.titrep);
+      console.log("descp", this.descp);
+      console.log("titree", this.titree);
+      console.log("desce", this.desce);
+      console.log("date", this.date);
+      console.log("lieu", this.lieu);
+
       if(this.titrep == "") {
         this.titrep = null;
       } else if(this.descp == "") {
@@ -21,10 +29,10 @@ let vm = new Vue({
         this.titree = null;
       } else if(this.desce == "") {
         this.desce = null;
-      } else if(this.date == "") {
-        this.date = null;
       } else if(this.lieu == "") {
         this.lieu = null;
+      } else if(this.date = "") {
+        this.date = "00-00-00";
       }
 
       if (!this.titrep && !this.titree) {
@@ -39,7 +47,7 @@ let vm = new Vue({
       else if(this.titrep) {
         if(!this.descp) {
           this.errors.push("Une description est requise")
-        } else if(this.titree || this.desce || this.date || this.lieu) {
+        } else if(this.titree || this.desce || this.date == "00-00-00" || this.lieu) {
           this.errors.push("Vous remplissez deux formulaires différents");
         }
       }
@@ -62,51 +70,58 @@ let vm = new Vue({
       }
 
       if (!this.errors.length) {
-        if(!this.titree) {
-          console.log("publication")
-          console.log(localStorage.mail)
-          console.log(this.titrep)
-          console.log(this.descp)
-          console.log(this.date)
-          console.log(this.lieu)
-          this.test();
-          this.getId();
-        } else {
-          console.log("publication")
-          console.log(localStorage.mail)
-          console.log(this.titree)
-          console.log(this.desce)
-          console.log(this.date)
-          console.log(this.lieu)
-        }
-        //return true;
+        this.ajoutPost();
+        return true;
       }
 
     e.preventDefault();
     },
-    test: function() {
-      console.log("je passe ici")
-      axios.get('http://localhost:3000/AjoutPost', {
+    ajoutPost: function() {
+      axios.get('http://localhost:3000/ajoutPost', {
         params: {
           FK_utilisateur_mail: localStorage.mail,
           titre: this.titrep,
           message: this.descp,
           ville: this.ville,
-          date_event: this.date
+          date_event: ("2020-04-05")
         }
       }).then(response => {
-        console.log("peut etre ici")
-        console.log(response.data.length)
+        this.getId(this.titrep);
+        console.log("publication créer avec l'id:")
       });
     },
-    getId() {
+    getId: function(title) {
             axios.get('http://localhost:3000/getPostID', {
                 params: {
                     mail: localStorage.mail,
-                    titre: "Premier message"
+                    titre: title
                 }
             }).then(response => {
-              console.log(response.data)
+              this.postid = response.data[0].PK_post_id
+              console.log(this.postid)
+              this.ajouterPoster(this.postid)
+              this.ajoutPhotoPost(this.postid)
+            });
+    },
+    ajouterPoster: function(id) {
+            axios.get('http://localhost:3000/ajoutPoster', {
+                params: {
+                    FK_utilisateur_mail: localStorage.mail,
+                    FK_post_id: id
+                }
+            }).then(response => {
+              console.log("poster ok")
+            });
+    },
+    ajoutPhotoPost: function(id) {
+            axios.get('http://localhost:3000/ajoutPhotoPost', {
+                params: {
+                    FK_utilisateur_mail: localStorage.mail,
+                    titre: localStorage.upload,
+                    FK_post_id: id
+                }
+            }).then(response => {
+              console.log("photo ok")
             });
     }
   }

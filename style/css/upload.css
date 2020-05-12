@@ -8,7 +8,10 @@ form {
 }
 
 #imageinput {
-	display: none;
+	position: absolute;
+	width: 1px;
+	height: 11px;
+	z-index: -5;
 }
 
 .photopost {
@@ -84,7 +87,7 @@ input {
 	font-size: 0.9em;
 }
 
-.publish button {
+.publish input {
 	width: 50%;
 	margin: 0 auto;
 	padding: 5px 10px;
@@ -94,6 +97,6 @@ input {
 	border: none;
 }
 
-.publish button:hover {
+.publish input:hover {
 	cursor: pointer;
 }

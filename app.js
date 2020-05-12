@@ -66,6 +66,11 @@ app.get('/uploads', function (req, res) {
     res.sendFile('uploads.html', {'root': __dirname + '/templates'})
 });
 
+app.get('/test', function (req, res) {
+    res.sendFile('test.html', {'root': __dirname + '/templates'})
+});
+
+
 /* Liste des requêtes disponibles :
    1) /NbUtilisateur : Nombre d'utilisateur (sortie : nb)
    2) /AllUtilisateur : Tous les utilisateurs (sortie : liste)
@@ -658,7 +663,7 @@ app.get('/mailExisting', function (req, res) {
 });
 
 // 18) /AjoutPost : Enregistre un post et poster (entrée : FK_utilisateur_mail, titre, message, date_publication -> sortie : 1 ou 0)
-app.get('/AjoutPost',function(req,res){
+app.get('/ajoutPost',function(req,res){
     // connection à la bdd créée
     var db = mysql.createConnection({
       host: "localhost",
@@ -682,6 +687,7 @@ app.get('/AjoutPost',function(req,res){
         db.end();
     });
 });
+
 app.get('/getPostID', function (req, res) {
     var db = mysql.createConnection({
         host: "localhost",
@@ -706,7 +712,7 @@ app.get('/getPostID', function (req, res) {
     });
 });
 
-app.get('/AjoutPoster', function (req, res) {
+app.get('/ajoutPoster', function (req, res) {
     var db = mysql.createConnection({
         host: "localhost",
         user: "root",
@@ -720,7 +726,32 @@ app.get('/AjoutPoster', function (req, res) {
 
         const query = req.query;
 
-        const sql = `INSERT INTO poster (mail, postid, date) VALUES ('${query.mail}', '${query.postid}', NOW())`;
+        const sql = `INSERT INTO poster (FK_utilisateur_mail, FK_post_id, date_publication) VALUES ('${query.FK_utilisateur_mail}', '${query.FK_post_id}', NOW())`;
+
+        db.query(sql, function (err, result, fields) {
+            if (err) throw err;
+            console.log(result);
+            res.send(result);
+        });
+        db.end();
+    });
+});
+
+app.get('/ajoutPhotoPost', function (req, res) {
+    var db = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "",
+        database: "mydb"
+
+    });
+
+    db.connect(function (err) {
+        if (err) throw err;
+
+        const query = req.query;
+
+        const sql = `INSERT INTO photo (FK_utilisateur_mail, titre, FK_post_id) VALUES ('${query.FK_utilisateur_mail}', '${query.titre}', '${query.FK_post_id}')`;
 
         db.query(sql, function (err, result, fields) {
             if (err) throw err;
@@ -1535,7 +1566,7 @@ SELECT Partager.FK_utilisateur_mail, post.titre, Partager.FK_post_id, Partager.d
                     WHERE follower.FK_utilisateur_mail_2 = 'gretathunberg@gmail.com'
                     ORDER BY Partager.date_partage DESC
 */
-/*
+
 const multer = require("multer");
 
 const handleError = (err, res) => {
@@ -1553,10 +1584,10 @@ app.get("/CV.png", (req, res) => {
 
 app.post(
   "/upload",
-  upload.single("file"  name attribute of <file> element in your form ),
+  upload.single("file"  /*name attribute of <file> element in your form*/),
   (req, res) => {
     const tempPath = req.file.path;
-    const targetPath = path.join(__dirname, "./uploads/" +req.file.originalname+ ".png");
+    const targetPath = path.join(__dirname, "./style/img/" +req.file.originalname);
 
     if (path.extname(req.file.originalname).toLowerCase() === ".png") {
       fs.rename(tempPath, targetPath, err => {
@@ -1571,4 +1602,3 @@ app.post(
     }
   }
 );
-*/
