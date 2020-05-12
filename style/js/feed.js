@@ -8,7 +8,9 @@ const v = new Vue({
             today: new Date,
             feed: [],
             comments: [],
-            collapsed: true
+            like: true,
+            comment: true,
+            share: true
         }
     },
     template: `
@@ -19,35 +21,40 @@ const v = new Vue({
                     <li id="title">{{ item.title }}</li>
                     <li id="photopost"><img :src="'style/img/'+item.photo" id="photoDuPost"></li>
                     <li id="postContent">
-                        <div id="buttonLike" v-on:click="like">
-                            <svg :class="[collapsed ? 'bi-heart' : 'bi-heart-fill', 'bi']" viewBox="0 0 16 16"
+                            <svg v-on:click="add_like" :class="[like ? 'bi-heart' : 'bi-heart-fill', 'bi']" viewBox="0 0 16 16"
                                  fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd"
-                                      :d="[collapsed ? 'M8 2.748l-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 01.176-.17C12.72-3.042 23.333 4.867 8 15z' : 'M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z']"
+                                      :d="[like ? 'M8 2.748l-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 01.176-.17C12.72-3.042 23.333 4.867 8 15z' : 'M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z']"
                                       clip-rule="evenodd"/>
                             </svg>
-                        </div>
-                        <div id="buttonComment" v-on:click="comment">
-                            <svg class="bi bi-chat-dots" viewBox="0 0 16 16" fill="currentColor"
+                        
+                            <svg v-on:click="add_comment" class="bi bi-chat-dots" viewBox="0 0 16 16" fill="currentColor"
                                  xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd"
                                       d="M2.678 11.894a1 1 0 01.287.801 10.97 10.97 0 01-.398 2c1.395-.323 2.247-.697 2.634-.893a1 1 0 01.71-.074A8.06 8.06 0 008 14c3.996 0 7-2.807 7-6 0-3.192-3.004-6-7-6S1 4.808 1 8c0 1.468.617 2.83 1.678 3.894zm-.493 3.905a21.682 21.682 0 01-.713.129c-.2.032-.352-.176-.273-.362a9.68 9.68 0 00.244-.637l.003-.01c.248-.72.45-1.548.524-2.319C.743 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7-3.582 7-8 7a9.06 9.06 0 01-2.347-.306c-.52.263-1.639.742-3.468 1.105z"
                                       clip-rule="evenodd"/>
                                 <path d="M5 8a1 1 0 11-2 0 1 1 0 012 0zm4 0a1 1 0 11-2 0 1 1 0 012 0zm4 0a1 1 0 11-2 0 1 1 0 012 0z"/>
                             </svg>
-                        </div>
-                        <div id="buttonShare" v-on:click="share">
-                            <i class="fas fa-share"></i>
-                        </div>
+                        
+                            <svg v-on:click="add_share" class="bi bi-reply" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M9.502 5.013a.144.144 0 00-.202.134V6.3a.5.5 0 01-.5.5c-.667 0-2.013.005-3.3.822-.984.624-1.99 1.76-2.595 3.876C3.925 10.515 5.09 9.982 6.11 9.7a8.741 8.741 0 011.921-.306 7.403 7.403 0 01.798.008h.013l.005.001h.001L8.8 9.9l.05-.498a.5.5 0 01.45.498v1.153c0 .108.11.176.202.134l3.984-2.933a.494.494 0 01.042-.028.147.147 0 000-.252.494.494 0 01-.042-.028L9.502 5.013zM8.3 10.386a7.745 7.745 0 00-1.923.277c-1.326.368-2.896 1.201-3.94 3.08a.5.5 0 01-.933-.305c.464-3.71 1.886-5.662 3.46-6.66 1.245-.79 2.527-.942 3.336-.971v-.66a1.144 1.144 0 011.767-.96l3.994 2.94a1.147 1.147 0 010 1.946l-3.994 2.94a1.144 1.144 0 01-1.767-.96v-.667z" clip-rule="evenodd"/>
+                            </svg>
+                    </li>
+                    <li>
                         <div id="description">
                             <div id="msg"><strong>{{ item.user }}</strong> {{ item.msg }}</div>
-                            <div id="comments" v-for="c in comments">
-                                <div><strong>{{ c.author }}</strong> {{ c.commentaire }} <span id="date_commentaire">Il y a {{ c.date_commentaire}} jours</span></div>
+                            <div v-for="c in item.commentaire">
+                                <strong>{{ c.author }}</strong> 
+                                {{ c.commentaire }} 
+                                <span id="date_commentaire">Il y a {{ c.date_commentaire }} jours</span>
                             </div>
                             <div id="ville">{{ item.ville}}</div>
                             <div id="date_event">{{ item.date_event }}</div>
                             <div id="map" style="width:600px; height:auto">{{ item.ville }}</div>
                         </div>
+                    </li>
+                    <li id="add_comment">
+                        
                     </li>
                     <li id="date">Il y a {{ item.date }} jours</li>
                 </ul>
@@ -60,45 +67,17 @@ const v = new Vue({
             </div>
         </div>`,
     methods: {
-        like: function () {
-            this.collapsed = !this.collapsed;
+        add_like: function () {
+            this.like = !this.like;
             console.log("like");
         },
-        comment: function () {
+        add_comment: function () {
             console.log("comment");
         },
-        share: function () {
+        add_share: function () {
             console.log("share");
         },
-        cart: function (lat, long) {
-            const map = L.map('map').setView([lat, long], 15); // LIGNE 18
-
-            const osmLayer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', { // LIGNE 20
-                attribution: '© OpenStreetMap contributors',
-                maxZoom: 19
-            });
-
-            map.addLayer(osmLayer);
-
-            L.marker([lat, long]).addTo(map);
-        },
-        test: function (adress) {
-            axios.get('https://api-adresse.data.gouv.fr/search/', {
-                headers: {
-                    method: 'GET',
-                    dataType: 'json',
-                    data: {
-                        q: adress
-                    }
-                }
-            }).then(data => {
-                const lat = data.features[0].geometry.coordinates[1];
-                const long = data.features[0].geometry.coordinates[0];
-
-                this.cart(lat, long);
-            });
-        },
-        compare: function (a, b) {
+        compare_feed: function (a, b) {
             const dateA = a.date;
             const dateB = b.date;
 
@@ -106,6 +85,18 @@ const v = new Vue({
             if (dateA > dateB) {
                 comparison = 1;
             } else if (dateA < dateB) {
+                comparison = -1;
+            }
+            return comparison;
+        },
+        compare_commentaire: function (a, b) {
+            const dateA = a.date_commentaire;
+            const dateB = b.date_commentaire;
+
+            let comparison = 0;
+            if (dateA < dateB) {
+                comparison = 1;
+            } else if (dateA > dateB) {
                 comparison = -1;
             }
             return comparison;
@@ -128,7 +119,6 @@ const v = new Vue({
                     mail: localStorage.mail
                 }
             }).then(async showFeed => {
-                //console.log(showFeed); //date_publication + id_post
                 if (showFeed.data.length !== 0) {
                     for (let i = 0; i < showFeed.data.length; i++) {
                         let d = new Date(showFeed.data[i].date_publication);
@@ -140,6 +130,11 @@ const v = new Vue({
                             date: diffDays,
                             IDpost: showFeed.data[i].id_post
                         });
+
+                        this.comments.push({
+                            IDpost: showFeed.data[i].id_post,
+                            commentaire: []
+                        });
                     }
                     for (let i = 0; i < this.feed.length; i++) {
                         /* -------------------- Get post information -------------------- */
@@ -148,7 +143,6 @@ const v = new Vue({
                                 postId: this.feed[i].IDpost
                             }
                         }).then(async unPost => {
-                            //console.log(unPost);
                             if (unPost.data.length !== 0) {
                                 if (unPost.data[0].date_event != null) {
                                     let d = new Date(unPost.data[0].date_event);
@@ -187,33 +181,47 @@ const v = new Vue({
                                 /* -------------------- Get post comments -------------------- */
                                 await axios.get('http://localhost:3000/AllCommentairePost', {
                                     params: {
-                                        postId: this.feed[i].IDpost
+                                        postId: this.comments[i].IDpost
                                     }
                                 }).then(async AllCommentairePost => {
-                                    console.log(AllCommentairePost);
                                     if (AllCommentairePost.data.length > 0) {
-                                        for (let i = 0; i < AllCommentairePost.data.length; i++) {
-                                            let d = new Date(AllCommentairePost.data[0].date_commentaire);
+                                        for (let j = 0; j < AllCommentairePost.data.length; j++) {
+                                            if (this.comments[i].IDpost === AllCommentairePost.data[j].FK_post_id) {
+                                                let d = new Date(AllCommentairePost.data[j].date_commentaire);
 
-                                            const diffTime = Math.abs(this.today - d);
-                                            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                                                const diffTime = Math.abs(this.today - d);
+                                                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
-                                            await axios.get('http://localhost:3000/unUtilisateur', {
-                                                params: {
-                                                    mail: AllCommentairePost.data[0].FK_utilisateur_mail
-                                                }
-                                            }).then(unUtilisateur => {
-                                                this.comments.push({
-                                                    commentaire: AllCommentairePost.data[0].message_commentaire,
+                                                this.comments[i].commentaire.push({
+                                                    id_commentaire: AllCommentairePost.data[j].id_commentaire,
                                                     date_commentaire: diffDays,
-                                                    author: unUtilisateur.data[0].pseudo
+                                                    author: AllCommentairePost.data[j].FK_utilisateur_mail,
+                                                    commentaire: AllCommentairePost.data[j].message_commentaire
                                                 });
-                                            });
+                                            }
                                         }
                                     }
                                 });
+
+                                /* -------------------- Get post comments author -------------------- */
+                                for (let i = 0; i < this.comments.length; i++) {
+                                    for (let j = 0; j < this.comments[i].commentaire.length; j++) {
+                                        await axios.get('http://localhost:3000/unUtilisateur', {
+                                            params: {
+                                                mail: this.comments[i].commentaire[j].author
+                                            }
+                                        }).then(unUtilisateur => {
+                                            if (unUtilisateur.data.length > 0) {
+                                                this.comments[i].commentaire[j].author = unUtilisateur.data[0].pseudo
+                                            }
+                                        });
+                                        this.comments[i].commentaire.sort(this.compare_commentaire);
+                                    }
+                                }
                             }
-                            this.feed.sort(this.compare);
+                            this.feed[i].commentaire = this.comments[i].commentaire;
+                            this.feed.sort(this.compare_feed);
+
                             return this.feed;
                         });
                     }
