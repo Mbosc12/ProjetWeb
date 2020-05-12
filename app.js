@@ -1215,10 +1215,9 @@ app.get('/notifLike', function (req, res) {
 
         const sql = `
                     SELECT liker.FK_utilisateur_mail, post.titre, liker.FK_post_id, liker.date_like
-                    FROM liker
-                    INNER JOIN post on liker.FK_post_id = post.PK_post_id
-                    INNER JOIN follower on follower.FK_utilisateur_mail_1 = post.FK_utilisateur_mail
-                    WHERE follower.FK_utilisateur_mail_2 = '${query.mail}'
+                    FROM post, liker
+                    WHERE post.FK_utilisateur_mail = '${query.mail}'
+                        AND post.PK_post_id = liker.FK_post_id
                     ORDER BY liker.date_like DESC
                     `;
         db.query(sql, function (err, result, fields) {
@@ -1230,6 +1229,8 @@ app.get('/notifLike', function (req, res) {
 
     });
 });
+
+
 
 // 37) /notifCom : mail, titre, id et date_like de tous les utilisateurs qui ont commenté un de tes post (entrée : mail -> sortie : liste)
 app.get('/notifCom', function (req, res) {
@@ -1248,10 +1249,9 @@ app.get('/notifCom', function (req, res) {
 
         const sql = `
                     SELECT Commenter.FK_utilisateur_mail, post.titre, Commenter.FK_post_id, Commenter.date_commentaire
-                    FROM Commenter
-                    INNER JOIN post on  Commenter.FK_post_id = post.PK_post_id
-                    INNER JOIN follower on follower.FK_utilisateur_mail_1 = post.FK_utilisateur_mail
-                    WHERE follower.FK_utilisateur_mail_2 = '${query.mail}'
+                    FROM post, Commenter
+                    WHERE post.FK_utilisateur_mail = '${query.mail}'
+                        AND post.PK_post_id = Commenter.FK_post_id
                     ORDER BY Commenter.date_commentaire DESC
                     `;
         db.query(sql, function (err, result, fields) {
@@ -1312,10 +1312,9 @@ app.get('/notifPartage', function (req, res) {
 
         const sql = `
                     SELECT Partager.FK_utilisateur_mail, post.titre, Partager.FK_post_id, Partager.date_partage
-                    FROM Partager
-                    INNER JOIN post on  Partager.FK_post_id = post.PK_post_id
-                    INNER JOIN follower on follower.FK_utilisateur_mail_1 = post.FK_utilisateur_mail
-                    WHERE follower.FK_utilisateur_mail_2 = '${query.mail}'
+                    FROM post, Partager
+                    WHERE post.FK_utilisateur_mail = '${query.mail}'
+                        AND post.PK_post_id = Partager.FK_post_id
                     ORDER BY Partager.date_partage DESC
                     `;
         db.query(sql, function (err, result, fields) {
@@ -1389,9 +1388,8 @@ app.get('/getPhotoId', function (req, res) {
     const db = mysql.createConnection({
         host: "localhost",
         user: "root",
-        password: "root",
-        database: "mydb",
-        port: "8889"
+        password: "",
+        database: "mydb"
     });
 
     db.connect(function (err) {
@@ -1443,9 +1441,8 @@ app.get('/getPhotoPost', function (req, res) {
     const db = mysql.createConnection({
         host: "localhost",
         user: "root",
-        password: "root",
-        database: "mydb",
-        port: "8889"
+        password: "",
+        database: "mydb"
     });
 
     db.connect(function (err) {

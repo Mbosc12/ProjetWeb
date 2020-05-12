@@ -222,6 +222,9 @@ const v = new Vue({
                                 }).then(async AllCommentairePost => {
                                     if (AllCommentairePost.data.length > 0) {
                                         for (let j = 0; j < AllCommentairePost.data.length; j++) {
+                                            console.log("i : "+i+" j : "+j);
+                                            console.log("this.comments[i].IDpost "+this.comments[i].IDpost);
+                                            console.log("AllCommentairePost.data[j].FK_post_id "+AllCommentairePost.data[j].FK_post_id);
                                             if (this.comments[i].IDpost === AllCommentairePost.data[j].FK_post_id) {
                                                 let d = new Date(AllCommentairePost.data[j].date_commentaire);
 
@@ -236,6 +239,7 @@ const v = new Vue({
                                                 });
                                             }
                                         }
+                                        console.log("com : "+this.comments[i].commentaire);
                                     }
                                 });
 
