@@ -13,7 +13,7 @@
 #date{
     font-weight: bold;
     font-size: 10px;
-    color: #dbdbdb;
+    color: #909090;
 }
 
 
@@ -27,7 +27,6 @@
 nav {
     background-color: #ffffff;
     border-bottom: 1px solid #68d89b;
-    margin-top: 5px;
     padding-bottom: 5px;
 }
 
@@ -95,13 +94,13 @@ body {
     color: #68d89b;
 }
 
-#posts #content {
-    padding: 15px;
+#posts #postContent {
     font-size: 14px;
     text-align: justify;
     border-left: 1px solid #dadada;
     border-right: 1px solid #dadada;
 }
+
 #posts #photopost {
     border: 1px solid #dadada;
 }
@@ -119,11 +118,96 @@ body {
 #posts #date {
     font-size: 10px;
     font-weight: bold;
-    color: #dadada;
+    color: #909090;
+    text-transform: uppercase;
     text-align: right;
     padding: 5px;
     border: 1px solid #dadada;
 }
+
+#posts #date_commentaire {
+    color: #909090;
+    font-size: 10px;
+    text-transform: uppercase;
+}
+
+#posts svg {
+    width: 25px;
+    margin-left: 10px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+#posts #buttons {
+    border-bottom: 1px solid white;
+}
+
+#posts .alert {
+    width : 300px;
+    margin-left: 10px;
+}
+
+#posts #description {
+    font-size: 13px;
+    padding-left: 10px;
+    padding-bottom: 10px;
+    padding-right: 10px;
+    word-wrap: break-word;
+    text-align: justify;
+    max-height: 80px;
+    overflow: auto;
+    border-left: 1px solid #dadada;
+    border-right: 1px solid #dadada;
+}
+
+#posts #add_comment {
+    border-left: 1px solid #dadada;
+    border-right: 1px solid #dadada;
+}
+
+#posts #add_comment textarea {
+    width: 580px;
+    height: 40px;
+    margin: 5px;
+    font-size: 12px;
+    float: left;
+}
+
+#posts #add_comment button {
+    vertical-align: middle;
+    text-align: center;
+    height: 40px;
+    margin: 5px;
+    font-size: 12px;
+}
+
+#posts #show_map {
+    border-left: 1px solid #dadada;
+    border-right: 1px solid #dadada;
+    background-color: white;
+}
+
+#posts #show_map button {
+    margin-left: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-size: 12px;
+}
+
+#posts #map_area {
+    border: 1px solid red;
+    width: 638px;
+    height: 300px;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+#posts #exampleModal {
+    margin-top: 200px;
+    text-align: center;
+    font-size: 13px;
+}
+
 
 /* -------------------- User card -------------------- */
 #user_card {

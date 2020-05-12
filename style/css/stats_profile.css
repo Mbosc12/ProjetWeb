@@ -13,7 +13,7 @@
 #date{
     font-weight: bold;
     font-size: 10px;
-    color: #dbdbdb;
+    color: #909090;
 }
 
 
@@ -57,8 +57,8 @@ body {
     border: 1px solid #dbdbdb;
     margin-top: 20px;
     margin-bottom: 20px;
-    margin-left: 165px;
-    width: 965px;
+    margin-left: 170px;
+    width: 990px;
 }
 
 #graphic p {
@@ -133,17 +133,4 @@ canvas {
     margin: 0 auto;
     width: 600px !important;
     height: 300px !important;
-}
-
-
-/* -------------------- Footer -------------------- */
-.footer {
-    margin-left: 50px;
-    margin-bottom: 10px;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    font-size: 11px;
-    color: #939393;
 }
