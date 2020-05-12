@@ -1215,11 +1215,9 @@ app.get('/notifLike', function (req, res) {
 
         const sql = `
                     SELECT liker.FK_utilisateur_mail, post.titre, liker.FK_post_id, liker.date_like
-                    FROM liker
-                    INNER JOIN post on liker.FK_post_id = post.PK_post_id
-                    INNER JOIN follower on follower.FK_utilisateur_mail_1 = post.FK_utilisateur_mail
-                    WHERE follower.FK_utilisateur_mail_2 = '${query.mail}'
-                    ORDER BY liker.date_like DESC
+                    FROM post, liker
+                    WHERE post.FK_utilisateur_mail = '${query.mail}'
+                        AND post.PK_post_id = liker.FK_post_id
                     `;
         db.query(sql, function (err, result, fields) {
             if (err) throw err;
@@ -1230,6 +1228,8 @@ app.get('/notifLike', function (req, res) {
 
     });
 });
+
+
 
 // 37) /notifCom : mail, titre, id et date_like de tous les utilisateurs qui ont commenté un de tes post (entrée : mail -> sortie : liste)
 app.get('/notifCom', function (req, res) {
