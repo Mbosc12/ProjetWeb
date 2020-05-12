@@ -568,7 +568,7 @@ app.get('/AllCommentairePost', function (req, res) {
 
         var query = req.query;
 
-        var sql = `SELECT FK_utilisateur_mail, date_commentaire, message_commentaire FROM Commenter WHERE FK_post_id = '${query.postId}'`;
+        var sql = `SELECT * FROM Commenter WHERE FK_post_id = '${query.postId}'`;
 
         db.query(sql, function (err, result, fields) {
             if (err) throw err;
