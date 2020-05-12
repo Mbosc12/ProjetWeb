@@ -98,7 +98,10 @@ let vm = new Vue({
 				mail: localStorage.mail
         	}
         }).then(response => {
-            this.followers = response.data;
+                for(var i = 0; i < response.data.length; i++) {
+                    this.followers[i] = response.data[i].pseudo;
+                }
+                console.log("followers : "+this.followers);
             });
         },
         FetchLikes: function(pid){
